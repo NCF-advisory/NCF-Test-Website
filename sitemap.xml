@@ -32,7 +32,12 @@
   </url>
   <url>
     <loc>https://novances-evaluation.fr/ressources/</loc>
-    <lastmod>2026-05-15</lastmod>
+    <lastmod>2026-05-20</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://novances-evaluation.fr/ressources/valorisation-basse-opportunite-transmission/</loc>
+    <lastmod>2026-05-20</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
