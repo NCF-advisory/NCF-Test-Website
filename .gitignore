@@ -37,3 +37,6 @@ npm-debug.log*
 .idea/
 *.swp
 *~
+
+# Playwright MCP — snapshots de page générés pendant l'itération visuelle
+.playwright-mcp/

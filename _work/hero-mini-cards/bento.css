@@ -1,0 +1,231 @@
+  /* ──────── Bento équipe hero (.hv-bento, 3 cols × 2 rows : 4 portraits + tuile NCF) ──────── */
+  @keyframes hv-rise {
+    from { opacity: 0; transform: translateY(14px) scale(0.985); }
+    to   { opacity: 1; transform: translateY(0)   scale(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hv-bento-card { animation: none !important; opacity: 1 !important; }
+  }
+
+  .hv-bento {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    max-width: 540px;
+    margin: 0 auto;
+    aspect-ratio: 1.45 / 1;
+  }
+  .hv-bento-card {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 14px;
+    border: 1px solid var(--line-2);
+    text-decoration: none;
+    color: inherit;
+    background: var(--bg-higher);
+    box-shadow: 0 14px 28px -18px rgba(0,0,0,0.45);
+    opacity: 0;
+    animation: hv-rise 0.75s cubic-bezier(.2,.8,.2,1) var(--d, 0s) forwards;
+    transition: transform 0.4s cubic-bezier(.2,.8,.2,1), box-shadow 0.4s, border-color 0.3s;
+    will-change: transform;
+  }
+  /* Placement des 5 cellules :
+     A (Frédéric) col 1 rows 1-2 | B (Florian) col 2 row 1 | C (Malo) col 3 row 1
+     D (Cléante)  col 2 row 2    | E (tuile NCF) col 3 row 2 */
+  .hv-bento-card--a { grid-column: 1; grid-row: 1 / span 2; }
+  .hv-bento-card--b { grid-column: 2; grid-row: 1; }
+  .hv-bento-card--c { grid-column: 3; grid-row: 1; }
+  .hv-bento-card--d { grid-column: 2; grid-row: 2; }
+  .hv-bento-card--e { grid-column: 3; grid-row: 2; }
+
+  .hv-bento-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent-a-30);
+    box-shadow: 0 22px 38px -16px rgba(0,0,0,0.55);
+  }
+
+  .hv-bento-photo {
+    position: absolute; inset: 0;
+    overflow: hidden;
+  }
+  .hv-bento-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+    transition: transform 0.6s cubic-bezier(.2,.8,.2,1);
+  }
+  .hv-bento-card:hover .hv-bento-photo img { transform: scale(1.06); }
+
+  .hv-bento-overlay {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 16px 14px 14px;
+    color: #fff;
+    background: linear-gradient(180deg,
+      transparent 0%,
+      rgba(5, 12, 28, 0.35) 22%,
+      rgba(5, 12, 28, 0.78) 55%,
+      rgba(5, 12, 28, 0.94) 100%);
+    display: flex; flex-direction: column; gap: 2px;
+    transform: translateY(40%);
+    transition: transform 0.45s cubic-bezier(.2,.8,.2,1);
+  }
+  .hv-bento-card:hover .hv-bento-overlay { transform: translateY(0); }
+  .hv-bento-role {
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.94);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.55);
+  }
+  .hv-bento-name {
+    font-size: 0.86rem; font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.01em;
+    margin-top: 2px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.65), 0 0 1px rgba(0,0,0,0.4);
+  }
+  .hv-bento-spec {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.92);
+    margin-top: 4px;
+    line-height: 1.4;
+    opacity: 0;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    transition: opacity 0.35s 0.05s;
+  }
+  .hv-bento-card:hover .hv-bento-spec { opacity: 1; }
+
+  /* Carte A (dominante) */
+  .hv-bento-card--a .hv-bento-name { font-size: 0.98rem; }
+  .hv-bento-card--a .hv-bento-spec { font-size: 0.74rem; }
+
+  /* Cartes B/C/D (cellules plus petites), overlay compact */
+  .hv-bento-card--b .hv-bento-overlay,
+  .hv-bento-card--c .hv-bento-overlay,
+  .hv-bento-card--d .hv-bento-overlay { padding: 10px 11px 10px; }
+  .hv-bento-card--b .hv-bento-name,
+  .hv-bento-card--c .hv-bento-name,
+  .hv-bento-card--d .hv-bento-name { font-size: 0.78rem; }
+  .hv-bento-card--b .hv-bento-role,
+  .hv-bento-card--c .hv-bento-role,
+  .hv-bento-card--d .hv-bento-role { font-size: 0.54rem; letter-spacing: 0.12em; }
+  .hv-bento-card--b .hv-bento-spec,
+  .hv-bento-card--c .hv-bento-spec,
+  .hv-bento-card--d .hv-bento-spec { display: none; }
+
+  /* B/C/D, overlay caché par défaut (photo seule au repos), révélé au hover */
+  .hv-bento-card--b .hv-bento-overlay,
+  .hv-bento-card--c .hv-bento-overlay,
+  .hv-bento-card--d .hv-bento-overlay {
+    transform: translateY(102%);
+  }
+  .hv-bento-card--b:hover .hv-bento-overlay,
+  .hv-bento-card--c:hover .hv-bento-overlay,
+  .hv-bento-card--d:hover .hv-bento-overlay {
+    transform: translateY(0);
+  }
+
+  /* ─── Tuile brand (carte E), "L'équipe NCF · Lyon" ─── */
+  .hv-bento-card--e {
+    background: linear-gradient(140deg, var(--accent) 0%, var(--accent-deep) 100%);
+    border-color: var(--accent-a-25);
+    box-shadow: 0 16px 30px -16px var(--accent-a-40);
+  }
+  .hv-bento-card--e:hover {
+    border-color: var(--accent-bright);
+    box-shadow: 0 22px 40px -16px var(--accent-a-40);
+  }
+  .hv-bento-brand {
+    position: absolute; inset: 0;
+    padding: 14px 14px 12px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    color: #fff;
+  }
+  .hv-bento-brand-tag {
+    font-size: 0.58rem; font-weight: 800;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.78);
+  }
+  .hv-bento-brand-main {
+    display: flex; flex-direction: column; gap: 1px;
+    margin-top: auto;
+    margin-bottom: 6px;
+    line-height: 1.05;
+  }
+  .hv-bento-brand-main strong {
+    font-size: 1.15rem; font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+  .hv-bento-brand-main span {
+    font-size: 0.78rem; font-weight: 500;
+    color: rgba(255,255,255,0.78);
+    letter-spacing: 0.005em;
+  }
+  .hv-bento-brand-arrow {
+    align-self: flex-end;
+    color: rgba(255,255,255,0.9);
+    transition: transform 0.3s cubic-bezier(.2,.8,.2,1);
+  }
+  .hv-bento-card--e:hover .hv-bento-brand-arrow {
+    transform: translateX(3px);
+    color: #fff;
+  }
+
+  /* Float discret continu, 5 cartes, vitesses légèrement décalées */
+  @keyframes hv-bento-float-a {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-4px); }
+  }
+  @keyframes hv-bento-float-b {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-3px); }
+  }
+  @keyframes hv-bento-float-c {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-2px); }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hv-bento-card--a { animation: hv-rise 0.75s cubic-bezier(.2,.8,.2,1) var(--d) forwards, hv-bento-float-a 5.5s ease-in-out 1.2s infinite; }
+    .hv-bento-card--b { animation: hv-rise 0.75s cubic-bezier(.2,.8,.2,1) var(--d) forwards, hv-bento-float-b 6.2s ease-in-out 1.4s infinite; }
+    .hv-bento-card--c { animation: hv-rise 0.75s cubic-bezier(.2,.8,.2,1) var(--d) forwards, hv-bento-float-a 6.8s ease-in-out 1.6s infinite; }
+    .hv-bento-card--d { animation: hv-rise 0.75s cubic-bezier(.2,.8,.2,1) var(--d) forwards, hv-bento-float-b 6.0s ease-in-out 1.8s infinite; }
+    .hv-bento-card--e { animation: hv-rise 0.75s cubic-bezier(.2,.8,.2,1) var(--d) forwards, hv-bento-float-c 7.2s ease-in-out 2.0s infinite; }
+    .hv-bento-card--a:hover,
+    .hv-bento-card--b:hover,
+    .hv-bento-card--c:hover,
+    .hv-bento-card--d:hover,
+    .hv-bento-card--e:hover { animation-play-state: paused; }
+  }
+
+  /* Responsive */
+  @media (max-width: 980px) {
+    .hv-bento { max-width: 420px; }
+  }
+  @media (max-width: 620px) {
+    .hv-bento {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1.15fr 1fr 1fr;
+      aspect-ratio: 1 / 1.45;
+      gap: 8px;
+      max-width: 380px;
+    }
+    .hv-bento-card--a { grid-column: 1 / span 2; grid-row: 1; }
+    .hv-bento-card--b { grid-column: 1; grid-row: 2; }
+    .hv-bento-card--c { grid-column: 2; grid-row: 2; }
+    .hv-bento-card--d { grid-column: 1; grid-row: 3; }
+    .hv-bento-card--e { grid-column: 2; grid-row: 3; }
+    .hv-bento-card--a .hv-bento-photo img { object-position: center 28%; }
+    .hv-bento-overlay,
+    .hv-bento-card--b .hv-bento-overlay,
+    .hv-bento-card--c .hv-bento-overlay,
+    .hv-bento-card--d .hv-bento-overlay { transform: translateY(0); }
+    .hv-bento-spec { opacity: 1; }
+    .hv-bento-brand-main strong { font-size: 1rem; }
+    .hv-bento-brand-main span { font-size: 0.74rem; }
+  }

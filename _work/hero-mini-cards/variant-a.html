@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Variante A v3 — Mini cas-usage avec visuels animés</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/global.css" />
+  <link rel="stylesheet" href="/assets/css/components/etreinte.css" />
+  <link rel="stylesheet" href="/assets/css/pages/home.css" />
+  <link rel="stylesheet" href="./bento.css" />
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .proto-tag {
+      position: fixed; top: 12px; left: 12px; z-index: 999;
+      background: var(--accent); color: #fff;
+      padding: 6px 12px; border-radius: 999px;
+      font: 600 11px/1 'Inter', system-ui; letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .proto-fold {
+      position: fixed; left: 0; right: 0; top: 990px; z-index: 998;
+      height: 0; border-top: 1px dashed rgba(239, 68, 68, 0.6);
+      pointer-events: none;
+    }
+    .proto-fold::after {
+      content: 'fold 1080p (990px)';
+      position: absolute; right: 12px; top: -18px;
+      font: 600 10px/1 'Inter', system-ui; color: rgb(239, 68, 68);
+      background: #fff; padding: 3px 6px; border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="proto-tag">Variante A v3 — visuels animés</div>
+  <div class="proto-fold"></div>
+
+  <section id="hero">
+    <div class="hero-inner">
+
+      <div class="hero-text">
+        <div class="hero-eyebrow">L'enjeu</div>
+        <h1 class="hero-h1">Vous êtes dirigeant d'entreprise et vous avez <span class="accent">besoin d'une évaluation.</span></h1>
+        <p class="hero-sub">Un rapport d'évaluation indépendant et opposable. Pour sécuriser vos décisions patrimoniales, transmission, litiges entre associés, croissance externe.</p>
+
+        <div class="cas-mini-grid--rich">
+
+          <!-- ── Carte 1 : Transmission (orbite) ── -->
+          <a href="/transmission/" class="cas-card cas-card--hero cs-succession">
+            <span class="cas-num">01</span>
+            <div class="cas-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M 1 4 L 1 1 L 4 1" stroke-width="1"/><path d="M 20 23 L 23 23 L 23 20" stroke-width="1"/><circle cx="7" cy="9" r="2"/><path d="M 4 17 Q 4 13 7 13 Q 10 13 10 17"/><circle cx="17" cy="9" r="2"/><path d="M 14 17 Q 14 13 17 13 Q 20 13 20 17"/><path d="M 10 19 L 14 19 M 12.5 17.5 L 14 19 L 12.5 20.5"/></svg>
+            </div>
+            <div class="cas-title">Transmission</div>
+            <p class="cas-teaser">Famille, repreneur ou salariés. Une valeur argumentée pour négocier.</p>
+            <div class="cas-visual cas-visual--orbit" aria-hidden="true">
+              <div class="cas-orbit-ring cas-orbit-ring--outer"></div>
+              <div class="cas-orbit-ring cas-orbit-ring--inner"></div>
+              <div class="cas-orbit-center cas-orbit-center--icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="6" width="14" height="14"/><rect x="7.5" y="9" width="2" height="2"/><rect x="11" y="9" width="2" height="2"/><rect x="14.5" y="9" width="2" height="2"/><rect x="7.5" y="13" width="2" height="2"/><rect x="14.5" y="13" width="2" height="2"/><rect x="11" y="13" width="2" height="7"/></svg>
+              </div>
+              <div class="cas-orbit-item cas-orbit-item--icon cas-orbit-item--one" aria-label="Famille">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="2"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="7" y1="13" x2="17" y2="13"/><line x1="7" y1="13" x2="7" y2="16"/><line x1="17" y1="13" x2="17" y2="16"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+              </div>
+              <div class="cas-orbit-item cas-orbit-item--icon cas-orbit-item--two" aria-label="Autre entreprise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="4" width="10" height="16"/><line x1="7" y1="8" x2="17" y2="8"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="7" y1="16" x2="17" y2="16"/><line x1="12" y1="4" x2="12" y2="16"/><rect x="10.5" y="17" width="3" height="3"/></svg>
+              </div>
+              <div class="cas-orbit-item cas-orbit-item--icon cas-orbit-item--three" aria-label="Salariés">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="9" r="1.5"/><path d="M 4 19 L 4 13 Q 4 11 6 11 Q 8 11 8 13 L 8 19"/><circle cx="12" cy="9" r="1.5"/><path d="M 10 19 L 10 13 Q 10 11 12 11 Q 14 11 14 13 L 14 19"/><circle cx="18" cy="9" r="1.5"/><path d="M 16 19 L 16 13 Q 16 11 18 11 Q 20 11 20 13 L 20 19"/></svg>
+              </div>
+            </div>
+            <span class="cas-link">
+              En savoir plus
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+
+          <!-- ── Carte 2 : Litiges (cap-table) ── -->
+          <a href="/litiges-entre-associes/" class="cas-card cas-card--hero cs-litiges">
+            <span class="cas-num">02</span>
+            <div class="cas-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="10" width="10" height="4"/><circle cx="12" cy="6" r="1.5"/><circle cx="12" cy="18" r="1.5"/><circle cx="5" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>
+            </div>
+            <div class="cas-title">Litiges associés</div>
+            <p class="cas-teaser">Sortie, prix contesté, repreneur. Un rapport neutre qui désamorce.</p>
+            <div class="cas-visual cas-visual--captable" aria-hidden="true">
+              <div class="cap-row">
+                <span class="cap-name">Associé A</span>
+                <span class="cap-pct">45 %</span>
+                <div class="cap-bar"><div class="cap-bar-fill" style="--w: 100%;"></div></div>
+              </div>
+              <div class="cap-row">
+                <span class="cap-name">Associé B</span>
+                <span class="cap-pct">30 %</span>
+                <div class="cap-bar"><div class="cap-bar-fill" style="--w: 66%;"></div></div>
+              </div>
+              <div class="cap-row cap-row--out">
+                <span class="cap-name">Sortant ◆</span>
+                <span class="cap-pct">25 %</span>
+                <div class="cap-bar"><div class="cap-bar-fill" style="--w: 55%;"></div></div>
+              </div>
+              <div class="cap-price">
+                Prix retenu
+                <strong>640 k€</strong>
+              </div>
+            </div>
+            <span class="cas-link">
+              En savoir plus
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+
+          <!-- ── Carte 3 : Croissance externe (étreinte) ── -->
+          <a href="/croissance-externe/" class="cas-card cas-card--hero cs-croissance">
+            <span class="cas-num">03</span>
+            <div class="cas-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="5" width="4" height="4"/><rect x="5" y="16" width="4" height="4"/><rect x="10" y="16" width="4" height="4"/><rect x="15" y="16" width="4" height="4"/><line x1="12" y1="9" x2="12" y2="12.5"/><line x1="7" y1="12.5" x2="17" y2="12.5"/><line x1="7" y1="12.5" x2="7" y2="16"/><line x1="12" y1="12.5" x2="12" y2="16"/><line x1="17" y1="12.5" x2="17" y2="16"/></svg>
+            </div>
+            <div class="cas-title">Croissance externe</div>
+            <p class="cas-teaser">Vous rachetez pour grandir. Évaluation rigoureuse pour négocier au juste prix.</p>
+            <div class="cas-visual" aria-hidden="true">
+              <svg class="etreinte" viewBox="0 0 320 220" preserveAspectRatio="xMidYMid meet">
+                <circle class="etreinte-pulse" cx="100" cy="110" r="56" />
+                <g class="etreinte-body">
+                  <rect class="etreinte-body-fill" x="60" y="70" width="80" height="80" rx="18"/>
+                  <g class="etreinte-body-icon" transform="translate(80 92)">
+                    <rect x="0" y="6" width="40" height="34"/>
+                    <line x1="0" y1="14" x2="40" y2="14"/>
+                    <line x1="0" y1="24" x2="40" y2="24"/>
+                    <line x1="0" y1="34" x2="40" y2="34"/>
+                    <rect x="16" y="30" width="8" height="10"/>
+                  </g>
+                  <g class="etreinte-floor">
+                    <rect x="80" y="86" width="40" height="12"/>
+                    <rect x="86" y="89" width="6" height="6"/>
+                    <rect x="104" y="89" width="6" height="6"/>
+                  </g>
+                </g>
+                <rect class="etreinte-flash" x="60" y="70" width="80" height="80" rx="18"/>
+                <path class="etreinte-arm" d="M 138 110 Q 200 60 245 110"/>
+                <g class="etreinte-target">
+                  <rect class="etreinte-target-square" x="225" y="92" width="36" height="36" rx="6"/>
+                  <g class="etreinte-target-icon" transform="translate(232 100)">
+                    <rect x="0" y="2" width="22" height="18"/>
+                    <line x1="0" y1="11" x2="22" y2="11"/>
+                    <rect x="9" y="14" width="4" height="6"/>
+                  </g>
+                </g>
+              </svg>
+            </div>
+            <span class="cas-link">
+              En savoir plus
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+
+        </div>
+
+        <div class="hero-trust-inline">
+          <span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><polyline points="20 6 9 17 4 12"/></svg>
+            PME 1 – 10 M€ de CA
+          </span>
+          <span class="dot"></span>
+          <span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><polyline points="20 6 9 17 4 12"/></svg>
+            Premier échange confidentiel
+          </span>
+          <span class="dot"></span>
+          <span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><polyline points="20 6 9 17 4 12"/></svg>
+            Cabinet basé à Lyon
+          </span>
+        </div>
+      </div>
+
+      <div class="hero-media hero-media--solo">
+        <div class="hv-bento">
+          <a href="/equipe/" class="hv-bento-card hv-bento-card--a" style="--d:0.05s;">
+            <div class="hv-bento-photo"><img src="/assets/img/team/frederic-lemonnier.jpg" alt="Frédéric Lemonnier" /></div>
+            <div class="hv-bento-overlay">
+              <span class="hv-bento-role">Associé</span>
+              <span class="hv-bento-name">Frédéric Lemonnier</span>
+              <span class="hv-bento-spec">Méthodologie &amp; relation dirigeant</span>
+            </div>
+          </a>
+          <a href="/equipe/" class="hv-bento-card hv-bento-card--b" style="--d:0.15s;">
+            <div class="hv-bento-photo"><img src="/assets/img/team/florian-lopez.jpg" alt="Florian Lopez" /></div>
+            <div class="hv-bento-overlay">
+              <span class="hv-bento-role">Manager</span>
+              <span class="hv-bento-name">Florian Lopez</span>
+              <span class="hv-bento-spec">Pilotage des missions</span>
+            </div>
+          </a>
+          <a href="/equipe/" class="hv-bento-card hv-bento-card--c" style="--d:0.25s;">
+            <div class="hv-bento-photo"><img src="/assets/img/team/malo-duquenne.jpg" alt="Malo Duquenne" /></div>
+            <div class="hv-bento-overlay">
+              <span class="hv-bento-role">Analyste</span>
+              <span class="hv-bento-name">Malo Duquenne</span>
+              <span class="hv-bento-spec">Analyse financière</span>
+            </div>
+          </a>
+          <a href="/equipe/" class="hv-bento-card hv-bento-card--d" style="--d:0.35s;">
+            <div class="hv-bento-photo"><img src="/assets/img/team/cleante-oullion.jpg" alt="Cléante Oullion" /></div>
+            <div class="hv-bento-overlay">
+              <span class="hv-bento-role">Analyste</span>
+              <span class="hv-bento-name">Cléante Oullion</span>
+              <span class="hv-bento-spec">Modélisation &amp; data</span>
+            </div>
+          </a>
+          <a href="/equipe/" class="hv-bento-card hv-bento-card--e" style="--d:0.45s;" aria-label="L'équipe NCF, cabinet basé à Lyon">
+            <div class="hv-bento-brand">
+              <span class="hv-bento-brand-tag">L'ÉQUIPE</span>
+              <div class="hv-bento-brand-main">
+                <strong>4 experts</strong>
+                <span>à Lyon</span>
+              </div>
+              <svg class="hv-bento-brand-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>

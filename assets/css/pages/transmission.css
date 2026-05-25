@@ -81,6 +81,8 @@
       inset: 0;
       pointer-events: none;
       z-index: 1;
+      contain: layout paint style;
+      transform: translateZ(0);
     }
     .parcours-thread {
       width: 100%; height: 100%;
@@ -92,7 +94,11 @@
        assets/css/components/thread.css. Ici, uniquement les overrides
        spécifiques à la page transmission. */
     .parcours .thread-line {
-      filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.25));
+      filter: none;
+    }
+    .parcours .thread-line-glow {
+      stroke-width: 8;
+      opacity: 0.14;
     }
     /* Pointe : halo plus généreux à l'accent succession */
     .parcours .thread-tip {
@@ -100,7 +106,7 @@
     }
     /* Nœud activé : halo coloré succession */
     .parcours .node-group.is-spawned {
-      filter: drop-shadow(0 0 8px var(--c-succession-soft));
+      filter: none;
     }
 
     /* Cartes — positionnées sur la piste */
@@ -916,5 +922,4 @@
       .apport-card, .diff-pillar, .partner-card { padding: 1.5rem; }
       .cta-btn-wrap .btn-primary, .cta-btn-wrap .btn-outline { width: 100%; justify-content: center; }
     }
-
 

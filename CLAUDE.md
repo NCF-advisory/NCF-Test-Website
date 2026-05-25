@@ -2,6 +2,75 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Principes généraux
+
+Directives comportementales pour réduire les erreurs courantes. À combiner avec les instructions projet ci-dessous.
+
+**Compromis :** ces principes privilégient la prudence sur la vitesse. Sur les tâches triviales, faire preuve de jugement.
+
+### 1. Réfléchir avant de coder
+
+**Ne pas supposer. Ne pas masquer l'incertitude. Expliciter les compromis.**
+
+Avant d'implémenter :
+- Énoncer les hypothèses explicitement. En cas de doute, demander.
+- Si plusieurs interprétations sont possibles, les présenter — ne pas trancher silencieusement.
+- Si une approche plus simple existe, le dire. Pousser un avis contraire quand c'est justifié.
+- Si quelque chose n'est pas clair, s'arrêter. Nommer ce qui pose problème. Demander.
+
+### 2. Simplicité d'abord
+
+**Le minimum de code qui résout le problème. Rien de spéculatif.**
+
+- Pas de fonctionnalités au-delà du demandé.
+- Pas d'abstractions pour du code à usage unique.
+- Pas de « flexibilité » ou de « configurabilité » non demandée.
+- Pas de gestion d'erreur pour des cas impossibles.
+- Si tu écris 200 lignes alors que 50 suffisent, réécris.
+
+Se demander : « Un ingénieur senior trouverait-il ça surdimensionné ? » Si oui, simplifier.
+
+### 3. Modifications chirurgicales
+
+**Ne toucher que ce qui doit l'être. Ne nettoyer que ses propres traces.**
+
+En éditant du code existant :
+- Ne pas « améliorer » le code, les commentaires ou le formatage adjacents.
+- Ne pas refactoriser ce qui n'est pas cassé.
+- Reprendre le style existant, même si on ferait différemment.
+- Si on remarque du code mort sans rapport, le signaler — ne pas le supprimer.
+
+Quand un changement crée des orphelins :
+- Retirer les imports/variables/fonctions rendus inutilisés par tes modifications.
+- Ne pas retirer le code mort préexistant sauf demande explicite.
+
+Le test : chaque ligne modifiée doit pouvoir être rattachée directement à la demande de l'utilisateur.
+
+### 4. Exécution pilotée par l'objectif
+
+**Définir les critères de succès. Itérer jusqu'à vérification.**
+
+Transformer les tâches en objectifs vérifiables :
+- « Ajouter une validation » → « Écrire des tests d'entrées invalides, puis les faire passer »
+- « Corriger le bug » → « Écrire un test qui le reproduit, puis le faire passer »
+- « Refactoriser X » → « S'assurer que les tests passent avant et après »
+
+Pour les tâches multi-étapes, énoncer un plan bref :
+
+```
+1. [Étape] → vérification : [contrôle]
+2. [Étape] → vérification : [contrôle]
+3. [Étape] → vérification : [contrôle]
+```
+
+Des critères de succès solides permettent d'itérer en autonomie. Des critères flous (« faire que ça marche ») obligent à clarifier en permanence.
+
+---
+
+**Ces principes fonctionnent si :** moins de modifications inutiles dans les diffs, moins de réécritures pour cause de sur-ingénierie, et les questions de clarification arrivent avant l'implémentation plutôt qu'après une erreur.
+
+---
+
 ## Projet
 
 Site institutionnel **Novances Évaluation** (cabinet d'évaluation financière, ex-NCF Advisory). Site statique HTML/CSS/JS vanille, déployé sur Vercel, formulaire contact relié à Pipedrive via une route serverless.

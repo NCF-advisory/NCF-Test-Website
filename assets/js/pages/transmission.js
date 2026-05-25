@@ -23,6 +23,7 @@
     const path = document.getElementById('thread-path');
     const track = document.querySelector('.parcours-track');
     if (!section || !path || !track) return;
+    if (window.matchMedia && window.matchMedia('(max-width: 820px)').matches) return;
 
     const front = num(section.dataset.threadFront, 0.78);
     const cardDelay = num(section.dataset.threadCardDelay, 180);
@@ -31,8 +32,11 @@
     const pathLength = path.getTotalLength();
     if (!pathLength) return;
 
-    path.style.strokeDasharray = pathLength;
-    path.style.strokeDashoffset = pathLength;
+    const revealLines = Array.from(track.querySelectorAll('.thread-line'));
+    for (let i = 0; i < revealLines.length; i++) {
+      revealLines[i].style.strokeDasharray = pathLength;
+      revealLines[i].style.strokeDashoffset = pathLength;
+    }
 
     // Échantillons (length → x,y) pour retrouver la longueur la plus proche
     // d'une ancre nœud.
@@ -50,6 +54,7 @@
     document.querySelectorAll('.node-group').forEach((g) => {
       nodes.push({
         element: g,
+        card: null,
         x: parseFloat(g.dataset.anchorX),
         y: parseFloat(g.dataset.anchorY),
         thresholdLength: 0,
@@ -68,30 +73,54 @@
         }
       }
     }
+    for (let i = 0; i < nodes.length; i++) {
+      const step = nodes[i].element.dataset.step;
+      if (step != null) {
+        nodes[i].card = document.querySelector('[data-card-step="' + step + '"]');
+      }
+    }
+
+    const metrics = {
+      trackTop: 0,
+      trackHeight: 1,
+      viewportHeight: window.innerHeight,
+    };
+
+    function readScrollY() {
+      return window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+    }
+
+    function refreshMetrics() {
+      const r = track.getBoundingClientRect();
+      metrics.trackTop = r.top + readScrollY();
+      metrics.trackHeight = r.height || 1;
+      metrics.viewportHeight = window.innerHeight || document.documentElement.clientHeight || 1;
+    }
 
     function getDrawnLength() {
-      const r = track.getBoundingClientRect();
-      const yInTrack = (window.innerHeight * front) - r.top;
-      const progress = yInTrack / r.height;
+      const yInTrack = (readScrollY() + (metrics.viewportHeight * front)) - metrics.trackTop;
+      const progress = yInTrack / metrics.trackHeight;
       if (progress <= 0) return 0;
       if (progress >= 1) return pathLength;
       return progress * pathLength;
     }
 
+    let lastDrawnLength = -1;
     function update() {
       const drawnLength = getDrawnLength();
-      path.style.strokeDashoffset = pathLength - drawnLength;
+      if (Math.abs(drawnLength - lastDrawnLength) < 0.35) return;
+      lastDrawnLength = drawnLength;
+      const dashOffset = pathLength - drawnLength;
+      for (let i = 0; i < revealLines.length; i++) {
+        revealLines[i].style.strokeDashoffset = dashOffset;
+      }
       for (let i = 0; i < nodes.length; i++) {
         const n = nodes[i];
         if (!n.spawned && drawnLength >= n.thresholdLength) {
           n.element.classList.add('is-spawned');
           n.spawned = true;
-          const step = n.element.dataset.step;
-          if (step != null) {
-            const card = document.querySelector('[data-card-step="' + step + '"]');
-            if (card) {
-              setTimeout(function () { card.classList.add('is-revealed'); }, cardDelay);
-            }
+          if (n.card) {
+            setTimeout(function () { n.card.classList.add('is-revealed'); }, cardDelay);
           }
         }
       }
@@ -108,7 +137,16 @@
       ticking = true;
     }
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', update, { passive: true });
+    window.addEventListener('resize', function () {
+      refreshMetrics();
+      lastDrawnLength = -1;
+      update();
+    }, { passive: true });
+    window.addEventListener('load', function () {
+      refreshMetrics();
+      lastDrawnLength = -1;
+      update();
+    }, { once: true });
 
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver(
@@ -123,6 +161,7 @@
       io.observe(section);
     }
 
+    refreshMetrics();
     update();
   }
 

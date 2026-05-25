@@ -1,0 +1,408 @@
+/* ═══════════════════ MINI CAS-USAGE (hero) ═══════════════════
+   3 versions disponibles :
+   - .cas-card--hero   : carte compacte AVEC les 3 visuels animés
+                        (orbite / cap-table / étreinte). C'est la
+                        variante retenue par l'utilisateur (V3).
+   - .cas-mini + .variant-a : chips statiques sans visuel (V1, archive)
+   - .cas-mini + .variant-b : chips ultra-compactes + expand au hover (V1, archive)
+   ════════════════════════════════════════════════════════════ */
+
+
+/* ─────────── V3 : Carte cas-usage en version « hero » ───────────
+   Réutilise toute la structure HTML / classes de .cas-card existant
+   (avec ses .cas-visual--orbit / --captable / étreinte SVG) et applique
+   un modifier .cas-card--hero qui compresse les dimensions pour tenir
+   sous le H1 du hero sans casser les animations.
+   ──────────────────────────────────────────────────────────────── */
+
+/* Overrides du hero pour donner plus d'air à la colonne gauche :
+   - on lock la colonne droite sur la largeur du bento (540px)
+   - le reste va au texte + cartes
+   - le gap est légèrement réduit */
+body:has(.cas-mini-grid--rich) .hero-inner {
+  grid-template-columns: 1fr 540px;
+  gap: 2rem;
+}
+body:has(.cas-mini-grid--rich) .hero-text {
+  max-width: none;
+}
+
+.cas-mini-grid--rich {
+  margin-top: 1.6rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.8rem;
+  max-width: 100%;
+}
+
+/* Sous 1180px on garde la mise en page 2 cols mais en réduisant
+   la colonne droite à la largeur de bento "tablette" (max 420px).
+   Sous 980px la base home.css reprend la main (stack 1fr). */
+@media (max-width: 1180px) {
+  body:has(.cas-mini-grid--rich) .hero-inner {
+    grid-template-columns: 1fr 420px;
+    gap: 1.5rem;
+  }
+  body:has(.cas-mini-grid--rich) .hero-text { max-width: none; }
+  .cas-mini-grid--rich { max-width: 100%; }
+}
+@media (max-width: 980px) {
+  body:has(.cas-mini-grid--rich) .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+/* Override globaux : padding, rayons, transitions héritées de .cas-card */
+.cas-card.cas-card--hero {
+  padding: 0.9rem 0.95rem 0.85rem;
+  border-radius: 14px;
+  min-height: 0;
+}
+
+.cas-card--hero::after {
+  height: 2px;
+}
+
+.cas-card--hero:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 32px -16px color-mix(in srgb, var(--cas-pop, var(--cas-accent)) 35%, transparent);
+  border-color: color-mix(in srgb, var(--cas-pop, var(--cas-accent)) 50%, transparent);
+}
+
+/* En-tête : l'icône est masquée pour laisser place au titre */
+.cas-card--hero .cas-icon {
+  display: none;
+}
+
+.cas-card--hero .cas-num {
+  top: 0.85rem;
+  right: 0.95rem;
+  font-size: 0.55rem;
+  letter-spacing: 0.14em;
+}
+
+.cas-card--hero .cas-num::before {
+  width: 12px;
+}
+
+/* Titre + teaser (le body original est masqué, remplacé par un teaser court) */
+.cas-card--hero .cas-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.18;
+  margin-bottom: 0.45rem;
+  padding-right: 2.2rem;
+  letter-spacing: -0.018em;
+}
+
+.cas-card--hero .cas-body {
+  display: none;
+}
+
+.cas-card--hero .cas-teaser {
+  font-size: 0.7rem;
+  color: var(--ink-dim);
+  line-height: 1.35;
+  margin-bottom: 0.55rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Visuel : container plus grand maintenant que cas-link est masqué */
+.cas-card--hero .cas-visual {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  min-height: 168px;
+  flex-grow: 1;
+  border-top: 1px solid var(--line-2);
+  padding-top: 0.5rem;
+}
+
+.cas-card--hero .cas-visual::before {
+  inset: 10px 0 0;
+  background-size: 18px 18px;
+  border-radius: 10px;
+}
+
+/* Lien bas masqué — la carte entière reste cliquable via le <a> */
+.cas-card--hero .cas-link {
+  display: none;
+}
+
+
+/* ─────────── Orbite compacte (Transmission) ─────────── */
+/* Container du visuel ~168px de haut, ~245px de large.
+   Orbite recentrée verticalement (top: 50%) et radius adapté
+   pour que les items 26×26 ne soient jamais clippés en rotation.
+   Math : center à 84px, radius 60, item half 13 → items vont
+   de 11px à 157px dans 168 ✓. */
+
+.cas-card--hero .cas-orbit-ring,
+.cas-card--hero .cas-orbit-center,
+.cas-card--hero .cas-orbit-item {
+  top: 50%;
+}
+
+.cas-card--hero .cas-orbit-ring--outer {
+  width: 120px;
+  height: 120px;
+}
+
+.cas-card--hero .cas-orbit-ring--inner {
+  width: 76px;
+  height: 76px;
+}
+
+.cas-card--hero .cas-orbit-center {
+  width: 40px;
+  height: 40px;
+  box-shadow: 0 10px 22px -10px rgba(0, 0, 0, 0.55), 0 0 0 5px var(--surface-mid);
+}
+
+.cas-card--hero .cas-orbit-center--icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.cas-card--hero .cas-orbit-item--icon {
+  width: 26px;
+  height: 26px;
+}
+
+.cas-card--hero .cas-orbit-item--icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.cas-card--hero .cas-orbit-item--one,
+.cas-card--hero .cas-orbit-item--two,
+.cas-card--hero .cas-orbit-item--three {
+  --orbit-radius: 60px;
+}
+
+
+/* ─────────── Cap-table compacte (Litiges) ─────────── */
+
+.cas-card--hero .cas-visual--captable {
+  padding: 0.7rem 0.5rem 0.5rem;
+  gap: 0.5rem;
+}
+
+.cas-card--hero .cap-row {
+  grid-template-columns: 56px 30px 1fr;
+  gap: 0.45rem;
+  font-size: 0.66rem;
+}
+
+.cas-card--hero .cap-pct {
+  font-size: 0.64rem;
+}
+
+.cas-card--hero .cap-bar {
+  height: 8px;
+  border-radius: 4px;
+}
+
+.cas-card--hero .cap-price {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.64rem;
+  border-radius: 6px;
+}
+
+.cas-card--hero .cap-price strong {
+  font-size: 0.88rem;
+  margin-top: 0.05rem;
+}
+
+
+/* ─────────── Étreinte (Croissance) ─────────── */
+/* Le SVG .etreinte est width/height: 100%, donc il prend
+   naturellement la taille de son container .cas-visual.
+   Pas d'override nécessaire — il s'adapte. */
+
+
+/* ─────────── Responsive ─────────── */
+
+@media (max-width: 1180px) {
+  .cas-mini-grid--rich { max-width: 100%; }
+}
+
+@media (max-width: 980px) {
+  .cas-mini-grid--rich {
+    max-width: 100%;
+    gap: 0.8rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .cas-mini-grid--rich {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+    max-width: 420px;
+  }
+  .cas-card--hero .cas-visual { min-height: 120px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cas-card--hero,
+  .cas-card--hero .cas-icon { transition: none; }
+  .cas-card--hero:hover { transform: none; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   V1 (archive) — chips sans visuels.
+   Conservées pour permettre de comparer les itérations.
+   ═══════════════════════════════════════════════════════════ */
+
+.cas-mini-grid {
+  margin-top: 1.9rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.7rem;
+  max-width: 580px;
+}
+
+.cas-mini {
+  --cas-accent: var(--accent);
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  text-decoration: none;
+  color: var(--text-strong);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition:
+    transform 0.35s cubic-bezier(.2, .8, .2, 1),
+    box-shadow 0.35s,
+    border-color 0.3s,
+    background 0.3s;
+  overflow: hidden;
+  min-height: 60px;
+}
+
+.cas-mini::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--cas-pop, var(--cas-accent));
+  opacity: 0.55;
+  transform: scaleX(0.4);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(.2, .8, .2, 1), opacity 0.3s;
+}
+
+.cas-mini:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--cas-pop, var(--cas-accent)) 45%, transparent);
+  box-shadow: 0 14px 28px -14px color-mix(in srgb, var(--cas-pop, var(--cas-accent)) 35%, transparent);
+}
+
+.cas-mini:hover::after { transform: scaleX(1); opacity: 1; }
+
+.cas-mini:focus-visible {
+  outline: 2px solid var(--cas-pop, var(--cas-accent));
+  outline-offset: 3px;
+}
+
+.cas-mini.cs-succession  { --cas-pop: var(--c-succession);  --cas-pop-soft: var(--c-succession-soft); }
+.cas-mini.cs-litiges     { --cas-pop: var(--c-litiges);     --cas-pop-soft: var(--c-litiges-soft); }
+.cas-mini.cs-croissance  { --cas-pop: var(--c-croissance);  --cas-pop-soft: var(--c-croissance-soft); }
+
+.cas-mini-icon {
+  flex-shrink: 0;
+  width: 34px; height: 34px;
+  border-radius: 9px;
+  background: var(--cas-pop-soft);
+  color: var(--cas-pop);
+  border: 1px solid color-mix(in srgb, var(--cas-pop) 22%, transparent);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.3s cubic-bezier(.2, .8, .2, 1);
+}
+
+.cas-mini-icon svg { width: 18px; height: 18px; }
+.cas-mini:hover .cas-mini-icon { transform: scale(1.06) rotate(-2deg); }
+
+.cas-mini-body { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
+
+.cas-mini-num {
+  font-size: 0.58rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--cas-pop);
+  opacity: 0.85;
+}
+
+.cas-mini-title {
+  font-size: 0.86rem; font-weight: 700;
+  letter-spacing: -0.012em;
+  color: var(--text-strong);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cas-mini-teaser { font-size: 0.74rem; color: var(--ink-dim); line-height: 1.35; }
+
+.cas-mini-arrow {
+  flex-shrink: 0;
+  color: var(--text-3);
+  transition: transform 0.3s, color 0.3s;
+  display: flex;
+}
+
+.cas-mini:hover .cas-mini-arrow { color: var(--cas-pop); transform: translateX(3px); }
+
+@media (max-width: 980px) { .cas-mini-grid { max-width: 100%; } }
+@media (max-width: 620px) {
+  .cas-mini-grid { grid-template-columns: 1fr; gap: 0.5rem; }
+  .cas-mini { min-height: 56px; }
+}
+
+.variant-a .cas-mini { min-height: 64px; }
+.variant-a .cas-mini-teaser { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 1180px) {
+  .variant-a .cas-mini-teaser { display: none; }
+  .variant-a .cas-mini { min-height: 56px; }
+}
+
+.variant-b .cas-mini { min-height: 56px; padding: 10px 12px; }
+.variant-b .cas-mini-num { display: none; }
+.variant-b .cas-mini-title { font-size: 0.84rem; }
+.variant-b .cas-mini-teaser {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    grid-template-rows 0.4s cubic-bezier(.2, .8, .2, 1),
+    opacity 0.3s,
+    margin-top 0.3s;
+}
+.variant-b .cas-mini-teaser > * { min-height: 0; }
+.variant-b .cas-mini:hover .cas-mini-teaser,
+.variant-b .cas-mini:focus-visible .cas-mini-teaser {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: 2px;
+}
+.variant-b .cas-mini:hover,
+.variant-b .cas-mini:focus-visible {
+  background: linear-gradient(
+    160deg, #FFFFFF 0%,
+    color-mix(in srgb, var(--cas-pop) 8%, #ECF1F9) 100%
+  );
+}
+@media (max-width: 620px) {
+  .variant-b .cas-mini-teaser { grid-template-rows: 1fr; opacity: 1; }
+}
