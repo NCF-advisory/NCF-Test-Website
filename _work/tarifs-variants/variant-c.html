@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Variante C — Sélecteur interactif</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/global.css" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+
+  <div class="proto-wrap">
+    <span class="proto-tag">Variante C — Sélecteur interactif</span>
+    <div class="proto-eyebrow">Tarifs</div>
+    <h1 class="proto-h1">Estimez votre <span class="accent">budget en un clic.</span></h1>
+    <p class="proto-sub">Indiquez la taille de votre entreprise, nous estimons le tarif d'évaluation correspondant. Ajoutez les prestations optionnelles pour affiner le devis.</p>
+
+    <p class="proto-intro">Tous nos tarifs sont indiqués HT, à partir de, par mission.</p>
+
+    <div class="tarif-pick">
+
+      <div class="tp-sliders">
+        <div class="tp-slider-block">
+          <label for="tp-effectifs">Effectifs</label>
+          <div class="tp-slider-value"><span id="tp-effectifs-val">15</span><span class="unit">personnes</span></div>
+          <input type="range" id="tp-effectifs" class="tp-slider" min="0" max="100" value="15" step="1" />
+          <div class="tp-slider-scale">
+            <span>0</span><span>15</span><span>50</span><span>100+</span>
+          </div>
+        </div>
+
+        <div class="tp-slider-block">
+          <label for="tp-ca">Chiffre d'affaires</label>
+          <div class="tp-slider-value"><span id="tp-ca-val">3</span><span class="unit">M€</span></div>
+          <input type="range" id="tp-ca" class="tp-slider" min="0" max="100" value="3" step="1" />
+          <div class="tp-slider-scale">
+            <span>0</span><span>3</span><span>10</span><span>100+</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tp-result">
+        <div class="tp-seg-name">
+          Segment&nbsp;: <strong id="tp-seg">TPE</strong>
+        </div>
+        <div class="tp-base-price"><span id="tp-base">4 000</span><span class="unit">&nbsp;€</span></div>
+        <div class="tp-base-note">Évaluation indépendante, rapport complet et opposable</div>
+
+        <div class="tp-addons">
+          <div class="tp-addons-title">Prestations additionnelles (optionnel)</div>
+          <ul class="tp-addon-list">
+            <li>
+              <label class="tp-addon-item">
+                <input type="checkbox" data-addon="vertical" />
+                <span class="tp-addon-check">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                <span class="tp-addon-label">Verticale marché complémentaire</span>
+                <span class="tp-addon-price" data-price-vertical>600 €</span>
+              </label>
+            </li>
+            <li>
+              <label class="tp-addon-item">
+                <input type="checkbox" data-addon="actu" />
+                <span class="tp-addon-check">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                <span class="tp-addon-label">Actualisation du rapport</span>
+                <span class="tp-addon-price" data-price-actu>600 €</span>
+              </label>
+            </li>
+            <li>
+              <label class="tp-addon-item">
+                <input type="checkbox" data-addon="litige" />
+                <span class="tp-addon-check">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                <span class="tp-addon-label">Contexte de litige</span>
+                <span class="tp-addon-price" data-price-litige>600 €</span>
+              </label>
+            </li>
+          </ul>
+
+          <div class="tp-total">
+            <div class="tp-total-label">Total estimé</div>
+            <div class="tp-total-value"><span id="tp-total">4 000</span><span class="unit">&nbsp;€</span></div>
+          </div>
+
+          <a href="/#contact" class="tp-cta">
+            Demander un devis avec ce périmètre
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="proto-cta">
+      <div class="proto-cta-text">
+        <strong>Votre cas ne correspond à aucun de ces segments ?</strong><br>
+        Premier échange confidentiel et gratuit pour cadrer votre besoin.
+      </div>
+      <a href="/#contact" class="proto-cta-btn">
+        Parler à un expert
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+  </div>
+
+  <script>
+    // ──────────────────────────────────────────────────────────────
+    // Sélecteur interactif tarifs
+    // Logique : (effectifs, CA) → segment (TPE / PME / PME+)
+    // - TPE      : effectifs < 15  ET CA < 3 M€
+    // - PME      : effectifs 15-50 ET CA < 10 M€
+    // - PME+     : effectifs > 50  OU CA entre 10 et 100 M€
+    // Si le visiteur dépasse 100 M€ → "Sur devis" (hors grille publique)
+    // ──────────────────────────────────────────────────────────────
+
+    const SEGMENTS = {
+      tpe:  { name: 'TPE',   base: 4000, vertical:  600, actu:  600, litige:  600 },
+      pme:  { name: 'PME',   base: 6000, vertical:  800, actu: 1200, litige: 1200 },
+      pmep: { name: 'PME +', base: 8000, vertical: 1000, actu: 2000, litige: 2000 },
+    };
+
+    const fmt = n => n.toLocaleString('fr-FR');
+
+    function detectSegment(effectifs, ca) {
+      if (effectifs > 100 || ca > 100) return null; // hors grille
+      if (effectifs > 50 || ca >= 10) return 'pmep';
+      if (effectifs >= 15 || ca >= 3) return 'pme';
+      return 'tpe';
+    }
+
+    const $eff   = document.getElementById('tp-effectifs');
+    const $ca    = document.getElementById('tp-ca');
+    const $effV  = document.getElementById('tp-effectifs-val');
+    const $caV   = document.getElementById('tp-ca-val');
+    const $seg   = document.getElementById('tp-seg');
+    const $base  = document.getElementById('tp-base');
+    const $total = document.getElementById('tp-total');
+    const $priceV = document.querySelector('[data-price-vertical]');
+    const $priceA = document.querySelector('[data-price-actu]');
+    const $priceL = document.querySelector('[data-price-litige]');
+    const $checks = document.querySelectorAll('input[data-addon]');
+
+    function update() {
+      const eff = parseInt($eff.value, 10);
+      const ca  = parseInt($ca.value, 10);
+
+      $effV.textContent = eff >= 100 ? '100+' : eff;
+      $caV.textContent  = ca  >= 100 ? '100+' : ca;
+
+      const segKey = detectSegment(eff, ca);
+
+      if (!segKey) {
+        $seg.textContent = 'Sur devis';
+        $base.textContent = 'Sur devis';
+        $total.textContent = 'Sur devis';
+        $priceV.textContent = '—';
+        $priceA.textContent = '—';
+        $priceL.textContent = '—';
+        return;
+      }
+
+      const seg = SEGMENTS[segKey];
+      $seg.textContent = seg.name;
+      $base.textContent = fmt(seg.base);
+      $priceV.textContent = fmt(seg.vertical) + ' €';
+      $priceA.textContent = fmt(seg.actu) + ' €';
+      $priceL.textContent = fmt(seg.litige) + ' €';
+
+      let total = seg.base;
+      $checks.forEach(c => {
+        if (c.checked) total += seg[c.dataset.addon];
+      });
+      $total.textContent = fmt(total);
+    }
+
+    [$eff, $ca].forEach(el => el.addEventListener('input', update));
+    $checks.forEach(c => c.addEventListener('change', update));
+
+    update();
+  </script>
+
+</body>
+</html>
