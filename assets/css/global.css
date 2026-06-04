@@ -205,7 +205,7 @@ body > * { position: relative; z-index: 1; }
 
 .nav-cta {
   display: inline-flex; align-items: center; gap: 7px;
-  padding: 10px 22px; background: var(--accent); color: var(--text-on-accent);
+  padding: 10px 22px; background: var(--accent-deep); color: var(--text-on-accent);
   font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em;
   text-decoration: none; border-radius: 8px;
   transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
@@ -213,7 +213,7 @@ body > * { position: relative; z-index: 1; }
   box-shadow: 0 0 0 1px var(--accent-bright), 0 6px 24px -6px var(--accent-a-30);
 }
 .nav-cta:hover {
-  background: var(--accent-bright);
+  background: var(--accent);
   transform: translateY(-1px);
   box-shadow: 0 0 0 1px var(--accent-bright), 0 10px 32px -6px var(--accent-a-30);
 }
@@ -253,13 +253,21 @@ body > * { position: relative; z-index: 1; }
 /* Compense la hauteur navbar pour les ancres */
 :target { scroll-margin-top: 80px; }
 
+/* Focus clavier visible (a11y) */
+a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-visible,
+.nav-cta:focus-visible, .btn-primary:focus-visible, .btn-outline:focus-visible, .btn-ghost:focus-visible, .nav-link:focus-visible {
+  outline: 2px solid var(--accent-deep);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
 /* ─────────── SECTION DE BASE ─────────── */
 .section { padding: 5rem 0; position: relative; }
 .section-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
 
 .section-eyebrow {
   font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--accent-bright); margin-bottom: 0.75rem;
+  color: var(--accent-deep); margin-bottom: 0.75rem;
   display: flex; align-items: center; gap: 8px;
 }
 .section-eyebrow::before {
@@ -286,11 +294,11 @@ body > * { position: relative; z-index: 1; }
   cursor: pointer; border: none; font-family: inherit; white-space: nowrap;
 }
 .btn-primary {
-  background: var(--accent); color: var(--text-on-accent);
+  background: var(--accent-deep); color: var(--text-on-accent);
   box-shadow: 0 0 0 1px var(--accent-bright), 0 8px 28px -8px var(--accent-a-30);
 }
 .btn-primary:hover {
-  background: var(--accent-bright);
+  background: var(--accent);
   transform: translateY(-1px);
   box-shadow: 0 0 0 1px var(--accent-bright), 0 12px 36px -8px var(--accent-a-30);
 }
