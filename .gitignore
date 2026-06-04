@@ -40,3 +40,6 @@ npm-debug.log*
 
 # Playwright MCP — snapshots de page générés pendant l'itération visuelle
 .playwright-mcp/
+
+# Brief interne (ne pas déployer)
+/regard-croise-experts.md

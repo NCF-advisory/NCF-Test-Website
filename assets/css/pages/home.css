@@ -1173,6 +1173,11 @@
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
     }
     @media (max-width: 900px) { .cas-grid { grid-template-columns: 1fr; } }
+    /* Variante 4 personas (router « Pour qui ? ») */
+    .cas-grid--personas { grid-template-columns: repeat(4, 1fr); }
+    @media (max-width: 1040px) { .cas-grid--personas { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px)  { .cas-grid--personas { grid-template-columns: 1fr; } }
+    .cas-grid--personas .cas-link { margin-top: auto; padding-top: 1.25rem; }
     .cas-card {
       position: relative;
       background: var(--card-bg);

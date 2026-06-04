@@ -1,6 +1,11 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/transmission", "destination": "/entrepreneurs", "permanent": true },
+    { "source": "/croissance-externe", "destination": "/entrepreneurs", "permanent": true },
+    { "source": "/litiges-entre-associes", "destination": "/entrepreneurs", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/assets/img/(.*)",
