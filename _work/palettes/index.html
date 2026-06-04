@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NCF — 5 variantes de bleu (prototype)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root { --ink:#061838; --ink2:#3A4A6B; --bg:#EAF0F8; --card:#fff; --line:rgba(15,23,42,.12); }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:Inter,system-ui,sans-serif; background:var(--bg); color:var(--ink); padding:3rem 1.5rem 4rem; }
+    .wrap { max-width:1080px; margin:0 auto; }
+    h1 { font-size:clamp(1.6rem,3vw,2.3rem); font-weight:800; letter-spacing:-.02em; margin:0 0 .5rem; }
+    .lede { color:var(--ink2); font-size:1.02rem; line-height:1.6; margin:0 0 2.5rem; max-width:680px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.5rem; }
+    .pal { background:var(--card); border:1px solid var(--line); border-radius:18px; overflow:hidden; box-shadow:0 18px 40px -24px rgba(0,0,0,.35); display:flex; flex-direction:column; }
+    .pal-head { padding:1.5rem 1.5rem 1.25rem; }
+    .pal-tag { font-size:.7rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; }
+    .pal-name { font-size:1.35rem; font-weight:800; letter-spacing:-.015em; margin:.3rem 0 0; }
+    .pal-hex { font-size:.82rem; color:var(--ink2); font-weight:600; margin-top:.2rem; font-variant-numeric:tabular-nums; }
+    .swatches { display:flex; height:54px; }
+    .sw { flex:1; }
+    .demo { padding:1.4rem 1.5rem 1.6rem; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:.9rem; }
+    .demo-eyebrow { font-size:.72rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; display:inline-flex; align-items:center; gap:10px; }
+    .demo-eyebrow::before { content:''; width:28px; height:2px; }
+    .demo-h { font-size:1.15rem; font-weight:800; letter-spacing:-.02em; line-height:1.2; }
+    .demo-h .acc { position:relative; }
+    .btn-row { display:flex; gap:.6rem; flex-wrap:wrap; margin-top:.2rem; }
+    .btn-p { color:#fff; font-weight:700; font-size:.85rem; padding:.6rem 1.05rem; border-radius:10px; text-decoration:none; }
+    .btn-o { background:transparent; font-weight:700; font-size:.85rem; padding:.6rem 1.05rem; border-radius:10px; border:1.5px solid; text-decoration:none; }
+    .see { margin-top:.4rem; font-weight:700; font-size:.92rem; text-decoration:none; display:inline-flex; align-items:center; gap:7px; }
+    .see::after { content:'→'; }
+    .note { margin-top:2.5rem; font-size:.85rem; color:var(--ink2); border-top:1px solid var(--line); padding-top:1.25rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>5 variantes de bleu — « plus de pep's »</h1>
+    <p class="lede">L'accent actuel est un navy institutionnel sobre (<strong>#1A2E6B</strong>). Voici 5 bleus plus punchy appliqués à toute la home. Clique sur « Voir le site complet » pour parcourir chaque version, puis dis-moi laquelle tu retiens — je l'intègre alors à la production.</p>
+
+    <div class="grid">
+
+      <!-- V1 Cobalt -->
+      <article class="pal">
+        <div class="pal-head" style="--a:#2563EB;--b:#3B82F6;--d:#1D4ED8;--s:#C7D7FB;">
+          <div class="pal-tag" style="color:#2563EB;">Variante 1</div>
+          <div class="pal-name">Cobalt</div>
+          <div class="pal-hex">#2563EB · SaaS, franc et lumineux</div>
+        </div>
+        <div class="swatches"><div class="sw" style="background:#1D4ED8;"></div><div class="sw" style="background:#2563EB;"></div><div class="sw" style="background:#3B82F6;"></div><div class="sw" style="background:#C7D7FB;"></div></div>
+        <div class="demo">
+          <div class="demo-eyebrow" style="color:#3B82F6;"><span style="background:linear-gradient(90deg,#3B82F6,transparent);width:28px;height:2px;display:inline-block;"></span>L'enjeu</div>
+          <div class="demo-h">Une évaluation <span class="acc" style="color:#2563EB;">opposable.</span></div>
+          <div class="btn-row"><a class="btn-p" style="background:#2563EB;" href="v1/">Parler à un expert</a><a class="btn-o" style="color:#2563EB;border-color:#2563EB;" href="v1/">Découvrir</a></div>
+          <a class="see" style="color:#2563EB;" href="v1/">Voir le site complet</a>
+        </div>
+      </article>
+
+      <!-- V2 Azur électrique -->
+      <article class="pal">
+        <div class="pal-head">
+          <div class="pal-tag" style="color:#0A84FF;">Variante 2</div>
+          <div class="pal-name">Azur électrique</div>
+          <div class="pal-hex">#0A84FF · vif, tech, contrasté</div>
+        </div>
+        <div class="swatches"><div class="sw" style="background:#0062D6;"></div><div class="sw" style="background:#0A84FF;"></div><div class="sw" style="background:#4DA3FF;"></div><div class="sw" style="background:#B8DBFF;"></div></div>
+        <div class="demo">
+          <div class="demo-eyebrow" style="color:#4DA3FF;"><span style="background:linear-gradient(90deg,#4DA3FF,transparent);width:28px;height:2px;display:inline-block;"></span>L'enjeu</div>
+          <div class="demo-h">Une évaluation <span class="acc" style="color:#0A84FF;">opposable.</span></div>
+          <div class="btn-row"><a class="btn-p" style="background:#0A84FF;" href="v2/">Parler à un expert</a><a class="btn-o" style="color:#0A84FF;border-color:#0A84FF;" href="v2/">Découvrir</a></div>
+          <a class="see" style="color:#0A84FF;" href="v2/">Voir le site complet</a>
+        </div>
+      </article>
+
+      <!-- V3 Bleu roi -->
+      <article class="pal">
+        <div class="pal-head">
+          <div class="pal-tag" style="color:#2742D8;">Variante 3</div>
+          <div class="pal-name">Bleu roi</div>
+          <div class="pal-hex">#2742D8 · profond mais énergique</div>
+        </div>
+        <div class="swatches"><div class="sw" style="background:#1B2FA6;"></div><div class="sw" style="background:#2742D8;"></div><div class="sw" style="background:#4360F0;"></div><div class="sw" style="background:#C5CEFA;"></div></div>
+        <div class="demo">
+          <div class="demo-eyebrow" style="color:#4360F0;"><span style="background:linear-gradient(90deg,#4360F0,transparent);width:28px;height:2px;display:inline-block;"></span>L'enjeu</div>
+          <div class="demo-h">Une évaluation <span class="acc" style="color:#2742D8;">opposable.</span></div>
+          <div class="btn-row"><a class="btn-p" style="background:#2742D8;" href="v3/">Parler à un expert</a><a class="btn-o" style="color:#2742D8;border-color:#2742D8;" href="v3/">Découvrir</a></div>
+          <a class="see" style="color:#2742D8;" href="v3/">Voir le site complet</a>
+        </div>
+      </article>
+
+      <!-- V4 Cyan azur -->
+      <article class="pal">
+        <div class="pal-head">
+          <div class="pal-tag" style="color:#0284C7;">Variante 4</div>
+          <div class="pal-name">Cyan azur</div>
+          <div class="pal-hex">#0EA5E9 · frais, ouvert, dynamique</div>
+        </div>
+        <div class="swatches"><div class="sw" style="background:#0284C7;"></div><div class="sw" style="background:#0EA5E9;"></div><div class="sw" style="background:#38BDF8;"></div><div class="sw" style="background:#BAE6FD;"></div></div>
+        <div class="demo">
+          <div class="demo-eyebrow" style="color:#0EA5E9;"><span style="background:linear-gradient(90deg,#0EA5E9,transparent);width:28px;height:2px;display:inline-block;"></span>L'enjeu</div>
+          <div class="demo-h">Une évaluation <span class="acc" style="color:#0284C7;">opposable.</span></div>
+          <div class="btn-row"><a class="btn-p" style="background:#0EA5E9;" href="v4/">Parler à un expert</a><a class="btn-o" style="color:#0284C7;border-color:#0EA5E9;" href="v4/">Découvrir</a></div>
+          <a class="see" style="color:#0284C7;" href="v4/">Voir le site complet</a>
+        </div>
+      </article>
+
+      <!-- V5 Indigo vif -->
+      <article class="pal">
+        <div class="pal-head">
+          <div class="pal-tag" style="color:#4F46E5;">Variante 5</div>
+          <div class="pal-name">Indigo vif</div>
+          <div class="pal-hex">#4F46E5 · moderne, premium, tranché</div>
+        </div>
+        <div class="swatches"><div class="sw" style="background:#4338CA;"></div><div class="sw" style="background:#4F46E5;"></div><div class="sw" style="background:#6D66F0;"></div><div class="sw" style="background:#C9C7FA;"></div></div>
+        <div class="demo">
+          <div class="demo-eyebrow" style="color:#6D66F0;"><span style="background:linear-gradient(90deg,#6D66F0,transparent);width:28px;height:2px;display:inline-block;"></span>L'enjeu</div>
+          <div class="demo-h">Une évaluation <span class="acc" style="color:#4F46E5;">opposable.</span></div>
+          <div class="btn-row"><a class="btn-p" style="background:#4F46E5;" href="v5/">Parler à un expert</a><a class="btn-o" style="color:#4F46E5;border-color:#4F46E5;" href="v5/">Découvrir</a></div>
+          <a class="see" style="color:#4F46E5;" href="v5/">Voir le site complet</a>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="note">Prototype — ces variantes vivent dans <code>_work/</code> (non déployé). Elles ne modifient que l'accent bleu (boutons, CTA, liens, eyebrows, halos) ; le fond ivoire, les couleurs « cas d'usage » (ambre/violet/émeraude) et le texte navy sont inchangés. Une fois ton choix fait, j'applique la palette retenue aux tokens <code>--accent*</code> de <code>global.css</code> en production.</p>
+  </div>
+</body>
+</html>

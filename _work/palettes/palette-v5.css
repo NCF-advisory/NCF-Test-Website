@@ -1,0 +1,20 @@
+/* Palette Indigo vif — bleu plus punchy (prototype _work) */
+:root{
+  --accent: #4F46E5;
+  --accent-bright: #6D66F0;
+  --accent-soft: #C9C7FA;
+  --accent-deep: #4338CA;
+  --accent-a-04: rgba(79, 70, 229, 0.06);
+  --accent-a-06: rgba(79, 70, 229, 0.09);
+  --accent-a-08: rgba(79, 70, 229, 0.11);
+  --accent-a-10: rgba(79, 70, 229, 0.13);
+  --accent-a-12: rgba(79, 70, 229, 0.16);
+  --accent-a-15: rgba(79, 70, 229, 0.19);
+  --accent-a-18: rgba(79, 70, 229, 0.22);
+  --accent-a-22: rgba(79, 70, 229, 0.26);
+  --accent-a-25: rgba(79, 70, 229, 0.30);
+  --accent-a-30: rgba(79, 70, 229, 0.35);
+  --accent-a-35: rgba(79, 70, 229, 0.40);
+  --accent-a-40: rgba(79, 70, 229, 0.46);
+}
+

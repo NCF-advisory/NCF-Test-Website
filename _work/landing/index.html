@@ -50,6 +50,70 @@
   <link rel="stylesheet" href="/assets/css/pages/home.css" />
 </head>
 <body>
+<style>
+  .lsw{position:fixed;z-index:99999;left:50%;bottom:18px;transform:translateX(-50%);display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;max-width:calc(100vw - 28px);background:#061838;color:#fff;padding:9px 18px;border-radius:16px;box-shadow:0 14px 36px -10px rgba(0,0,0,.55);font:600 13px Inter,system-ui,sans-serif;}
+  .lsw-g{display:inline-flex;align-items:center;gap:7px;}
+  .lsw-title{opacity:.72;}
+  .lsw-div{width:1px;height:22px;background:rgba(255,255,255,.18);}
+  .lsw-btn{border:none;background:rgba(255,255,255,.12);color:#fff;font:700 12px Inter,system-ui,sans-serif;padding:7px 13px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s;}
+  .lsw-btn:hover{background:rgba(255,255,255,.22);}
+  .lsw-btn.on{background:#fff;color:#061838;}
+  .lsw-dot{width:22px;height:22px;border-radius:50%;border:2px solid transparent;background:var(--d);cursor:pointer;padding:0;transition:transform .15s,border-color .15s;}
+  .lsw-dot:hover{transform:scale(1.15);}
+  .lsw-dot.on{border-color:#fff;box-shadow:0 0 0 2px var(--d);}
+  .lsw-hlabel{min-width:96px;font-weight:700;}
+</style>
+<div class="lsw">
+  <span class="lsw-g">
+    <span class="lsw-title">Cartes :</span>
+    <button class="lsw-btn lsw-card on" data-k="s1">1 · Bleus froids</button>
+    <button class="lsw-btn lsw-card" data-k="s3">3 · Océan</button>
+  </span>
+  <span class="lsw-div"></span>
+  <span class="lsw-g">
+    <span class="lsw-title">Bleu hero :</span>
+    <button class="lsw-dot on" data-h="navy" style="--d:#1A2E6B" title="Navy (actuel)" aria-label="Navy"></button>
+    <button class="lsw-dot" data-h="cobalt" style="--d:#2563EB" title="Cobalt" aria-label="Cobalt"></button>
+    <button class="lsw-dot" data-h="azur" style="--d:#0A84FF" title="Azur électrique" aria-label="Azur"></button>
+    <button class="lsw-dot" data-h="roi" style="--d:#2742D8" title="Bleu roi" aria-label="Bleu roi"></button>
+    <button class="lsw-dot" data-h="cyan" style="--d:#0EA5E9" title="Cyan azur" aria-label="Cyan"></button>
+    <button class="lsw-dot" data-h="indigo" style="--d:#4F46E5" title="Indigo vif" aria-label="Indigo"></button>
+    <span class="lsw-hlabel">Navy (actuel)</span>
+  </span>
+</div>
+<script>
+  (function(){
+    const CARDS={
+      s1:{entrepreneur:[37,99,235],ec:[14,165,233],avocat:[79,70,229],notaire:[30,64,175]},
+      s3:{entrepreneur:[37,99,235],ec:[8,145,178],avocat:[13,148,136],notaire:[14,116,144]}
+    };
+    const HEROS={
+      navy:{name:'Navy (actuel)',accent:'#1A2E6B',bright:'#2A4193',soft:'#BCCAE9',deep:'#0D1B47',rgb:'26, 46, 107'},
+      cobalt:{name:'Cobalt',accent:'#2563EB',bright:'#3B82F6',soft:'#C7D7FB',deep:'#1D4ED8',rgb:'37, 99, 235'},
+      azur:{name:'Azur électrique',accent:'#0A84FF',bright:'#4DA3FF',soft:'#B8DBFF',deep:'#0062D6',rgb:'10, 132, 255'},
+      roi:{name:'Bleu roi',accent:'#2742D8',bright:'#4360F0',soft:'#C5CEFA',deep:'#1B2FA6',rgb:'39, 66, 216'},
+      cyan:{name:'Cyan azur',accent:'#0EA5E9',bright:'#38BDF8',soft:'#BAE6FD',deep:'#0284C7',rgb:'14, 165, 233'},
+      indigo:{name:'Indigo vif',accent:'#4F46E5',bright:'#6D66F0',soft:'#C9C7FA',deep:'#4338CA',rgb:'79, 70, 229'}
+    };
+    const AL={'04':0.06,'06':0.09,'08':0.11,'10':0.13,'12':0.16,'15':0.19,'18':0.22,'22':0.26,'25':0.30,'30':0.35,'35':0.40,'40':0.46};
+    const R=document.documentElement.style;
+    function applyCards(k){
+      const p=CARDS[k]; if(!p) return;
+      for(const t in p){ const rgb=p[t].join(', '); R.setProperty('--p-'+t,'rgb('+rgb+')'); R.setProperty('--p-'+t+'-soft','rgba('+rgb+', 0.14)'); R.setProperty('--p-'+t+'-tint','rgba('+rgb+', 0.06)'); }
+      document.querySelectorAll('.lsw-card').forEach(function(b){ b.classList.toggle('on', b.dataset.k===k); });
+    }
+    function applyHero(k){
+      const p=HEROS[k]; if(!p) return;
+      R.setProperty('--accent',p.accent); R.setProperty('--accent-bright',p.bright); R.setProperty('--accent-soft',p.soft); R.setProperty('--accent-deep',p.deep);
+      for(const a in AL){ R.setProperty('--accent-a-'+a,'rgba('+p.rgb+', '+AL[a]+')'); }
+      document.querySelectorAll('.lsw-dot').forEach(function(b){ b.classList.toggle('on', b.dataset.h===k); });
+      const lbl=document.querySelector('.lsw-hlabel'); if(lbl) lbl.textContent=p.name;
+    }
+    document.querySelectorAll('.lsw-card').forEach(function(b){ b.addEventListener('click', function(){ applyCards(b.dataset.k); }); });
+    document.querySelectorAll('.lsw-dot').forEach(function(b){ b.addEventListener('click', function(){ applyHero(b.dataset.h); }); });
+    applyCards('s1'); applyHero('navy');
+  })();
+</script>
 
 <!-- ═══════════════════ NAVBAR ═══════════════════ -->
 <nav id="navbar">
@@ -1120,5 +1184,6 @@
 
 </body>
 </html>
+
 
 

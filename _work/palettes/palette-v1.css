@@ -1,0 +1,20 @@
+/* Palette Cobalt — bleu plus punchy (prototype _work) */
+:root{
+  --accent: #2563EB;
+  --accent-bright: #3B82F6;
+  --accent-soft: #C7D7FB;
+  --accent-deep: #1D4ED8;
+  --accent-a-04: rgba(37, 99, 235, 0.06);
+  --accent-a-06: rgba(37, 99, 235, 0.09);
+  --accent-a-08: rgba(37, 99, 235, 0.11);
+  --accent-a-10: rgba(37, 99, 235, 0.13);
+  --accent-a-12: rgba(37, 99, 235, 0.16);
+  --accent-a-15: rgba(37, 99, 235, 0.19);
+  --accent-a-18: rgba(37, 99, 235, 0.22);
+  --accent-a-22: rgba(37, 99, 235, 0.26);
+  --accent-a-25: rgba(37, 99, 235, 0.30);
+  --accent-a-30: rgba(37, 99, 235, 0.35);
+  --accent-a-35: rgba(37, 99, 235, 0.40);
+  --accent-a-40: rgba(37, 99, 235, 0.46);
+}
+

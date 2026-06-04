@@ -1,0 +1,20 @@
+/* Palette Cyan azur — bleu plus punchy (prototype _work) */
+:root{
+  --accent: #0EA5E9;
+  --accent-bright: #38BDF8;
+  --accent-soft: #BAE6FD;
+  --accent-deep: #0284C7;
+  --accent-a-04: rgba(14, 165, 233, 0.06);
+  --accent-a-06: rgba(14, 165, 233, 0.09);
+  --accent-a-08: rgba(14, 165, 233, 0.11);
+  --accent-a-10: rgba(14, 165, 233, 0.13);
+  --accent-a-12: rgba(14, 165, 233, 0.16);
+  --accent-a-15: rgba(14, 165, 233, 0.19);
+  --accent-a-18: rgba(14, 165, 233, 0.22);
+  --accent-a-22: rgba(14, 165, 233, 0.26);
+  --accent-a-25: rgba(14, 165, 233, 0.30);
+  --accent-a-30: rgba(14, 165, 233, 0.35);
+  --accent-a-35: rgba(14, 165, 233, 0.40);
+  --accent-a-40: rgba(14, 165, 233, 0.46);
+}
+

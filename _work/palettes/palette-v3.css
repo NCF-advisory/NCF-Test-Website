@@ -1,0 +1,20 @@
+/* Palette Bleu roi — bleu plus punchy (prototype _work) */
+:root{
+  --accent: #2742D8;
+  --accent-bright: #4360F0;
+  --accent-soft: #C5CEFA;
+  --accent-deep: #1B2FA6;
+  --accent-a-04: rgba(39, 66, 216, 0.06);
+  --accent-a-06: rgba(39, 66, 216, 0.09);
+  --accent-a-08: rgba(39, 66, 216, 0.11);
+  --accent-a-10: rgba(39, 66, 216, 0.13);
+  --accent-a-12: rgba(39, 66, 216, 0.16);
+  --accent-a-15: rgba(39, 66, 216, 0.19);
+  --accent-a-18: rgba(39, 66, 216, 0.22);
+  --accent-a-22: rgba(39, 66, 216, 0.26);
+  --accent-a-25: rgba(39, 66, 216, 0.30);
+  --accent-a-30: rgba(39, 66, 216, 0.35);
+  --accent-a-35: rgba(39, 66, 216, 0.40);
+  --accent-a-40: rgba(39, 66, 216, 0.46);
+}
+

@@ -47,25 +47,25 @@
   --text-3:       #586A8A;       /* tertiaires / muted */
   --text-on-accent: #FFFFFF;     /* texte sur surface accent (CTA) */
 
-  /* ── 4. Accent principal — bleu marine institutionnel ── */
-  --accent:        #1A2E6B;       /* CTA base */
-  --accent-bright: #2A4193;       /* hover + eyebrows */
-  --accent-soft:   #BCCAE9;
-  --accent-deep:   #0D1B47;
+  /* ── 4. Accent principal — Cyan azur ── */
+  --accent:        #0EA5E9;       /* CTA base */
+  --accent-bright: #38BDF8;       /* hover + eyebrows */
+  --accent-soft:   #BAE6FD;
+  --accent-deep:   #0284C7;
 
   /* Alphas d'accent (glows / tints) */
-  --accent-a-04: rgba(26, 46, 107, 0.06);
-  --accent-a-06: rgba(26, 46, 107, 0.09);
-  --accent-a-08: rgba(26, 46, 107, 0.11);
-  --accent-a-10: rgba(26, 46, 107, 0.13);
-  --accent-a-12: rgba(26, 46, 107, 0.16);
-  --accent-a-15: rgba(26, 46, 107, 0.19);
-  --accent-a-18: rgba(26, 46, 107, 0.22);
-  --accent-a-22: rgba(26, 46, 107, 0.26);
-  --accent-a-25: rgba(26, 46, 107, 0.30);
-  --accent-a-30: rgba(26, 46, 107, 0.35);
-  --accent-a-35: rgba(26, 46, 107, 0.40);
-  --accent-a-40: rgba(26, 46, 107, 0.46);
+  --accent-a-04: rgba(14, 165, 233, 0.06);
+  --accent-a-06: rgba(14, 165, 233, 0.09);
+  --accent-a-08: rgba(14, 165, 233, 0.11);
+  --accent-a-10: rgba(14, 165, 233, 0.13);
+  --accent-a-12: rgba(14, 165, 233, 0.16);
+  --accent-a-15: rgba(14, 165, 233, 0.19);
+  --accent-a-18: rgba(14, 165, 233, 0.22);
+  --accent-a-22: rgba(14, 165, 233, 0.26);
+  --accent-a-25: rgba(14, 165, 233, 0.30);
+  --accent-a-30: rgba(14, 165, 233, 0.35);
+  --accent-a-35: rgba(14, 165, 233, 0.40);
+  --accent-a-40: rgba(14, 165, 233, 0.46);
 
   /* ── 5. Brand secondaire (violet) ── */
   --violet:       #532EFB;
@@ -84,6 +84,12 @@
   --c-croissance:      #10B981;
   --c-croissance-soft: rgba(16, 185, 129, 0.14);
   --c-croissance-tint: rgba(16, 185, 129, 0.06);
+
+  /* ── 6b. Personas — famille de bleus froids (cohérence cartes + pages) ── */
+  --p-entrepreneur: #2563EB; --p-entrepreneur-soft: rgba(37, 99, 235, 0.14);  --p-entrepreneur-tint: rgba(37, 99, 235, 0.06);
+  --p-ec:           #0EA5E9; --p-ec-soft:           rgba(14, 165, 233, 0.14); --p-ec-tint:           rgba(14, 165, 233, 0.06);
+  --p-avocat:       #4F46E5; --p-avocat-soft:       rgba(79, 70, 229, 0.14);  --p-avocat-tint:       rgba(79, 70, 229, 0.06);
+  --p-notaire:      #1E40AF; --p-notaire-soft:      rgba(30, 64, 175, 0.14);  --p-notaire-tint:      rgba(30, 64, 175, 0.06);
 
   /* ── 7. Chrome (navbar, band, mob-menu, logo) ── */
   --navbar-bg:        rgba(234, 240, 248, 0.85);

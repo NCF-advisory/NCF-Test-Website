@@ -1,28 +1,28 @@
 /* ═══════════════════ Spécifique page avocats ═══════════════════ */
 
-    /* Accent violet (var --c-litiges, utilisée ici comme or patiné) sur les eyebrows partagés */
-    body.avocats-page .section-eyebrow { color: var(--c-litiges); }
+    /* Accent persona (bleu) (var --p-avocat, utilisée ici comme or patiné) sur les eyebrows partagés */
+    body.avocats-page .section-eyebrow { color: var(--p-avocat); }
     body.avocats-page .section-eyebrow::before {
-      background: linear-gradient(90deg, var(--c-litiges), transparent);
+      background: linear-gradient(90deg, var(--p-avocat), transparent);
     }
     body.avocats-page .nav-link.active { color: var(--text-strong); }
     body.avocats-page .nav-link.active::after {
-      background: var(--c-litiges);
-      box-shadow: 0 0 8px var(--c-litiges-soft);
+      background: var(--p-avocat);
+      box-shadow: 0 0 8px var(--p-avocat-soft);
     }
 
     /* Sections alternées : fonds très légèrement contrastés pour donner du rythme */
     .sec-dark   { background: var(--navy-deep); }
     .sec-soft   { background: linear-gradient(180deg, var(--navy-deep), var(--bg-deep) 50%, var(--navy-deep)); }
-    .sec-raised { background: radial-gradient(800px 500px at 50% 0%, rgba(83,46,251,0.04), transparent 65%), var(--navy-deep); }
+    .sec-raised { background: radial-gradient(800px 500px at 50% 0%, rgba(79,70,229,0.04), transparent 65%), var(--navy-deep); }
 
     /* ═══════════════════ PARCOURS — fil conducteur héros ═══════════════════ */
     .parcours {
       position: relative;
       padding: 5rem 0 5.5rem;
       background:
-        radial-gradient(1000px 600px at 20% 15%, rgba(83,46,251,0.07), transparent 60%),
-        radial-gradient(900px 500px at 80% 85%, rgba(83,46,251,0.05), transparent 65%),
+        radial-gradient(1000px 600px at 20% 15%, rgba(79,70,229,0.07), transparent 60%),
+        radial-gradient(900px 500px at 80% 85%, rgba(79,70,229,0.05), transparent 65%),
         var(--bg-base);
       overflow: hidden;
     }
@@ -47,7 +47,7 @@
       margin: 0 0 1.3rem;
     }
     .parcours-title .accent {
-      color: var(--c-litiges);
+      color: var(--p-avocat);
       position: relative;
     }
     .parcours-title .accent::after {
@@ -55,7 +55,7 @@
       position: absolute;
       left: 0; right: 0; bottom: 0.06em;
       height: 0.3em;
-      background: rgba(83, 46, 251, 0.18);
+      background: rgba(79, 70, 229, 0.18);
       z-index: -1;
       border-radius: 2px;
     }
@@ -86,7 +86,7 @@
     }
     .parcours-thread {
       width: 100%; height: 100%;
-      color: var(--c-litiges);
+      color: var(--p-avocat);
       overflow: visible;
     }
 
@@ -102,7 +102,7 @@
     }
     /* Pointe : halo plus généreux à l'accent succession */
     .parcours .thread-tip {
-      filter: drop-shadow(0 0 10px rgba(83, 46, 251, 0.75));
+      filter: drop-shadow(0 0 10px rgba(79, 70, 229, 0.75));
     }
     /* Nœud activé : halo coloré succession */
     .parcours .node-group.is-spawned {
@@ -118,7 +118,7 @@
       background: var(--card-bg);
       border: 1px solid var(--line-2);
       border-radius: 18px;
-      box-shadow: 0 30px 60px -32px var(--c-litiges-soft);
+      box-shadow: 0 30px 60px -32px var(--p-avocat-soft);
       opacity: 0;
       transform: translateY(40px) scale(0.96);
       filter: blur(8px);
@@ -135,8 +135,8 @@
       filter: blur(0);
     }
     .parcours-card:hover {
-      box-shadow: 0 36px 70px -28px var(--c-litiges-soft);
-      border-color: var(--c-litiges-soft);
+      box-shadow: 0 36px 70px -28px var(--p-avocat-soft);
+      border-color: var(--p-avocat-soft);
     }
 
     /* Positionnement de chaque carte À CÔTÉ de son nœud, sans le recouvrir.
@@ -162,7 +162,7 @@
       font-size: 0.72rem;
       font-weight: 800;
       letter-spacing: 0.16em;
-      color: var(--c-litiges);
+      color: var(--p-avocat);
       margin-bottom: 0.4rem;
     }
     .parcours-card-tag {
@@ -202,7 +202,7 @@
       font-weight: 700;
       letter-spacing: -0.02em;
       line-height: 1.1;
-      color: var(--c-litiges);
+      color: var(--p-avocat);
       margin: 0;
     }
 
@@ -246,7 +246,7 @@
       content: '';
       position: absolute; inset: 0; z-index: -1;
       background:
-        radial-gradient(900px 600px at 15% 20%, rgba(83, 46, 251, 0.10), transparent 60%),
+        radial-gradient(900px 600px at 15% 20%, rgba(79, 70, 229, 0.10), transparent 60%),
         radial-gradient(700px 500px at 85% 80%, rgba(0, 184, 255, 0.04), transparent 65%);
     }
     #hero-avocats::after {
@@ -270,7 +270,7 @@
       font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--c-litiges);
+      color: var(--p-avocat);
       display: inline-flex;
       align-items: center;
       gap: 12px;
@@ -278,7 +278,7 @@
     .hero-s-eyebrow::before {
       content: '';
       width: 32px; height: 2px;
-      background: linear-gradient(90deg, var(--c-litiges), transparent);
+      background: linear-gradient(90deg, var(--p-avocat), transparent);
       display: inline-block;
     }
     .hero-s-h1 {
@@ -291,7 +291,7 @@
       margin-top: 1.1rem;
     }
     .hero-s-h1 .accent {
-      color: var(--c-litiges);
+      color: var(--p-avocat);
       position: relative;
     }
     .hero-s-h1 .accent::after {
@@ -299,7 +299,7 @@
       position: absolute;
       left: 0; right: 0; bottom: 0.08em;
       height: 0.32em;
-      background: rgba(83, 46, 251, 0.18);
+      background: rgba(79, 70, 229, 0.18);
       z-index: -1;
       border-radius: 2px;
     }
@@ -324,7 +324,7 @@
       align-items: center;
       gap: 10px;
     }
-    .hero-s-reassure svg { stroke: var(--c-litiges); flex-shrink: 0; }
+    .hero-s-reassure svg { stroke: var(--p-avocat); flex-shrink: 0; }
 
     /* ═══════════════════ VOTRE SITUATION — pain points en citations ═══════════════════ */
     .pain-grid {
@@ -341,7 +341,7 @@
       padding: 2.25rem 1.75rem 1.5rem;
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-left: 3px solid var(--c-litiges);
+      border-left: 3px solid var(--p-avocat);
       border-radius: 14px;
       display: flex;
       flex-direction: column;
@@ -354,7 +354,7 @@
       font-family: Georgia, 'Times New Roman', serif;
       font-size: 5.5rem;
       line-height: 1;
-      color: var(--c-litiges);
+      color: var(--p-avocat);
       opacity: 0.35;
       font-weight: 700;
       pointer-events: none;
@@ -374,7 +374,7 @@
       letter-spacing: 0.14em;
       text-transform: uppercase;
       font-weight: 700;
-      color: var(--c-litiges);
+      color: var(--p-avocat);
       margin-top: auto;
       display: inline-flex;
       align-items: center;
@@ -384,7 +384,7 @@
       content: '';
       width: 6px; height: 6px;
       border-radius: 50%;
-      background: var(--c-litiges);
+      background: var(--p-avocat);
     }
 
     /* ═══════════════════ NOS APPORTS ═══════════════════ */
@@ -404,16 +404,16 @@
     }
     .apport-card:hover {
       transform: translateY(-3px);
-      border-color: rgba(83, 46, 251, 0.32);
-      box-shadow: 0 18px 40px -18px rgba(83, 46, 251, 0.25);
+      border-color: rgba(79, 70, 229, 0.32);
+      box-shadow: 0 18px 40px -18px rgba(79, 70, 229, 0.25);
     }
     .apport-icon {
       width: 48px; height: 48px;
       display: inline-flex;
       align-items: center; justify-content: center;
       border-radius: 12px;
-      background: var(--c-litiges-soft);
-      color: var(--c-litiges);
+      background: var(--p-avocat-soft);
+      color: var(--p-avocat);
       margin-bottom: 1.1rem;
     }
     .apport-title {
@@ -447,7 +447,7 @@
     .diff-num {
       display: inline-flex;
       width: 38px; height: 38px;
-      background: var(--c-litiges);
+      background: var(--p-avocat);
       color: var(--navy-deep);
       font-weight: 800;
       font-size: 0.9rem;
@@ -488,15 +488,15 @@
       position: absolute;
       left: 35px; top: 76px; bottom: -6px;
       width: 2px;
-      background: linear-gradient(180deg, rgba(83, 46, 251, 0.45), rgba(83, 46, 251, 0.12));
+      background: linear-gradient(180deg, rgba(79, 70, 229, 0.45), rgba(79, 70, 229, 0.12));
       z-index: 0;
     }
     .process-num {
       width: 72px; height: 72px;
       border-radius: 50%;
-      background: rgba(83, 46, 251, 0.08);
-      border: 2px solid var(--c-litiges);
-      color: var(--c-litiges);
+      background: rgba(79, 70, 229, 0.08);
+      border: 2px solid var(--p-avocat);
+      color: var(--p-avocat);
       font-size: 1.4rem;
       font-weight: 800;
       display: inline-flex;
@@ -524,15 +524,15 @@
       margin-top: 0.7rem;
       padding: 4px 12px;
       border-radius: 999px;
-      background: rgba(83,46,251,0.12);
-      color: var(--c-litiges);
+      background: rgba(79,70,229,0.12);
+      color: var(--p-avocat);
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      border: 1px solid rgba(83,46,251,0.2);
+      border: 1px solid rgba(79,70,229,0.2);
     }
-    .process-badge svg { stroke: var(--c-litiges); }
+    .process-badge svg { stroke: var(--p-avocat); }
 
     /* ═══════════════════ CAS D'ÉCOLE ═══════════════════ */
     .case-panel {
@@ -574,7 +574,7 @@
       letter-spacing: 0.14em;
       font-weight: 700;
       text-transform: uppercase;
-      color: var(--c-litiges);
+      color: var(--p-avocat);
       margin-bottom: 0.6rem;
     }
     .case-title {
@@ -615,7 +615,7 @@
       letter-spacing: 0.14em;
       font-weight: 700;
       text-transform: uppercase;
-      color: var(--c-litiges);
+      color: var(--p-avocat);
       margin-top: 1.75rem;
       margin-bottom: 0.6rem;
     }
@@ -635,7 +635,7 @@
       letter-spacing: 0.14em;
       font-weight: 700;
       text-transform: uppercase;
-      color: var(--c-litiges);
+      color: var(--p-avocat);
       margin-bottom: 1rem;
     }
     .case-result-list {
@@ -658,16 +658,16 @@
       left: 0; top: 0.35em;
       width: 18px; height: 18px;
       border-radius: 50%;
-      background: var(--c-litiges-soft);
-      border: 1.5px solid var(--c-litiges);
+      background: var(--p-avocat-soft);
+      border: 1.5px solid var(--p-avocat);
     }
     .case-result-list li::after {
       content: '';
       position: absolute;
       left: 5px; top: 0.65em;
       width: 7px; height: 4px;
-      border-left: 2px solid var(--c-litiges);
-      border-bottom: 2px solid var(--c-litiges);
+      border-left: 2px solid var(--p-avocat);
+      border-bottom: 2px solid var(--p-avocat);
       transform: rotate(-45deg);
     }
     .case-verbatim {
@@ -698,7 +698,7 @@
       position: relative;
     }
     .testi-stars {
-      color: var(--c-litiges);
+      color: var(--p-avocat);
       letter-spacing: 0.15em;
       font-size: 0.95rem;
       margin-bottom: 0.6rem;
@@ -741,14 +741,14 @@
       border-radius: 14px;
       transition: border-color 0.25s;
     }
-    .partner-card:hover { border-color: rgba(83,46,251,0.25); }
+    .partner-card:hover { border-color: rgba(79,70,229,0.25); }
     .partner-icon {
       width: 44px; height: 44px;
       display: inline-flex;
       align-items: center; justify-content: center;
       border-radius: 10px;
       background: var(--surface-low);
-      color: var(--c-litiges);
+      color: var(--p-avocat);
       margin-bottom: 1rem;
       border: 1px solid var(--border);
     }
@@ -757,7 +757,7 @@
       letter-spacing: 0.14em;
       text-transform: uppercase;
       font-weight: 700;
-      color: var(--c-litiges);
+      color: var(--p-avocat);
       margin-bottom: 0.35rem;
     }
     .partner-title {
@@ -789,7 +789,7 @@
       transition: border-color 0.2s, background 0.2s;
     }
     .faq-item[open] {
-      border-color: rgba(83, 46, 251, 0.3);
+      border-color: rgba(79, 70, 229, 0.3);
       background: var(--card-bg);
     }
     .faq-item summary {
@@ -812,8 +812,8 @@
       width: 14px; height: 14px;
       transform: translateY(-50%);
       background-image:
-        linear-gradient(var(--c-litiges), var(--c-litiges)),
-        linear-gradient(var(--c-litiges), var(--c-litiges));
+        linear-gradient(var(--p-avocat), var(--p-avocat)),
+        linear-gradient(var(--p-avocat), var(--p-avocat));
       background-size: 14px 2px, 2px 14px;
       background-position: center, center;
       background-repeat: no-repeat;
@@ -823,7 +823,7 @@
       background-size: 14px 2px, 0 0;
       transform: translateY(-50%) rotate(90deg);
     }
-    .faq-item summary:hover { color: var(--c-litiges); }
+    .faq-item summary:hover { color: var(--p-avocat); }
     .faq-body {
       padding: 0 1.35rem 1.3rem;
       font-size: 0.94rem;
@@ -835,10 +835,10 @@
     /* ═══════════════════ CTA FINAL ═══════════════════ */
     .cta-final {
       background:
-        radial-gradient(800px 500px at 30% 50%, rgba(83,46,251,0.14), transparent 60%),
+        radial-gradient(800px 500px at 30% 50%, rgba(79,70,229,0.14), transparent 60%),
         radial-gradient(600px 400px at 80% 40%, rgba(0,184,255,0.06), transparent 65%),
         linear-gradient(135deg, var(--navy), var(--navy-deep));
-      border-top: 1px solid rgba(83,46,251,0.2);
+      border-top: 1px solid rgba(79,70,229,0.2);
       padding: 5rem 0;
       position: relative;
       overflow: hidden;
@@ -868,12 +868,12 @@
       font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--c-litiges);
+      color: var(--p-avocat);
       margin-bottom: 1rem;
     }
     .cta-eyebrow::before {
       content: ''; width: 24px; height: 2px;
-      background: linear-gradient(90deg, var(--c-litiges), transparent);
+      background: linear-gradient(90deg, var(--p-avocat), transparent);
     }
     .cta-title {
       font-size: clamp(1.6rem, 3vw, 2.3rem);
@@ -882,7 +882,7 @@
       letter-spacing: -0.025em;
       line-height: 1.15;
     }
-    .cta-title .accent { color: var(--c-litiges); }
+    .cta-title .accent { color: var(--p-avocat); }
     .cta-sub {
       font-size: 1.02rem;
       color: var(--ink-dim);
@@ -906,7 +906,7 @@
       align-items: center;
       gap: 8px;
     }
-    .cta-engagement svg { stroke: var(--c-litiges); flex-shrink: 0; }
+    .cta-engagement svg { stroke: var(--p-avocat); flex-shrink: 0; }
 
     /* ═══════════════════ RESPONSIVE FINETUNING ═══════════════════ */
     @media (max-width: 760px) {
