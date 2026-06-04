@@ -74,16 +74,10 @@
   --magenta: #EC4899;
   --green:   #22C55E;
 
-  /* ── 6. Cas d'usage (hues distincts par offre) ── */
-  --c-succession:      #F59E0B;
-  --c-succession-soft: rgba(245, 158, 11, 0.14);
-  --c-succession-tint: rgba(245, 158, 11, 0.06);
-  --c-litiges:      #532EFB;
-  --c-litiges-soft: rgba(83, 46, 251, 0.16);
-  --c-litiges-tint: rgba(83, 46, 251, 0.06);
-  --c-croissance:      #10B981;
-  --c-croissance-soft: rgba(16, 185, 129, 0.14);
-  --c-croissance-tint: rgba(16, 185, 129, 0.06);
+  /* ── 6. Cas d'usage (hues distincts par offre, utilisés dans /ressources) ── */
+  --c-succession: #F59E0B;
+  --c-litiges:    #532EFB;
+  --c-croissance: #10B981;
 
   /* ── 6b. Personas — famille de bleus froids (cohérence cartes + pages) ── */
   --p-entrepreneur: #2563EB; --p-entrepreneur-soft: rgba(37, 99, 235, 0.14);  --p-entrepreneur-tint: rgba(37, 99, 235, 0.06);

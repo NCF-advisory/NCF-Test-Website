@@ -619,6 +619,17 @@
   }
   .tm-cell { padding: 0.85rem 0.9rem; }
   .tm-row-base .tm-price { font-size: 1.25rem; }
+
+  /* Colonne des libellés figée à gauche pendant le scroll horizontal.
+     Les lignes étant en `display: contents`, on cible la 1re cellule
+     de chaque ligne (nth-child(4n+1)) ; fond opaque pour masquer les
+     colonnes de prix qui défilent dessous. */
+  .tm-cell:nth-child(4n+1) { position: sticky; left: 0; z-index: 2; }
+  .tm-head .tm-cell:nth-child(4n+1) { z-index: 3; }
+  .tm-row-addon .tm-cell:nth-child(4n+1) { background: var(--card-bg); }
+  .tm-row-base .tm-cell:nth-child(4n+1) {
+    background: linear-gradient(var(--accent-a-04), var(--accent-a-04)), var(--card-bg);
+  }
 }
 @media (max-width: 720px) {
   .tp-sliders { grid-template-columns: 1fr; gap: 1.2rem; }

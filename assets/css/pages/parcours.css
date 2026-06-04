@@ -1,28 +1,42 @@
-/* ═══════════════════ Spécifique page experts-comptables ═══════════════════ */
+/* ═══════════════════════════════════════════════════════════════════════
+   PARCOURS — feuille mutualisée des 4 pages cible
+   (entrepreneurs · experts-comptables · avocats · notaires)
 
-    /* Accent persona (bleu) (var --p-ec, utilisée ici comme or patiné) sur les eyebrows partagés */
-    body.experts-comptables-page .section-eyebrow { color: var(--p-ec); }
-    body.experts-comptables-page .section-eyebrow::before {
-      background: linear-gradient(90deg, var(--p-ec), transparent);
+   La couleur d'accent est pilotée par une classe persona sur <body> :
+     <body class="parcours-page is-entrepreneurs">       (ou is-experts-comptables / is-avocats / is-notaires)
+   --persona       : teinte pleine (hex, via le token global --p-*)
+   --persona-soft  : même teinte ~14% (token global --p-*-soft)
+   --persona-rgb   : triplet R G B pour les rgba() à alpha variable
+   ═══════════════════════════════════════════════════════════════════════ */
+body.parcours-page.is-entrepreneurs      { --persona: var(--p-entrepreneur); --persona-soft: var(--p-entrepreneur-soft); --persona-rgb: 37 99 235; }
+body.parcours-page.is-experts-comptables { --persona: var(--p-ec);           --persona-soft: var(--p-ec-soft);           --persona-rgb: 14 165 233; }
+body.parcours-page.is-avocats            { --persona: var(--p-avocat);        --persona-soft: var(--p-avocat-soft);        --persona-rgb: 79 70 229; }
+body.parcours-page.is-notaires           { --persona: var(--p-notaire);       --persona-soft: var(--p-notaire-soft);       --persona-rgb: 30 64 175; }
+/* ═══════════════════ Styles partagés des pages « parcours » ═══════════════════ */
+
+    /* Accent persona (bleu, var --persona) sur les eyebrows partagés */
+    body.parcours-page .section-eyebrow { color: var(--persona); }
+    body.parcours-page .section-eyebrow::before {
+      background: linear-gradient(90deg, var(--persona), transparent);
     }
-    body.experts-comptables-page .nav-link.active { color: var(--text-strong); }
-    body.experts-comptables-page .nav-link.active::after {
-      background: var(--p-ec);
-      box-shadow: 0 0 8px var(--p-ec-soft);
+    body.parcours-page .nav-link.active { color: var(--text-strong); }
+    body.parcours-page .nav-link.active::after {
+      background: var(--persona);
+      box-shadow: 0 0 8px var(--persona-soft);
     }
 
     /* Sections alternées : fonds très légèrement contrastés pour donner du rythme */
     .sec-dark   { background: var(--navy-deep); }
     .sec-soft   { background: linear-gradient(180deg, var(--navy-deep), var(--bg-deep) 50%, var(--navy-deep)); }
-    .sec-raised { background: radial-gradient(800px 500px at 50% 0%, rgba(14,165,233,0.04), transparent 65%), var(--navy-deep); }
+    .sec-raised { background: radial-gradient(800px 500px at 50% 0%, rgba(var(--persona-rgb) / 0.04), transparent 65%), var(--navy-deep); }
 
     /* ═══════════════════ PARCOURS — fil conducteur héros ═══════════════════ */
     .parcours {
       position: relative;
       padding: 5rem 0 5.5rem;
       background:
-        radial-gradient(1000px 600px at 20% 15%, rgba(14,165,233,0.07), transparent 60%),
-        radial-gradient(900px 500px at 80% 85%, rgba(14,165,233,0.05), transparent 65%),
+        radial-gradient(1000px 600px at 20% 15%, rgba(var(--persona-rgb) / 0.07), transparent 60%),
+        radial-gradient(900px 500px at 80% 85%, rgba(var(--persona-rgb) / 0.05), transparent 65%),
         var(--bg-base);
       overflow: hidden;
     }
@@ -47,7 +61,7 @@
       margin: 0 0 1.3rem;
     }
     .parcours-title .accent {
-      color: var(--p-ec);
+      color: var(--persona);
       position: relative;
     }
     .parcours-title .accent::after {
@@ -55,7 +69,7 @@
       position: absolute;
       left: 0; right: 0; bottom: 0.06em;
       height: 0.3em;
-      background: rgba(14, 165, 233, 0.18);
+      background: rgba(var(--persona-rgb) / 0.18);
       z-index: -1;
       border-radius: 2px;
     }
@@ -86,7 +100,7 @@
     }
     .parcours-thread {
       width: 100%; height: 100%;
-      color: var(--p-ec);
+      color: var(--persona);
       overflow: visible;
     }
 
@@ -102,7 +116,7 @@
     }
     /* Pointe : halo plus généreux à l'accent succession */
     .parcours .thread-tip {
-      filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.75));
+      filter: drop-shadow(0 0 10px rgba(var(--persona-rgb) / 0.75));
     }
     /* Nœud activé : halo coloré succession */
     .parcours .node-group.is-spawned {
@@ -118,7 +132,7 @@
       background: var(--card-bg);
       border: 1px solid var(--line-2);
       border-radius: 18px;
-      box-shadow: 0 30px 60px -32px var(--p-ec-soft);
+      box-shadow: 0 30px 60px -32px var(--persona-soft);
       opacity: 0;
       transform: translateY(40px) scale(0.96);
       filter: blur(8px);
@@ -135,8 +149,8 @@
       filter: blur(0);
     }
     .parcours-card:hover {
-      box-shadow: 0 36px 70px -28px var(--p-ec-soft);
-      border-color: var(--p-ec-soft);
+      box-shadow: 0 36px 70px -28px var(--persona-soft);
+      border-color: var(--persona-soft);
     }
 
     /* Positionnement de chaque carte À CÔTÉ de son nœud, sans le recouvrir.
@@ -162,7 +176,7 @@
       font-size: 0.72rem;
       font-weight: 800;
       letter-spacing: 0.16em;
-      color: var(--p-ec);
+      color: var(--persona);
       margin-bottom: 0.4rem;
     }
     .parcours-card-tag {
@@ -202,7 +216,7 @@
       font-weight: 700;
       letter-spacing: -0.02em;
       line-height: 1.1;
-      color: var(--p-ec);
+      color: var(--persona);
       margin: 0;
     }
 
@@ -235,21 +249,21 @@
     }
 
     /* ═══════════════════ HERO ═══════════════════ */
-    #hero-experts-comptables {
+    .parcours-hero {
       padding: 138px 0 4.5rem;
       position: relative;
       overflow: hidden;
       isolation: isolate;
       background: var(--navy-deep);
     }
-    #hero-experts-comptables::before {
+    .parcours-hero::before {
       content: '';
       position: absolute; inset: 0; z-index: -1;
       background:
-        radial-gradient(900px 600px at 15% 20%, rgba(14, 165, 233, 0.10), transparent 60%),
+        radial-gradient(900px 600px at 15% 20%, rgba(var(--persona-rgb) / 0.10), transparent 60%),
         radial-gradient(700px 500px at 85% 80%, rgba(0, 184, 255, 0.04), transparent 65%);
     }
-    #hero-experts-comptables::after {
+    .parcours-hero::after {
       content: '';
       position: absolute; inset: 0; z-index: -1;
       background-image: radial-gradient(circle, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
@@ -270,7 +284,7 @@
       font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--p-ec);
+      color: var(--persona);
       display: inline-flex;
       align-items: center;
       gap: 12px;
@@ -278,7 +292,7 @@
     .hero-s-eyebrow::before {
       content: '';
       width: 32px; height: 2px;
-      background: linear-gradient(90deg, var(--p-ec), transparent);
+      background: linear-gradient(90deg, var(--persona), transparent);
       display: inline-block;
     }
     .hero-s-h1 {
@@ -291,7 +305,7 @@
       margin-top: 1.1rem;
     }
     .hero-s-h1 .accent {
-      color: var(--p-ec);
+      color: var(--persona);
       position: relative;
     }
     .hero-s-h1 .accent::after {
@@ -299,7 +313,7 @@
       position: absolute;
       left: 0; right: 0; bottom: 0.08em;
       height: 0.32em;
-      background: rgba(14, 165, 233, 0.18);
+      background: rgba(var(--persona-rgb) / 0.18);
       z-index: -1;
       border-radius: 2px;
     }
@@ -324,7 +338,7 @@
       align-items: center;
       gap: 10px;
     }
-    .hero-s-reassure svg { stroke: var(--p-ec); flex-shrink: 0; }
+    .hero-s-reassure svg { stroke: var(--persona); flex-shrink: 0; }
 
     /* ═══════════════════ VOTRE SITUATION — pain points en citations ═══════════════════ */
     .pain-grid {
@@ -341,7 +355,7 @@
       padding: 2.25rem 1.75rem 1.5rem;
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-left: 3px solid var(--p-ec);
+      border-left: 3px solid var(--persona);
       border-radius: 14px;
       display: flex;
       flex-direction: column;
@@ -354,7 +368,7 @@
       font-family: Georgia, 'Times New Roman', serif;
       font-size: 5.5rem;
       line-height: 1;
-      color: var(--p-ec);
+      color: var(--persona);
       opacity: 0.35;
       font-weight: 700;
       pointer-events: none;
@@ -374,7 +388,7 @@
       letter-spacing: 0.14em;
       text-transform: uppercase;
       font-weight: 700;
-      color: var(--p-ec);
+      color: var(--persona);
       margin-top: auto;
       display: inline-flex;
       align-items: center;
@@ -384,7 +398,7 @@
       content: '';
       width: 6px; height: 6px;
       border-radius: 50%;
-      background: var(--p-ec);
+      background: var(--persona);
     }
 
     /* ═══════════════════ NOS APPORTS ═══════════════════ */
@@ -404,16 +418,16 @@
     }
     .apport-card:hover {
       transform: translateY(-3px);
-      border-color: rgba(14, 165, 233, 0.32);
-      box-shadow: 0 18px 40px -18px rgba(14, 165, 233, 0.25);
+      border-color: rgba(var(--persona-rgb) / 0.32);
+      box-shadow: 0 18px 40px -18px rgba(var(--persona-rgb) / 0.25);
     }
     .apport-icon {
       width: 48px; height: 48px;
       display: inline-flex;
       align-items: center; justify-content: center;
       border-radius: 12px;
-      background: var(--p-ec-soft);
-      color: var(--p-ec);
+      background: var(--persona-soft);
+      color: var(--persona);
       margin-bottom: 1.1rem;
     }
     .apport-title {
@@ -447,7 +461,7 @@
     .diff-num {
       display: inline-flex;
       width: 38px; height: 38px;
-      background: var(--p-ec);
+      background: var(--persona);
       color: var(--navy-deep);
       font-weight: 800;
       font-size: 0.9rem;
@@ -488,15 +502,15 @@
       position: absolute;
       left: 35px; top: 76px; bottom: -6px;
       width: 2px;
-      background: linear-gradient(180deg, rgba(14, 165, 233, 0.45), rgba(14, 165, 233, 0.12));
+      background: linear-gradient(180deg, rgba(var(--persona-rgb) / 0.45), rgba(var(--persona-rgb) / 0.12));
       z-index: 0;
     }
     .process-num {
       width: 72px; height: 72px;
       border-radius: 50%;
-      background: rgba(14, 165, 233, 0.08);
-      border: 2px solid var(--p-ec);
-      color: var(--p-ec);
+      background: rgba(var(--persona-rgb) / 0.08);
+      border: 2px solid var(--persona);
+      color: var(--persona);
       font-size: 1.4rem;
       font-weight: 800;
       display: inline-flex;
@@ -524,15 +538,15 @@
       margin-top: 0.7rem;
       padding: 4px 12px;
       border-radius: 999px;
-      background: rgba(14,165,233,0.12);
-      color: var(--p-ec);
+      background: rgba(var(--persona-rgb) / 0.12);
+      color: var(--persona);
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      border: 1px solid rgba(14,165,233,0.2);
+      border: 1px solid rgba(var(--persona-rgb) / 0.2);
     }
-    .process-badge svg { stroke: var(--p-ec); }
+    .process-badge svg { stroke: var(--persona); }
 
     /* ═══════════════════ CAS D'ÉCOLE ═══════════════════ */
     .case-panel {
@@ -574,7 +588,7 @@
       letter-spacing: 0.14em;
       font-weight: 700;
       text-transform: uppercase;
-      color: var(--p-ec);
+      color: var(--persona);
       margin-bottom: 0.6rem;
     }
     .case-title {
@@ -615,7 +629,7 @@
       letter-spacing: 0.14em;
       font-weight: 700;
       text-transform: uppercase;
-      color: var(--p-ec);
+      color: var(--persona);
       margin-top: 1.75rem;
       margin-bottom: 0.6rem;
     }
@@ -635,7 +649,7 @@
       letter-spacing: 0.14em;
       font-weight: 700;
       text-transform: uppercase;
-      color: var(--p-ec);
+      color: var(--persona);
       margin-bottom: 1rem;
     }
     .case-result-list {
@@ -658,16 +672,16 @@
       left: 0; top: 0.35em;
       width: 18px; height: 18px;
       border-radius: 50%;
-      background: var(--p-ec-soft);
-      border: 1.5px solid var(--p-ec);
+      background: var(--persona-soft);
+      border: 1.5px solid var(--persona);
     }
     .case-result-list li::after {
       content: '';
       position: absolute;
       left: 5px; top: 0.65em;
       width: 7px; height: 4px;
-      border-left: 2px solid var(--p-ec);
-      border-bottom: 2px solid var(--p-ec);
+      border-left: 2px solid var(--persona);
+      border-bottom: 2px solid var(--persona);
       transform: rotate(-45deg);
     }
     .case-verbatim {
@@ -698,7 +712,7 @@
       position: relative;
     }
     .testi-stars {
-      color: var(--p-ec);
+      color: var(--persona);
       letter-spacing: 0.15em;
       font-size: 0.95rem;
       margin-bottom: 0.6rem;
@@ -741,14 +755,14 @@
       border-radius: 14px;
       transition: border-color 0.25s;
     }
-    .partner-card:hover { border-color: rgba(14,165,233,0.25); }
+    .partner-card:hover { border-color: rgba(var(--persona-rgb) / 0.25); }
     .partner-icon {
       width: 44px; height: 44px;
       display: inline-flex;
       align-items: center; justify-content: center;
       border-radius: 10px;
       background: var(--surface-low);
-      color: var(--p-ec);
+      color: var(--persona);
       margin-bottom: 1rem;
       border: 1px solid var(--border);
     }
@@ -757,7 +771,7 @@
       letter-spacing: 0.14em;
       text-transform: uppercase;
       font-weight: 700;
-      color: var(--p-ec);
+      color: var(--persona);
       margin-bottom: 0.35rem;
     }
     .partner-title {
@@ -789,7 +803,7 @@
       transition: border-color 0.2s, background 0.2s;
     }
     .faq-item[open] {
-      border-color: rgba(14, 165, 233, 0.3);
+      border-color: rgba(var(--persona-rgb) / 0.3);
       background: var(--card-bg);
     }
     .faq-item summary {
@@ -812,8 +826,8 @@
       width: 14px; height: 14px;
       transform: translateY(-50%);
       background-image:
-        linear-gradient(var(--p-ec), var(--p-ec)),
-        linear-gradient(var(--p-ec), var(--p-ec));
+        linear-gradient(var(--persona), var(--persona)),
+        linear-gradient(var(--persona), var(--persona));
       background-size: 14px 2px, 2px 14px;
       background-position: center, center;
       background-repeat: no-repeat;
@@ -823,7 +837,7 @@
       background-size: 14px 2px, 0 0;
       transform: translateY(-50%) rotate(90deg);
     }
-    .faq-item summary:hover { color: var(--p-ec); }
+    .faq-item summary:hover { color: var(--persona); }
     .faq-body {
       padding: 0 1.35rem 1.3rem;
       font-size: 0.94rem;
@@ -835,10 +849,10 @@
     /* ═══════════════════ CTA FINAL ═══════════════════ */
     .cta-final {
       background:
-        radial-gradient(800px 500px at 30% 50%, rgba(14,165,233,0.14), transparent 60%),
+        radial-gradient(800px 500px at 30% 50%, rgba(var(--persona-rgb) / 0.14), transparent 60%),
         radial-gradient(600px 400px at 80% 40%, rgba(0,184,255,0.06), transparent 65%),
         linear-gradient(135deg, var(--navy), var(--navy-deep));
-      border-top: 1px solid rgba(14,165,233,0.2);
+      border-top: 1px solid rgba(var(--persona-rgb) / 0.2);
       padding: 5rem 0;
       position: relative;
       overflow: hidden;
@@ -868,12 +882,12 @@
       font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--p-ec);
+      color: var(--persona);
       margin-bottom: 1rem;
     }
     .cta-eyebrow::before {
       content: ''; width: 24px; height: 2px;
-      background: linear-gradient(90deg, var(--p-ec), transparent);
+      background: linear-gradient(90deg, var(--persona), transparent);
     }
     .cta-title {
       font-size: clamp(1.6rem, 3vw, 2.3rem);
@@ -882,7 +896,7 @@
       letter-spacing: -0.025em;
       line-height: 1.15;
     }
-    .cta-title .accent { color: var(--p-ec); }
+    .cta-title .accent { color: var(--persona); }
     .cta-sub {
       font-size: 1.02rem;
       color: var(--ink-dim);
@@ -906,11 +920,11 @@
       align-items: center;
       gap: 8px;
     }
-    .cta-engagement svg { stroke: var(--p-ec); flex-shrink: 0; }
+    .cta-engagement svg { stroke: var(--persona); flex-shrink: 0; }
 
     /* ═══════════════════ RESPONSIVE FINETUNING ═══════════════════ */
     @media (max-width: 760px) {
-      #hero-experts-comptables { padding: 128px 0 3rem; }
+      .parcours-hero { padding: 128px 0 3rem; }
       .hero-s-inner { padding: 2rem 1.25rem 0.5rem; }
       .hero-s-ctas .btn-primary,
       .hero-s-ctas .btn-outline { width: 100%; justify-content: center; }
