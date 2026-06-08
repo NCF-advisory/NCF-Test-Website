@@ -97,9 +97,23 @@
   100% { opacity: 0;    transform: scale(2.8); }
 }
 
+/* Branche — relie le fil central à une carte ; se trace quand le nœud éclôt */
+.thread-branch {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  opacity: 0.95;
+  stroke-dasharray: 260;
+  stroke-dashoffset: 260;
+  transition: stroke-dashoffset 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.node-group.is-spawned .thread-branch { stroke-dashoffset: 0; }
+
 /* Accessibilité — réduire le motion mais garder l'état final visible */
 @media (prefers-reduced-motion: reduce) {
   .thread-line { transition: none; }
+  .thread-branch { transition: none; }
   .node-group.is-spawned .node-ring,
   .node-group.is-spawned .node-dot,
   .node-group.is-spawned .node-halo {

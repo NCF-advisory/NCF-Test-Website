@@ -82,7 +82,7 @@
           <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </span>
       </a>
-      <a href="#process" class="btn-outline">Découvrir la méthode</a>
+      <a href="#methode" class="btn-outline">Découvrir la méthode</a>
     </div>
     <div class="hero-s-reassure">
       <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -107,46 +107,29 @@
   <div class="parcours-track">
     <div class="parcours-thread-wrap" aria-hidden="true">
       <svg aria-hidden="true" id="thread-svg" class="parcours-thread" viewBox="0 0 1200 1800" preserveAspectRatio="xMidYMid meet">
-        <!-- Escalier à coins arrondis (rayon ~14). Les nœuds tombent aux coudes principaux. -->
-        <path class="thread-line thread-line-glow"
-          d="M 600 0
-             V 306 Q 600 320 586 320
-             H 294 Q 280 320 280 334
-             V 806 Q 280 820 294 820
-             H 906 Q 920 820 920 834
-             V 1306 Q 920 1320 906 1320
-             H 294 Q 280 1320 280 1334
-             V 1466 Q 280 1480 294 1480
-             H 586 Q 600 1480 600 1494
-             V 1800" />
-        <path id="thread-path" class="thread-line"
-          d="M 600 0
-             V 306 Q 600 320 586 320
-             H 294 Q 280 320 280 334
-             V 806 Q 280 820 294 820
-             H 906 Q 920 820 920 834
-             V 1306 Q 920 1320 906 1320
-             H 294 Q 280 1320 280 1334
-             V 1466 Q 280 1480 294 1480
-             H 586 Q 600 1480 600 1494
-             V 1800" />
+        <!-- Fil droit central ; a chaque noeud, une branche rejoint la carte (droite, gauche, droite). -->
+        <path class="thread-line thread-line-glow" d="M 600 0 V 1800" />
+        <path id="thread-path" class="thread-line" d="M 600 0 V 1800" />
 
-        <g class="node-group" data-step="0" data-anchor-x="280" data-anchor-y="320">
-          <g transform="translate(280 320)">
+        <g class="node-group" data-step="0" data-anchor-x="600" data-anchor-y="320">
+          <line class="thread-branch" x1="600" y1="320" x2="852" y2="320" />
+          <g transform="translate(600 320)">
             <circle class="node-halo" r="22"/>
             <circle class="node-ring" r="18" pathLength="100"/>
             <circle class="node-dot"  r="6"/>
           </g>
         </g>
-        <g class="node-group" data-step="1" data-anchor-x="920" data-anchor-y="820">
-          <g transform="translate(920 820)">
+        <g class="node-group" data-step="1" data-anchor-x="600" data-anchor-y="820">
+          <line class="thread-branch" x1="600" y1="820" x2="348" y2="820" />
+          <g transform="translate(600 820)">
             <circle class="node-halo" r="22"/>
             <circle class="node-ring" r="18" pathLength="100"/>
             <circle class="node-dot"  r="6"/>
           </g>
         </g>
-        <g class="node-group" data-step="2" data-anchor-x="280" data-anchor-y="1320">
-          <g transform="translate(280 1320)">
+        <g class="node-group" data-step="2" data-anchor-x="600" data-anchor-y="1320">
+          <line class="thread-branch" x1="600" y1="1320" x2="852" y2="1320" />
+          <g transform="translate(600 1320)">
             <circle class="node-halo" r="22"/>
             <circle class="node-ring" r="18" pathLength="100"/>
             <circle class="node-dot"  r="6"/>
@@ -250,6 +233,78 @@
   </div>
 </section>
 
+<!-- ═══════════════════ MÉTHODE · cheminement par les outils ═══════════════════ -->
+<section class="section methodo-flow" id="methode">
+  <div class="section-inner">
+    <div class="section-eyebrow">Notre méthode</div>
+    <h2 class="section-title">De votre premier échange au rapport final.</h2>
+
+    <div class="ch-flow">
+      <div class="ch-step">
+        <div class="ch-node"><img src="/assets/img/tools/outlook.png" alt="Microsoft Outlook" /></div>
+        <span class="ch-tool">Outlook</span>
+        <div class="ch-title">Premiers échanges</div>
+        <p class="ch-desc">On comprend votre contexte et l'enjeu de la mission.</p>
+      </div>
+
+      <div class="ch-step">
+        <div class="ch-node">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 h8 l6 6 v17 a1 1 0 0 1 -1 1 H9 a1 1 0 0 1 -1 -1 V5 a1 1 0 0 1 1 -1Z"/><path d="M17 4 v6 h6"/><line x1="12" y1="16" x2="20" y2="16"/><line x1="12" y1="20" x2="20" y2="20"/><line x1="12" y1="24" x2="17" y2="24"/></svg>
+        </div>
+        <span class="ch-tool">Documents</span>
+        <div class="ch-title">Collecte des pièces</div>
+        <p class="ch-desc">Comptes, statuts, prévisionnel : on réunit le dossier.</p>
+      </div>
+
+      <div class="ch-step">
+        <div class="ch-node"><img src="/assets/img/tools/excel.png" alt="Microsoft Excel" /></div>
+        <span class="ch-tool">Excel</span>
+        <div class="ch-title">Expertise &amp; évaluation</div>
+        <p class="ch-desc">Modélisation financière, nourrie par nos bases de données de marché.</p>
+      </div>
+
+      <div class="ch-step">
+        <div class="ch-node"><img src="/assets/img/tools/powerpoint.png" alt="Microsoft PowerPoint" /></div>
+        <span class="ch-tool">PowerPoint</span>
+        <div class="ch-title">Rapport final</div>
+        <p class="ch-desc">Une restitution claire, structurée et défendable.</p>
+      </div>
+
+      <div class="ch-step">
+        <div class="ch-node"><img src="/assets/img/tools/outlook.png" alt="Microsoft Outlook" /></div>
+        <span class="ch-tool">Outlook</span>
+        <div class="ch-title">Restitution</div>
+        <p class="ch-desc">Le rapport vous est transmis, exploitable tel quel.</p>
+      </div>
+    </div>
+
+    <div class="ch-data">
+      <span class="ch-data-ic"><svg viewBox="0 0 24 24"><use href="/assets/ncf-icons/icons-sprite.svg#data"/></svg></span>
+      <div class="ch-data-txt">
+        <span class="ch-data-tool">Nos bases de données</span>
+        <p>Comparables sectoriels et transactions réelles, issus de bases professionnelles de référence.</p>
+      </div>
+      <div class="ch-data-logos">
+        <span class="ch-data-chip"><img src="/assets/img/tools/capital-iq-pro.jpg" alt="S&amp;P Capital IQ Pro" /><b>Capital IQ Pro</b></span>
+        <span class="ch-data-chip"><img src="/assets/img/tools/epsilon-research.jpg" alt="Epsilon Research IQ" /><b>Epsilon Research IQ</b></span>
+      </div>
+    </div>
+
+    <div class="ch-teams">
+      <span class="ch-teams-ic">
+        <img src="/assets/img/tools/teams.png" alt="Microsoft Teams" />
+        <span class="ch-teams-sep"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Téléphone"><path d="M5 4h3l2 5-2 1a10 10 0 005 5l1-2 5 2v3a2 2 0 01-2 2A15 15 0 013 6a2 2 0 012-2z"/></svg>
+      </span>
+      <div>
+        <span class="ch-teams-tool">Teams ou téléphone · tout au long de la mission</span>
+        <p>Des points d'échange réguliers, en visio ou par téléphone, pour ajuster les hypothèses au bon moment et garantir la qualité du rapport.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <!-- ═══════════════════ BLOC 6, CAS D'ÉCOLE ═══════════════════ -->
 <section class="section sec-soft" id="cas-ecole">
   <div class="section-inner">
@@ -321,19 +376,25 @@
       </div>
     </div>
 
-    <!-- Témoignage Google public -->
+  </div>
+</section>
+
+<!-- ═══════════════════ AVIS GOOGLE ═══════════════════ -->
+<section class="section avis-section">
+  <div class="section-inner">
     <div class="testi-external rv d2">
-      <div class="testi-stars" aria-label="5 étoiles sur 5">★ ★ ★ ★ ★</div>
-      <p class="testi-quote">
-        « Très satisfaits de l'accompagnement de NCF lors de la cession. Équipe professionnelle, disponible et à l'écoute. Le rapport a été un vrai outil de négociation. »
-      </p>
-      <div class="testi-meta">
-        <span><strong>Denis Brillault</strong>, dirigeant cédant</span>
-        <span class="testi-source">
-          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22.6 12.2c0-.8-.1-1.5-.2-2.2H12v4.3h6c-.3 1.4-1.1 2.6-2.3 3.4v2.8h3.6c2.1-2 3.3-4.8 3.3-8.3z"/></svg>
-          Avis Google
-        </span>
-      </div>
+    <div class="testi-stars" aria-label="5 étoiles sur 5">★ ★ ★ ★ ★</div>
+    <p class="testi-quote">
+    « Très satisfaits de l'accompagnement de NCF lors de la cession. Équipe professionnelle, disponible et à l'écoute. Le rapport a été un vrai outil de négociation. »
+    </p>
+    <div class="testi-meta">
+    <span><strong>Denis Brillault</strong>, dirigeant cédant</span>
+    <a class="testi-source" href="https://www.google.com/maps/search/?api=1&query=NCF%20Advisory%2013%20Rue%20Claude%20Chappe%2069370%20Saint-Didier-au-Mont-d%27Or" target="_blank" rel="noopener noreferrer">
+    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22.6 12.2c0-.8-.1-1.5-.2-2.2H12v4.3h6c-.3 1.4-1.1 2.6-2.3 3.4v2.8h3.6c2.1-2 3.3-4.8 3.3-8.3z"/></svg>
+    Voir nos avis Google
+    <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    </div>
     </div>
   </div>
 </section>
@@ -398,6 +459,41 @@
   </div>
 </section>
 
+<!-- ═══════════════════ GROUPE NOVANCES (réassurance) ═══════════════════ -->
+<section class="section novances-band" id="novances">
+  <div class="section-inner">
+    <div class="novances-band-grid">
+      <div class="novances-band-text">
+        <div class="rv">
+          <div class="section-eyebrow">Notre groupe</div>
+          <h2 class="section-title">Derrière NCF, le savoir-faire du <span class="accent">Groupe Novances.</span></h2>
+          <p class="section-sub">
+            NCF est membre du Groupe Novances, groupe de conseil multidisciplinaire qui réunit sous un même toit l'expertise comptable, fiscale, juridique et patrimoniale.
+          </p>
+          <p class="section-sub">
+            Pour votre transmission, c'est l'assurance d'un partenaire installé et pérenne&nbsp;: derrière chaque évaluation, vous bénéficiez des ressources d'un groupe national reconnu, sans changer d'interlocuteur.
+          </p>
+        </div>
+        <div class="novances-band-foot rv">
+          <img class="novances-band-logo" src="/assets/img/brand/logo-novances.avif" alt="Groupe Novances" loading="lazy" />
+          <a href="https://novances.fr/" target="_blank" rel="noopener noreferrer" class="novances-band-link">
+            Découvrir le Groupe Novances
+            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <ul class="novances-stats">
+        <li class="novances-stat rv d1"><span class="novances-stat-num">+8&nbsp;000</span><span class="novances-stat-label">clients accompagnés</span></li>
+        <li class="novances-stat rv d2"><span class="novances-stat-num">40&nbsp;M€</span><span class="novances-stat-label">de chiffre d'affaires consolidé en 2025</span></li>
+        <li class="novances-stat rv d3"><span class="novances-stat-num">+45 ans</span><span class="novances-stat-label">d'expérience</span></li>
+        <li class="novances-stat rv d4"><span class="novances-stat-num">40</span><span class="novances-stat-label">associés</span></li>
+        <li class="novances-stat rv d1"><span class="novances-stat-num">350</span><span class="novances-stat-label">collaborateurs</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════════════ BLOC 9, CTA FINAL ═══════════════════ -->
 <section class="cta-final" id="cta-final">
   <div class="cta-inner rv">
@@ -431,10 +527,10 @@
       <div class="footer-brand">
         <img src="/assets/img/brand/logo-ncf-bl-marine.png" alt="NCF" />
         <p class="footer-brand-tag">Cabinet d'évaluation d'entreprise pour les dirigeants de PME en préparation de transmission.</p>
-        <div class="footer-novances">
+        <a class="footer-novances" href="https://novances.fr/" target="_blank" rel="noopener noreferrer" aria-label="Site du Groupe Novances (nouvel onglet)">
           <img src="/assets/img/brand/logo-novances.avif" alt="Groupe Novances" />
           <span>Membre du <strong>Groupe Novances</strong></span>
-        </div><div class="footer-novances"><img src="/assets/img/brand/Moore_Global.svg.png" alt="Moore Global" /><span>Réseau international <strong>Moore Global</strong></span></div>
+        </a><div class="footer-novances"><img src="/assets/img/brand/Moore_Global.svg.png" alt="Moore Global" /><span>Réseau international <strong>Moore Global</strong></span></div>
       </div>
       <div>
         <div class="footer-col-title">Pour qui ?</div><div class="footer-links"><a href="/entrepreneurs/" class="footer-link">Entrepreneurs</a><a href="/experts-comptables/" class="footer-link">Experts-comptables</a><a href="/avocats/" class="footer-link">Avocats</a><a href="/notaires/" class="footer-link">Notaires</a></div>

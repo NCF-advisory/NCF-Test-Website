@@ -160,15 +160,15 @@ body.parcours-page.is-notaires           { --persona: var(--p-notaire);       --
        Nœud 03 (viewBox 280, 1300) → projeté à ~36% horizontal → carte à GAUCHE */
     .parcours-card[data-card-step="0"] {
       top: 9%;
-      right: 70%;   /* carte sur la gauche du cercle 01 */
+      left: 70%;    /* branche à DROITE — carte à droite du fil */
     }
     .parcours-card[data-card-step="1"] {
       top: 35%;
-      left: 70%;    /* carte sur la droite du cercle 02 */
+      right: 70%;   /* branche à GAUCHE — carte à gauche du fil */
     }
     .parcours-card[data-card-step="2"] {
       top: 61%;
-      right: 70%;   /* carte sur la gauche du cercle 03 */
+      left: 70%;    /* branche à DROITE — carte à droite du fil */
     }
 
     .parcours-card-num {
@@ -223,9 +223,9 @@ body.parcours-page.is-notaires           { --persona: var(--p-notaire);       --
     /* ━━━━━━━━ Responsive ━━━━━━━━ */
     @media (max-width: 1100px) {
       .parcours-card { width: clamp(260px, 38vw, 340px); }
-      .parcours-card[data-card-step="0"] { top: 8%;  right: 68%; }
-      .parcours-card[data-card-step="1"] { top: 36%; left: 68%; }
-      .parcours-card[data-card-step="2"] { top: 63%; right: 68%; }
+      .parcours-card[data-card-step="0"] { top: 8%;  left: 68%; }
+      .parcours-card[data-card-step="1"] { top: 36%; right: 68%; }
+      .parcours-card[data-card-step="2"] { top: 63%; left: 68%; }
     }
     @media (max-width: 820px) {
       .parcours { padding: 4rem 0 5rem; }
@@ -739,6 +739,8 @@ body.parcours-page.is-notaires           { --persona: var(--p-notaire);       --
       gap: 6px;
     }
     .testi-source strong { color: var(--ink-dim); font-weight: 600; }
+    a.testi-source { text-decoration: none; transition: color 0.2s ease; }
+    a.testi-source:hover { color: var(--persona); }
 
     /* ═══════════════════ PARTENAIRES ═══════════════════ */
     .partners-grid {
@@ -937,4 +939,183 @@ body.parcours-page.is-notaires           { --persona: var(--p-notaire);       --
       .cta-btn-wrap .btn-primary, .cta-btn-wrap .btn-outline { width: 100%; justify-content: center; }
     }
 
+    /* ═══════════════════ GROUPE NOVANCES — bandeau réassurance ═══════════════════ */
+    .novances-band {
+      background:
+        radial-gradient(900px 520px at 50% 0%, rgba(var(--persona-rgb) / 0.06), transparent 65%),
+        var(--bg-elevated);
+    }
+    .novances-band .section-title .accent { color: var(--persona); }
+    .novances-band .section-sub + .section-sub { margin-top: 0.9rem; }
 
+    .novances-band-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      gap: 2.5rem 3rem;
+      align-items: center;
+    }
+
+    .novances-stats {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    .novances-stats .novances-stat:last-child { grid-column: 1 / -1; }
+    .novances-stat {
+      position: relative;
+      overflow: hidden;
+      padding: 1.6rem 1.25rem;
+      text-align: center;
+      background: var(--card-bg);
+      border: 1px solid var(--line-2);
+      border-radius: 14px;
+      box-shadow: 0 24px 48px -34px var(--persona-soft);
+    }
+    .novances-stat::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--persona), transparent);
+    }
+    .novances-stat-num {
+      display: block;
+      font-size: clamp(1.7rem, 3vw, 2.25rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--persona);
+    }
+    .novances-stat-label {
+      display: block;
+      margin-top: 0.6rem;
+      font-size: 0.9rem;
+      line-height: 1.3;
+      color: var(--text-2);
+    }
+
+    .novances-band-foot {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-top: 2.5rem;
+    }
+    .novances-band-foot .novances-band-logo {
+      height: 38px;
+      width: auto;
+    }
+    .novances-band-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--persona);
+      text-decoration: none;
+      transition: gap 0.25s ease, color 0.25s ease;
+    }
+    .novances-band-link:hover { gap: 12px; }
+    .novances-band-link svg { transition: transform 0.25s ease; }
+    .novances-band-link:hover svg { transform: translateX(2px); }
+
+    @media (max-width: 900px) {
+      .novances-band-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .novances-stats { grid-template-columns: repeat(3, 1fr); }
+      .novances-stats .novances-stat:last-child { grid-column: auto; }
+    }
+    @media (max-width: 560px) {
+      .novances-stats { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+      .novances-stats .novances-stat:last-child { grid-column: 1 / -1; }
+      .novances-stat { padding: 1.3rem 0.9rem; }
+    }
+
+
+/* ═══════════════════ MÉTHODE · cheminement par les outils ═══════════════════ */
+    .methodo-flow { background: var(--bg-elevated); }
+    .ch-flow { display:grid; grid-template-columns:repeat(5,1fr); gap:1rem; margin-top:3rem; position:relative; align-items:start; }
+    .ch-flow::before { content:''; position:absolute; top:36px; left:9%; right:9%; height:3px; border-radius:3px;
+      background:linear-gradient(90deg, rgba(var(--persona-rgb)/.2), var(--persona) 50%, rgba(var(--persona-rgb)/.2)); }
+    .ch-flow::after { content:''; position:absolute; top:36px; left:9%; width:16%; height:3px; border-radius:3px;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,.9), transparent); animation:ch-sheen 3.2s ease-in-out infinite; }
+    @keyframes ch-sheen { 0%{ left:7%; opacity:0; } 18%{opacity:1;} 82%{opacity:1;} 100%{ left:77%; opacity:0; } }
+    .ch-step { position:relative; text-align:center; padding:0 .25rem; }
+    .ch-node { position:relative; z-index:1; height:72px; width:72px; margin:0 auto; border-radius:18px;
+      background:#fff; border:1px solid var(--line-2); box-shadow:0 12px 26px -14px rgba(6,24,56,.28);
+      display:flex; align-items:center; justify-content:center; transition:transform .25s ease, box-shadow .25s ease; }
+    .ch-step:hover .ch-node { transform:translateY(-4px); box-shadow:0 18px 34px -14px rgba(6,24,56,.32); }
+    .ch-node img { width:38px; height:38px; object-fit:contain; display:block; }
+    .ch-node svg { width:34px; height:34px; color:var(--persona); }
+    .ch-tool { display:block; margin-top:.8rem; font-size:.72rem; font-weight:800; letter-spacing:.03em; text-transform:uppercase; color:var(--persona); }
+    .ch-tool small { display:block; font-size:.64rem; font-weight:600; letter-spacing:0; text-transform:none; color:var(--text-3); margin-top:3px; line-height:1.35; }
+    .ch-title { font-size:.92rem; font-weight:700; color:var(--text-strong); margin:.45rem 0 .3rem; }
+    .ch-desc { font-size:.82rem; color:var(--text-2); line-height:1.5; margin:0; }
+    .ch-data { margin-top:2.5rem; display:flex; gap:1.25rem; align-items:center; flex-wrap:wrap;
+      background:var(--card-bg); border:1px solid var(--line-2); border-radius:16px; padding:1.25rem 1.5rem; box-shadow:0 24px 48px -36px var(--persona-soft); }
+    .ch-data-ic { flex-shrink:0; width:50px; height:50px; border-radius:12px; background:rgba(var(--persona-rgb)/.10); color:var(--persona); display:flex; align-items:center; justify-content:center; }
+    .ch-data-ic svg { width:28px; height:28px; }
+    .ch-data-txt { flex:1; min-width:240px; }
+    .ch-data-tool { font-size:.7rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:var(--persona); }
+    .ch-data-txt p { margin:.15rem 0 0; font-size:.92rem; color:var(--text-1); line-height:1.55; }
+    .ch-data-logos { display:flex; gap:.6rem; flex-shrink:0; }
+    .ch-data-chip { display:flex; align-items:center; gap:9px; background:#fff; border:1px solid var(--line-2); border-radius:11px; padding:8px 13px; }
+    .ch-data-chip img { width:26px; height:26px; object-fit:contain; }
+    .ch-data-chip b { font-size:.8rem; font-weight:700; color:var(--text-strong); white-space:nowrap; }
+    .ch-teams { margin-top:2.5rem; display:flex; gap:1.1rem; align-items:center;
+      background:rgba(var(--persona-rgb)/.06); border:1px solid rgba(var(--persona-rgb)/.18); border-left:3px solid var(--persona);
+      border-radius:14px; padding:1.1rem 1.4rem; }
+    .ch-teams-ic { flex-shrink:0; height:50px; padding:0 14px; border-radius:12px; background:#fff; border:1px solid var(--line-2); display:flex; align-items:center; gap:11px; }
+    .ch-teams-ic img { width:28px; height:28px; object-fit:contain; }
+    .ch-teams-ic svg { width:24px; height:24px; color:var(--persona); }
+    .ch-teams-sep { width:1px; height:24px; background:var(--line-2); }
+    .ch-teams-tool { font-size:.7rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:var(--persona); }
+    .ch-teams p { margin:.15rem 0 0; font-size:.92rem; color:var(--text-1); line-height:1.55; }
+    @media(max-width:680px){ .ch-data-logos{ width:100%; } .ch-data-chip{ flex:1; justify-content:center; } }
+    @media(max-width:860px){
+      .ch-flow { grid-template-columns:1fr; gap:0; max-width:460px; margin-inline:auto; }
+      .ch-flow::before { top:0; bottom:0; left:36px; right:auto; width:3px; height:auto; background:linear-gradient(180deg, rgba(var(--persona-rgb)/.2), var(--persona), rgba(var(--persona-rgb)/.2)); }
+      .ch-flow::after { display:none; }
+      .ch-step { display:grid; grid-template-columns:72px 1fr; gap:1rem; text-align:left; padding:.55rem 0; align-items:center; }
+      .ch-node { margin:0; } .ch-tool { margin-top:.15rem; } .ch-title{margin-top:.1rem;}
+    }
+
+
+/* ─── TEMPORAIRE : cas d'école masqué (avis déplacé sous « Notre méthode ») ─── */
+    #cas-ecole { display: none; }
+    .avis-section .testi-external { margin-top: 0; }
+
+
+/* ═══════════════════ TÉMOIGNAGE · interview expert-comptable ═══════════════════ */
+    .interview { background: var(--bg-elevated); }
+    .interview .section-title .accent { color: var(--persona); }
+    .itw-grid { display: grid; grid-template-columns: 300px 1fr; gap: 3rem; margin-top: 2.75rem; align-items: start; }
+    .itw-person { align-self: start; }
+    .itw-photo {
+      border-radius: 18px; overflow: hidden;
+      background: radial-gradient(120% 100% at 50% 0%, rgba(var(--persona-rgb)/0.20), rgba(var(--persona-rgb)/0.05));
+      border: 1px solid var(--line-2);
+    }
+    .itw-photo img { width: 100%; height: auto; display: block; }
+    .itw-name { margin-top: 1.1rem; font-size: 1.15rem; font-weight: 800; color: var(--text-strong); letter-spacing: -0.01em; }
+    .itw-role { font-size: 0.85rem; color: var(--text-2); margin-top: 2px; }
+    .itw-pull { margin: 1rem 0 0; padding-left: 0.9rem; border-left: 3px solid var(--persona); font-size: 0.95rem; font-style: italic; color: var(--text-1); line-height: 1.5; }
+    .itw-qa { display: flex; flex-direction: column; gap: 1.7rem; }
+    .itw-q { position: relative; margin: 0 0 0.55rem; padding-left: 1.1rem; font-size: 1.05rem; font-weight: 700; color: var(--text-strong); line-height: 1.4; }
+    .itw-q::before { content: ''; position: absolute; left: 0; top: 0.18em; bottom: 0.18em; width: 3px; border-radius: 2px; background: var(--persona); }
+    .itw-a { margin: 0; font-size: 0.96rem; color: var(--text-2); line-height: 1.7; }
+    @media (max-width: 820px) {
+      .itw-grid { grid-template-columns: 1fr; gap: 1.75rem; }
+      .itw-person { position: static; }
+      .itw-photo { max-width: 240px; }
+    }
+
+    /* Placeholder photo témoignage (en attente du portrait) */
+    .itw-photo--placeholder { aspect-ratio: 346 / 362; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.7rem; color: var(--persona); }
+    .itw-photo--placeholder svg { width: 60px; height: 60px; opacity: 0.55; }
+    .itw-photo--placeholder span { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); }
+
+/* ─── TEMPORAIRE : modèle de collaboration masqué (doublon avec « Notre méthode ») ─── */
+    #process { display: none; }

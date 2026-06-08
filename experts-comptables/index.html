@@ -70,7 +70,7 @@
   <div class="hero-s-inner rv">
     <div class="hero-s-eyebrow">Experts-comptables</div>
     <h1 class="hero-s-h1">
-      Vous suivez des dirigeants de PME. Sur l'évaluation, <span class="accent">nous intervenons à vos côtés.</span>
+      Sur l'évaluation, <span class="accent">nous intervenons à vos côtés.</span>
     </h1>
     <p class="hero-s-sub">
       Transmission familiale, donation avant cession, contrôle fiscal : sur ces dossiers sensibles, une évaluation indépendante protège à la fois votre client et la relation que vous avez bâtie avec lui. Nous travaillons en coordination directe avec votre cabinet, sans jamais vous déposséder du dossier.
@@ -82,7 +82,7 @@
           <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </span>
       </a>
-      <a href="#process" class="btn-outline">Voir notre modèle de collaboration</a>
+      <a href="#methode" class="btn-outline">Voir notre méthode</a>
     </div>
     <div class="hero-s-reassure">
       <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -107,46 +107,29 @@
   <div class="parcours-track">
     <div class="parcours-thread-wrap" aria-hidden="true">
       <svg aria-hidden="true" id="thread-svg" class="parcours-thread" viewBox="0 0 1200 1800" preserveAspectRatio="xMidYMid meet">
-        <!-- Escalier à coins arrondis (rayon ~14). Les nœuds tombent aux coudes principaux. -->
-        <path class="thread-line thread-line-glow"
-          d="M 600 0
-             V 306 Q 600 320 586 320
-             H 294 Q 280 320 280 334
-             V 806 Q 280 820 294 820
-             H 906 Q 920 820 920 834
-             V 1306 Q 920 1320 906 1320
-             H 294 Q 280 1320 280 1334
-             V 1466 Q 280 1480 294 1480
-             H 586 Q 600 1480 600 1494
-             V 1800" />
-        <path id="thread-path" class="thread-line"
-          d="M 600 0
-             V 306 Q 600 320 586 320
-             H 294 Q 280 320 280 334
-             V 806 Q 280 820 294 820
-             H 906 Q 920 820 920 834
-             V 1306 Q 920 1320 906 1320
-             H 294 Q 280 1320 280 1334
-             V 1466 Q 280 1480 294 1480
-             H 586 Q 600 1480 600 1494
-             V 1800" />
+        <!-- Fil droit central ; a chaque noeud, une branche rejoint la carte (droite, gauche, droite). -->
+        <path class="thread-line thread-line-glow" d="M 600 0 V 1800" />
+        <path id="thread-path" class="thread-line" d="M 600 0 V 1800" />
 
-        <g class="node-group" data-step="0" data-anchor-x="280" data-anchor-y="320">
-          <g transform="translate(280 320)">
+        <g class="node-group" data-step="0" data-anchor-x="600" data-anchor-y="320">
+          <line class="thread-branch" x1="600" y1="320" x2="852" y2="320" />
+          <g transform="translate(600 320)">
             <circle class="node-halo" r="22"/>
             <circle class="node-ring" r="18" pathLength="100"/>
             <circle class="node-dot"  r="6"/>
           </g>
         </g>
-        <g class="node-group" data-step="1" data-anchor-x="920" data-anchor-y="820">
-          <g transform="translate(920 820)">
+        <g class="node-group" data-step="1" data-anchor-x="600" data-anchor-y="820">
+          <line class="thread-branch" x1="600" y1="820" x2="348" y2="820" />
+          <g transform="translate(600 820)">
             <circle class="node-halo" r="22"/>
             <circle class="node-ring" r="18" pathLength="100"/>
             <circle class="node-dot"  r="6"/>
           </g>
         </g>
-        <g class="node-group" data-step="2" data-anchor-x="280" data-anchor-y="1320">
-          <g transform="translate(280 1320)">
+        <g class="node-group" data-step="2" data-anchor-x="600" data-anchor-y="1320">
+          <line class="thread-branch" x1="600" y1="1320" x2="852" y2="1320" />
+          <g transform="translate(600 1320)">
             <circle class="node-halo" r="22"/>
             <circle class="node-ring" r="18" pathLength="100"/>
             <circle class="node-dot"  r="6"/>
@@ -158,7 +141,7 @@
     <article class="parcours-card parcours-card--left" data-card-step="0">
       <span class="parcours-card-num">01</span>
       <span class="parcours-card-tag">Votre portefeuille</span>
-      <h3>Vous protégez votre client — et votre cabinet.</h3>
+      <h3>Vous protégez votre client, et votre cabinet.</h3>
       <p>Une opération ponctuelle mal maîtrisée peut abîmer une relation bâtie sur des années. En confiant l'évaluation à un tiers spécialisé, vous gérez le risque sans l'endosser.</p>
     </article>
 
@@ -172,8 +155,8 @@
     <article class="parcours-card parcours-card--left" data-card-step="2">
       <span class="parcours-card-num">03</span>
       <span class="parcours-card-tag">L'expertise</span>
-      <h3>Les comparables que vous n'avez pas en interne.</h3>
-      <p>Une équipe dédiée à l'évaluation de PME, des méthodes reconnues et l'accès à des bases de comparables, en complément de votre connaissance du dossier.</p>
+      <h3>Des comparables élargis, au service de votre client.</h3>
+      <p>À votre connaissance du dossier, nous ajoutons une équipe dédiée à l'évaluation de PME, des méthodes reconnues et l'accès à des bases de comparables sectoriels.</p>
     </article>
   </div>
 
@@ -224,7 +207,7 @@
         <div class="process-content">
           <div class="process-title">Collecte et analyse, en direct avec le client</div>
           <p class="process-body">
-            Nous travaillons ensuite de façon indépendante avec votre client, via un circuit confidentiel, pour la collecte des pièces et l'analyse — sans vous solliciter inutilement sur ce que nous maîtrisons.
+            Nous travaillons ensuite de façon indépendante avec votre client, via un circuit confidentiel, pour la collecte des pièces et l'analyse, sans vous solliciter inutilement sur ce que nous maîtrisons.
           </p>
         </div>
       </div>
@@ -244,13 +227,119 @@
         <div class="process-content">
           <div class="process-title">Rapport final, émis avec votre approbation</div>
           <p class="process-body">
-            Le rapport définitif intègre votre regard. Il n'est pas tamponné par votre cabinet — il reste celui d'un tiers indépendant, et c'est précisément ce qui fait sa force — mais il est émis avec votre approbation. L'équipe reste joignable ensuite.
+            Le rapport définitif intègre votre regard. Il n'est pas tamponné par votre cabinet (il reste celui d'un tiers indépendant, et c'est précisément ce qui fait sa force), mais il est émis avec votre approbation. L'équipe reste joignable ensuite.
           </p>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- ═══════════════════ MÉTHODE · cheminement par les outils ═══════════════════ -->
+<section class="section methodo-flow" id="methode">
+  <div class="section-inner">
+    <div class="section-eyebrow">Notre méthode</div>
+    <h2 class="section-title">De votre premier échange au rapport final.</h2>
+
+    <div class="ch-flow">
+      <div class="ch-step">
+        <div class="ch-node"><img src="/assets/img/tools/outlook.png" alt="Microsoft Outlook" /></div>
+        <span class="ch-tool">Outlook</span>
+        <div class="ch-title">Premiers échanges</div>
+        <p class="ch-desc">On comprend votre contexte et l'enjeu de la mission.</p>
+      </div>
+
+      <div class="ch-step">
+        <div class="ch-node">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 h8 l6 6 v17 a1 1 0 0 1 -1 1 H9 a1 1 0 0 1 -1 -1 V5 a1 1 0 0 1 1 -1Z"/><path d="M17 4 v6 h6"/><line x1="12" y1="16" x2="20" y2="16"/><line x1="12" y1="20" x2="20" y2="20"/><line x1="12" y1="24" x2="17" y2="24"/></svg>
+        </div>
+        <span class="ch-tool">Documents</span>
+        <div class="ch-title">Collecte des pièces</div>
+        <p class="ch-desc">Comptes, statuts, prévisionnel : on réunit le dossier.</p>
+      </div>
+
+      <div class="ch-step">
+        <div class="ch-node"><img src="/assets/img/tools/excel.png" alt="Microsoft Excel" /></div>
+        <span class="ch-tool">Excel</span>
+        <div class="ch-title">Expertise &amp; évaluation</div>
+        <p class="ch-desc">Modélisation financière, nourrie par nos bases de données de marché.</p>
+      </div>
+
+      <div class="ch-step">
+        <div class="ch-node"><img src="/assets/img/tools/powerpoint.png" alt="Microsoft PowerPoint" /></div>
+        <span class="ch-tool">PowerPoint</span>
+        <div class="ch-title">Rapport final</div>
+        <p class="ch-desc">Une restitution claire, structurée et défendable.</p>
+      </div>
+
+      <div class="ch-step">
+        <div class="ch-node"><img src="/assets/img/tools/outlook.png" alt="Microsoft Outlook" /></div>
+        <span class="ch-tool">Outlook</span>
+        <div class="ch-title">Restitution</div>
+        <p class="ch-desc">Le rapport vous est transmis, exploitable tel quel.</p>
+      </div>
+    </div>
+
+    <div class="ch-data">
+      <span class="ch-data-ic"><svg viewBox="0 0 24 24"><use href="/assets/ncf-icons/icons-sprite.svg#data"/></svg></span>
+      <div class="ch-data-txt">
+        <span class="ch-data-tool">Nos bases de données</span>
+        <p>Comparables sectoriels et transactions réelles, issus de bases professionnelles de référence.</p>
+      </div>
+      <div class="ch-data-logos">
+        <span class="ch-data-chip"><img src="/assets/img/tools/capital-iq-pro.jpg" alt="S&amp;P Capital IQ Pro" /><b>Capital IQ Pro</b></span>
+        <span class="ch-data-chip"><img src="/assets/img/tools/epsilon-research.jpg" alt="Epsilon Research IQ" /><b>Epsilon Research IQ</b></span>
+      </div>
+    </div>
+
+    <div class="ch-teams">
+      <span class="ch-teams-ic">
+        <img src="/assets/img/tools/teams.png" alt="Microsoft Teams" />
+        <span class="ch-teams-sep"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Téléphone"><path d="M5 4h3l2 5-2 1a10 10 0 005 5l1-2 5 2v3a2 2 0 01-2 2A15 15 0 013 6a2 2 0 012-2z"/></svg>
+      </span>
+      <div>
+        <span class="ch-teams-tool">Teams ou téléphone · tout au long de la mission</span>
+        <p>Des points d'échange réguliers, en visio ou par téléphone, pour ajuster les hypothèses au bon moment et garantir la qualité du rapport.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════ TÉMOIGNAGE · interview expert-comptable ═══════════════════ -->
+<section class="section interview" id="temoignage">
+  <div class="section-inner">
+    <div class="section-eyebrow">Témoignage</div>
+    <h2 class="section-title">Le regard d'un <span class="accent">expert-comptable.</span></h2>
+    <div class="itw-grid">
+      <aside class="itw-person">
+        <div class="itw-photo">
+          <img src="/assets/img/Temoignages/pascal.png" alt="Pascal Jourdan, expert-comptable" width="346" height="362" loading="lazy" />
+        </div>
+        <div class="itw-name">Pascal Jourdan</div>
+        <div class="itw-role">Expert-comptable · Groupe Novances</div>
+        <p class="itw-pull">« En cas de contrôle fiscal, il est confortable de ne pas être l'auteur du rapport. »</p>
+      </aside>
+
+      <div class="itw-qa">
+        <div class="itw-item">
+          <p class="itw-q">Pourquoi faire appel à un expert en évaluation indépendant quand on est soi-même expert-comptable et spécialiste du chiffre ?</p>
+          <p class="itw-a">En tant qu'expert-comptable, nous connaissons bien l'activité de nos clients, leur historique et leur contexte. Mais nous n'avons pas toujours l'expérience quantitative et qualitative d'un spécialiste dédié à l'évaluation d'entreprise, ni l'accès à des bases de données de comparables.</p>
+        </div>
+        <div class="itw-item">
+          <p class="itw-q">Quels avantages voyez-vous dans l'intervention d'un tiers, expert en évaluation, sur vos dossiers ?</p>
+          <p class="itw-a">L'expert en évaluation est indépendant. C'est précieux dans une transmission où, par exemple, le fils travaille dans la société et est déjà notre client, tandis que sa sœur est cadre ailleurs : cela évite les conflits d'intérêt et toute suspicion d'avantager l'un en minimisant la valorisation. En cas de contrôle fiscal, il est aussi confortable de ne pas être l'auteur du rapport. En tant qu'expert-comptable et chef d'entreprise, nous devons gérer les risques qui pèsent sur notre portefeuille : détériorer une relation client pour une opération ponctuelle mal maîtrisée nuit au client comme à la valeur de notre cabinet.</p>
+        </div>
+        <div class="itw-item">
+          <p class="itw-q">Comment fonctionne la relation avec NCF ?</p>
+          <p class="itw-a">NCF participe avec nous à la première réunion, aux côtés de notre client. L'équipe échange ensuite directement avec lui, puis nous soumet un projet de rapport sur lequel nous donnons notre avis. Le rapport définitif, même s'il n'est pas tamponné par notre cabinet, intègre notre connaissance historique du client, et il est émis avec notre approbation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <!-- ═══════════════════ BLOC 6, CAS D'ÉCOLE ═══════════════════ -->
 <section class="section sec-soft" id="cas-ecole">
@@ -304,7 +393,7 @@
 
         <div class="case-block-title">Intervention NCF</div>
         <p class="case-block-body">
-          Évaluation indépendante croisant trois méthodes. Première réunion menée avec le cabinet et le dirigeant, puis échange direct avec le client. Projet de rapport soumis à l'avis du cabinet — sa connaissance historique du dossier intégrée — et rapport final émis avec son approbation, sans être tamponné par le cabinet.
+          Évaluation indépendante croisant trois méthodes. Première réunion menée avec le cabinet et le dirigeant, puis échange direct avec le client. Projet de rapport soumis à l'avis du cabinet (sa connaissance historique du dossier intégrée), et rapport final émis avec son approbation, sans être tamponné par le cabinet.
         </p>
       </div>
 
@@ -322,6 +411,27 @@
         <p class="case-author">Pascal Jourdan, expert-comptable · Groupe Novances</p>
       </div>
     </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════ AVIS GOOGLE ═══════════════════ -->
+<section class="section avis-section">
+  <div class="section-inner">
+    <div class="testi-external rv d2">
+    <div class="testi-stars" aria-label="5 étoiles sur 5">★ ★ ★ ★ ★</div>
+    <p class="testi-quote">
+    « Nous avons fait appel à plusieurs reprises à Novances et leurs services ont toujours été à la hauteur de nos attentes : réactivité, conseil, professionnalisme. Je recommande sans hésitation. »
+    </p>
+    <div class="testi-meta">
+    <span><strong>Laurence Putoud</strong></span>
+    <a class="testi-source" href="https://www.google.com/maps/search/?api=1&query=NCF%20Advisory%2013%20Rue%20Claude%20Chappe%2069370%20Saint-Didier-au-Mont-d%27Or" target="_blank" rel="noopener noreferrer">
+    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22.6 12.2c0-.8-.1-1.5-.2-2.2H12v4.3h6c-.3 1.4-1.1 2.6-2.3 3.4v2.8h3.6c2.1-2 3.3-4.8 3.3-8.3z"/></svg>
+    Voir nos avis Google
+    <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    </div>
+    </div>
   </div>
 </section>
 
@@ -337,7 +447,7 @@
       <details class="faq-item rv">
         <summary>Le rapport est-il tamponné par mon cabinet ?</summary>
         <div class="faq-body">
-          <p>Non. Il reste le rapport d'un tiers indépendant — c'est précisément ce qui lui donne sa valeur en cas de contrôle fiscal ou de désaccord familial.</p>
+          <p>Non. Il reste le rapport d'un tiers indépendant : c'est précisément ce qui lui donne sa valeur en cas de contrôle fiscal ou de désaccord familial.</p>
           <p>Mais il est construit avec votre regard : vous relisez le projet, et le rapport final intègre votre connaissance historique du client avant d'être émis avec votre approbation.</p>
         </div>
       </details>
@@ -353,7 +463,7 @@
         <summary>Pourquoi ne pas évaluer moi-même, puisque je connais les chiffres ?</summary>
         <div class="faq-body">
           <p>Vous connaissez le dossier mieux que personne, et c'est un atout que nous intégrons. L'évaluation fine demande en plus des comparables sectoriels et une pratique quantitative dédiée.</p>
-          <p>Sur les dossiers sensibles — transmission familiale, donation avant cession — l'indépendance d'un tiers vous protège d'une suspicion de conflit d'intérêt et sécurise l'opération face à l'administration.</p>
+          <p>Sur les dossiers sensibles (transmission familiale, donation avant cession), l'indépendance d'un tiers vous protège d'une suspicion de conflit d'intérêt et sécurise l'opération face à l'administration.</p>
         </div>
       </details>
 
@@ -382,7 +492,7 @@
       Un dossier en tête ? <span class="accent">Parlons-en.</span>
     </h2>
     <p class="cta-sub">
-      Un premier échange confidentiel, sans engagement. Présentez-nous la situation de votre client, et un membre de l'équipe NCF vous dit comment nous pouvons intervenir — sous 24 h ouvrées.
+      Un premier échange confidentiel, sans engagement. Présentez-nous la situation de votre client, et un membre de l'équipe NCF vous dit comment nous pouvons intervenir, sous 24 h ouvrées.
     </p>
     <div class="cta-btn-wrap">
       <a href="/#contact" class="btn-primary btn-magnetic">
@@ -407,10 +517,10 @@
       <div class="footer-brand">
         <img src="/assets/img/brand/logo-ncf-bl-marine.png" alt="NCF" />
         <p class="footer-brand-tag">Cabinet d'évaluation d'entreprise pour les dirigeants de PME en préparation de transmission.</p>
-        <div class="footer-novances">
+        <a class="footer-novances" href="https://novances.fr/" target="_blank" rel="noopener noreferrer" aria-label="Site du Groupe Novances (nouvel onglet)">
           <img src="/assets/img/brand/logo-novances.avif" alt="Groupe Novances" />
           <span>Membre du <strong>Groupe Novances</strong></span>
-        </div><div class="footer-novances"><img src="/assets/img/brand/Moore_Global.svg.png" alt="Moore Global" /><span>Réseau international <strong>Moore Global</strong></span></div>
+        </a><div class="footer-novances"><img src="/assets/img/brand/Moore_Global.svg.png" alt="Moore Global" /><span>Réseau international <strong>Moore Global</strong></span></div>
       </div>
       <div>
         <div class="footer-col-title">Pour qui ?</div><div class="footer-links"><a href="/entrepreneurs/" class="footer-link">Entrepreneurs</a><a href="/experts-comptables/" class="footer-link">Experts-comptables</a><a href="/avocats/" class="footer-link">Avocats</a><a href="/notaires/" class="footer-link">Notaires</a></div>

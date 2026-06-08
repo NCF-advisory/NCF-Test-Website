@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prototype — Bloc méthodo (concepts)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/global.css" />
+  <link rel="stylesheet" href="/assets/css/pages/parcours.css" />
+  <style>
+    body { background: var(--bg-base); }
+    .mv-tag {
+      max-width: 1200px; margin: 3.5rem auto 0; padding: 0 2rem;
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent-deep);
+    }
+    .mv-tag span { color: var(--text-3); font-weight: 600; letter-spacing: 0; text-transform: none; }
+    .methodo .section-eyebrow { display:inline-flex; }
+    .methodo .section-title { max-width: 720px; }
+
+    /* ════ Concept 1 — Cartes piliers + icônes ncf ════ */
+    .m1-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; margin-top:2.5rem; }
+    .m1-card { background:var(--card-bg); border:1px solid var(--line-2); border-radius:16px; padding:1.85rem; box-shadow:0 24px 48px -34px var(--persona-soft); transition:transform .3s ease, box-shadow .3s ease; }
+    .m1-card:hover { transform:translateY(-4px); box-shadow:0 32px 56px -30px var(--persona-soft); }
+    .m1-ic { display:inline-flex; width:54px; height:54px; align-items:center; justify-content:center; border-radius:14px; background:rgba(var(--persona-rgb)/0.10); color:var(--persona); margin-bottom:1.1rem; }
+    .m1-ic svg { width:28px; height:28px; }
+    .m1-card h3 { font-size:1.08rem; color:var(--text-strong); margin:0 0 .55rem; letter-spacing:-0.01em; }
+    .m1-card p { font-size:.92rem; color:var(--text-2); line-height:1.6; margin:0; }
+    @media(max-width:820px){ .m1-grid{grid-template-columns:1fr;} }
+
+    /* ════ Concept 2 — Étapes numérotées + ligne ════ */
+    .m2-steps { display:grid; grid-template-columns:repeat(3,1fr); gap:1.75rem; margin-top:2.9rem; position:relative; }
+    .m2-steps::before { content:''; position:absolute; top:26px; left:14%; right:14%; height:2px; background:linear-gradient(90deg, rgba(var(--persona-rgb)/.15), var(--persona), rgba(var(--persona-rgb)/.15)); }
+    .m2-step { position:relative; text-align:center; }
+    .m2-num { position:relative; z-index:1; display:inline-flex; width:52px; height:52px; border-radius:50%; align-items:center; justify-content:center; background:var(--persona); color:#fff; font-weight:800; font-size:1.05rem; box-shadow:0 10px 22px -6px var(--persona-soft); border:4px solid var(--bg-base); }
+    .m2-step h3 { font-size:1.02rem; color:var(--text-strong); margin:1rem 0 .5rem; }
+    .m2-step p { font-size:.9rem; color:var(--text-2); line-height:1.55; margin:0; }
+    @media(max-width:820px){ .m2-steps{grid-template-columns:1fr; gap:1.25rem;} .m2-steps::before{display:none;} .m2-step{display:grid; grid-template-columns:52px 1fr; gap:1rem; text-align:left;} .m2-step h3{margin-top:.1rem;} }
+
+    /* ════ Concept 3 — Liste épurée ════ */
+    .m3-list { margin-top:2.25rem; max-width:780px; }
+    .m3-row { display:flex; gap:1.15rem; padding:1.35rem 0; border-top:1px solid var(--line-2); align-items:flex-start; }
+    .m3-row:last-child { border-bottom:1px solid var(--line-2); }
+    .m3-ic { color:var(--persona); flex-shrink:0; margin-top:2px; }
+    .m3-ic svg { width:26px; height:26px; }
+    .m3-tx h3 { font-size:1.02rem; color:var(--text-strong); margin:0 0 .35rem; }
+    .m3-tx p { font-size:.92rem; color:var(--text-2); line-height:1.6; margin:0; }
+
+    /* ════ Concept 4 — Fil conducteur vertical animé ════ */
+    .m4-wrap { position:relative; margin-top:2.5rem; max-width:760px; }
+    .m4-wrap::before { content:''; position:absolute; left:11px; top:10px; bottom:10px; width:2px; background:linear-gradient(180deg, var(--persona), rgba(var(--persona-rgb)/.2)); transform:scaleY(0); transform-origin:top; animation:m4draw 1.5s cubic-bezier(.16,1,.3,1) forwards; }
+    @keyframes m4draw { to { transform:scaleY(1); } }
+    .m4-step { display:grid; grid-template-columns:24px 1fr; gap:1.25rem; padding-bottom:2rem; }
+    .m4-step:last-child { padding-bottom:0; }
+    .m4-dot { width:24px; height:24px; border-radius:50%; background:var(--bg-base); border:2px solid var(--persona); display:flex; align-items:center; justify-content:center; margin-top:2px; opacity:0; transform:scale(.4); animation:m4pop .55s cubic-bezier(.34,1.56,.64,1) forwards; }
+    .m4-dot::after { content:''; width:8px; height:8px; border-radius:50%; background:var(--persona); }
+    .m4-step:nth-child(1) .m4-dot { animation-delay:.45s; }
+    .m4-step:nth-child(2) .m4-dot { animation-delay:.9s; }
+    .m4-step:nth-child(3) .m4-dot { animation-delay:1.35s; }
+    @keyframes m4pop { to { opacity:1; transform:scale(1); } }
+    .m4-step h3 { font-size:1.05rem; color:var(--text-strong); margin:0 0 .4rem; }
+    .m4-step p { font-size:.92rem; color:var(--text-2); line-height:1.6; margin:0; }
+    .m4-kicker { font-size:.66rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--persona); margin-bottom:.3rem; }
+
+    /* ════ Concept 5 — Rangées alternées à icônes animées ════ */
+    .m5-rows { margin-top:2.5rem; display:flex; flex-direction:column; gap:1.1rem; }
+    .m5-row { display:grid; grid-template-columns:96px 1fr; gap:1.5rem; align-items:center; background:var(--card-bg-soft); border:1px solid var(--line-2); border-radius:16px; padding:1.4rem 1.6rem; }
+    .m5-badge { width:96px; height:96px; border-radius:18px; background:rgba(var(--persona-rgb)/0.08); border:1px solid rgba(var(--persona-rgb)/0.18); display:flex; align-items:center; justify-content:center; color:var(--persona); }
+    .m5-badge svg { width:46px; height:46px; }
+    .m5-anim { animation:m5float 3.4s ease-in-out infinite; }
+    @keyframes m5float { 0%,100%{ transform:translateY(0) rotate(0); } 50%{ transform:translateY(-5px) rotate(-2deg); } }
+    .m5-draw { stroke-dasharray:120; stroke-dashoffset:120; animation:m5draw 1.6s ease forwards; }
+    @keyframes m5draw { to { stroke-dashoffset:0; } }
+    .m5-pulse { transform-origin:center; animation:m5pulse 2.2s ease-in-out infinite; }
+    @keyframes m5pulse { 0%,100%{ opacity:.5; r:1.6px; } 50%{ opacity:1; r:2.4px; } }
+    .m5-row h3 { font-size:1.08rem; color:var(--text-strong); margin:0 0 .45rem; }
+    .m5-row p { font-size:.93rem; color:var(--text-2); line-height:1.6; margin:0; }
+    @media(max-width:620px){ .m5-row{grid-template-columns:1fr; text-align:center;} .m5-badge{margin:0 auto;} }
+  </style>
+</head>
+<body class="parcours-page is-avocats">
+
+<!-- ════════ CONCEPT 1 ════════ -->
+<div class="mv-tag">Concept 1 — Cartes piliers + icônes maison <span>· classique, cohérent avec le site</span></div>
+<section class="section methodo">
+  <div class="section-inner">
+    <div class="section-eyebrow">Notre savoir-faire</div>
+    <h2 class="section-title">Une expertise technique, rendue accessible.</h2>
+    <div class="m1-grid">
+      <article class="m1-card">
+        <span class="m1-ic"><svg viewBox="0 0 24 24"><use href="/assets/ncf-icons/icons-sprite.svg#calculator"/></svg></span>
+        <h3>Chiffré, mais accessible.</h3>
+        <p>Calculs détaillés et modélisation financière, restitués dans un rapport clair — lisible par votre client comme par l'administration.</p>
+      </article>
+      <article class="m1-card">
+        <span class="m1-ic"><svg viewBox="0 0 24 24"><use href="/assets/ncf-icons/icons-sprite.svg#seal"/></svg></span>
+        <h3>Opposable et argumenté.</h3>
+        <p>Méthodes reconnues, doctrine fiscale et jurisprudence : chaque valeur est justifiée par écrit et tient en cas de contrôle.</p>
+      </article>
+      <article class="m1-card">
+        <span class="m1-ic"><svg viewBox="0 0 24 24"><use href="/assets/ncf-icons/icons-sprite.svg#comparable"/></svg></span>
+        <h3>Ancré dans le marché.</h3>
+        <p>Comparables sectoriels et transactions réelles : le pont entre le Guide de l'évaluation et la valeur réelle de marché.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CONCEPT 2 ════════ -->
+<div class="mv-tag">Concept 2 — Étapes numérotées + ligne de progression <span>· séquentiel, « notre méthode »</span></div>
+<section class="section methodo">
+  <div class="section-inner">
+    <div class="section-eyebrow">Notre savoir-faire</div>
+    <h2 class="section-title">Une expertise technique, rendue accessible.</h2>
+    <div class="m2-steps">
+      <div class="m2-step"><span class="m2-num">01</span><h3>Chiffré, mais accessible.</h3><p>Calculs détaillés et modélisation financière, restitués dans un rapport clair, lisible par tous.</p></div>
+      <div class="m2-step"><span class="m2-num">02</span><h3>Opposable et argumenté.</h3><p>Méthodes reconnues, doctrine fiscale et jurisprudence : une valeur justifiée par écrit, qui tient en contrôle.</p></div>
+      <div class="m2-step"><span class="m2-num">03</span><h3>Ancré dans le marché.</h3><p>Comparables sectoriels et transactions réelles : le pont entre le Guide et la valeur réelle.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CONCEPT 3 ════════ -->
+<div class="mv-tag">Concept 3 — Liste épurée <span>· sobre et compact, sans cartes</span></div>
+<section class="section methodo">
+  <div class="section-inner">
+    <div class="section-eyebrow">Notre savoir-faire</div>
+    <h2 class="section-title">Une expertise technique, rendue accessible.</h2>
+    <div class="m3-list">
+      <div class="m3-row">
+        <span class="m3-ic"><svg viewBox="0 0 24 24"><use href="/assets/ncf-icons/icons-sprite.svg#calculator"/></svg></span>
+        <div class="m3-tx"><h3>Chiffré, mais accessible.</h3><p>Calculs détaillés et modélisation financière, restitués dans un rapport clair — lisible par votre client comme par l'administration.</p></div>
+      </div>
+      <div class="m3-row">
+        <span class="m3-ic"><svg viewBox="0 0 24 24"><use href="/assets/ncf-icons/icons-sprite.svg#seal"/></svg></span>
+        <div class="m3-tx"><h3>Opposable et argumenté.</h3><p>Méthodes reconnues, doctrine fiscale et jurisprudence : chaque valeur est justifiée par écrit et tient en cas de contrôle.</p></div>
+      </div>
+      <div class="m3-row">
+        <span class="m3-ic"><svg viewBox="0 0 24 24"><use href="/assets/ncf-icons/icons-sprite.svg#comparable"/></svg></span>
+        <div class="m3-tx"><h3>Ancré dans le marché.</h3><p>Comparables sectoriels et transactions réelles : le pont entre le Guide de l'évaluation et la valeur réelle de marché.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CONCEPT 4 ════════ -->
+<div class="mv-tag">Concept 4 — Fil conducteur vertical animé <span>· écho à l'escalier du haut de page (ligne qui se trace + nœuds)</span></div>
+<section class="section methodo">
+  <div class="section-inner">
+    <div class="section-eyebrow">Notre savoir-faire</div>
+    <h2 class="section-title">Une expertise technique, rendue accessible.</h2>
+    <div class="m4-wrap">
+      <div class="m4-step">
+        <span class="m4-dot"></span>
+        <div><div class="m4-kicker">Analyse</div><h3>Chiffré, mais accessible.</h3><p>Calculs détaillés et modélisation financière, restitués dans un rapport clair — lisible par votre client comme par l'administration.</p></div>
+      </div>
+      <div class="m4-step">
+        <span class="m4-dot"></span>
+        <div><div class="m4-kicker">Argumentation</div><h3>Opposable et argumenté.</h3><p>Méthodes reconnues, doctrine fiscale et jurisprudence : chaque valeur est justifiée par écrit et tient en cas de contrôle.</p></div>
+      </div>
+      <div class="m4-step">
+        <span class="m4-dot"></span>
+        <div><div class="m4-kicker">Marché</div><h3>Ancré dans le marché.</h3><p>Comparables sectoriels et transactions réelles : le pont entre le Guide de l'évaluation et la valeur réelle de marché.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CONCEPT 5 ════════ -->
+<div class="mv-tag">Concept 5 — Rangées à icônes animées <span>· icônes en mouvement léger (flotte + tracé)</span></div>
+<section class="section methodo">
+  <div class="section-inner">
+    <div class="section-eyebrow">Notre savoir-faire</div>
+    <h2 class="section-title">Une expertise technique, rendue accessible.</h2>
+    <div class="m5-rows">
+      <div class="m5-row">
+        <span class="m5-badge">
+          <svg class="m5-anim" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect class="m5-draw" x="8" y="8" width="32" height="32" rx="4"/>
+            <line x1="16" y1="32" x2="16" y2="26"/><line x1="24" y1="32" x2="24" y2="20"/><line x1="32" y1="32" x2="32" y2="14"/>
+          </svg>
+        </span>
+        <div><h3>Chiffré, mais accessible.</h3><p>Calculs détaillés et modélisation financière, restitués dans un rapport clair — lisible par votre client comme par l'administration.</p></div>
+      </div>
+      <div class="m5-row">
+        <span class="m5-badge">
+          <svg class="m5-anim" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation-delay:.4s">
+            <path class="m5-draw" d="M24 6 L40 12 V24 C40 33 33 39 24 42 C15 39 8 33 8 24 V12 Z"/>
+            <path d="M17 24 l5 5 l9 -11"/>
+          </svg>
+        </span>
+        <div><h3>Opposable et argumenté.</h3><p>Méthodes reconnues, doctrine fiscale et jurisprudence : chaque valeur est justifiée par écrit et tient en cas de contrôle.</p></div>
+      </div>
+      <div class="m5-row">
+        <span class="m5-badge">
+          <svg class="m5-anim" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation-delay:.8s">
+            <line x1="14" y1="40" x2="14" y2="22"/><line x1="24" y1="40" x2="24" y2="14"/><line x1="34" y1="40" x2="34" y2="26"/>
+            <circle class="m5-pulse" cx="14" cy="18" r="2" fill="currentColor" stroke="none"/>
+            <circle class="m5-pulse" cx="24" cy="10" r="2" fill="currentColor" stroke="none" style="animation-delay:.4s"/>
+            <circle class="m5-pulse" cx="34" cy="22" r="2" fill="currentColor" stroke="none" style="animation-delay:.8s"/>
+          </svg>
+        </span>
+        <div><h3>Ancré dans le marché.</h3><p>Comparables sectoriels et transactions réelles : le pont entre le Guide de l'évaluation et la valeur réelle de marché.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

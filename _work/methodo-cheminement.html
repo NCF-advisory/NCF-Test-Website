@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prototype — Cheminement par les outils (logos)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/global.css" />
+  <link rel="stylesheet" href="/assets/css/pages/parcours.css" />
+  <style>
+    body { background: var(--bg-base); }
+    .mv-tag { max-width:1200px; margin:3rem auto 0; padding:0 2rem; font-size:.8rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-deep); }
+    .mv-tag span { color:var(--text-3); font-weight:600; letter-spacing:0; text-transform:none; }
+
+    /* ════ Cheminement par les outils (logos réels) ════ */
+    .ch-flow { display:grid; grid-template-columns:repeat(5,1fr); gap:1rem; margin-top:3rem; position:relative; align-items:start; }
+    .ch-flow::before { content:''; position:absolute; top:36px; left:9%; right:9%; height:3px; border-radius:3px;
+      background:linear-gradient(90deg, rgba(var(--persona-rgb)/.2), var(--persona) 50%, rgba(var(--persona-rgb)/.2)); }
+    .ch-flow::after { content:''; position:absolute; top:36px; left:9%; width:16%; height:3px; border-radius:3px;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,.9), transparent); animation:ch-sheen 3.2s ease-in-out infinite; }
+    @keyframes ch-sheen { 0%{ left:7%; opacity:0; } 18%{opacity:1;} 82%{opacity:1;} 100%{ left:77%; opacity:0; } }
+
+    .ch-step { position:relative; text-align:center; padding:0 .25rem; }
+    .ch-node { position:relative; z-index:1; height:72px; width:72px; margin:0 auto; border-radius:18px;
+      background:#fff; border:1px solid var(--line-2); box-shadow:0 12px 26px -14px rgba(6,24,56,.28);
+      display:flex; align-items:center; justify-content:center; gap:14px; transition:transform .25s ease, box-shadow .25s ease; }
+    .ch-step:hover .ch-node { transform:translateY(-4px); box-shadow:0 18px 34px -14px rgba(6,24,56,.32); }
+    .ch-node img { width:38px; height:38px; object-fit:contain; display:block; }
+    .ch-node svg { width:34px; height:34px; color:var(--persona); }
+    .ch-node--multi { width:auto; padding:0 18px; }
+    .ch-node--multi img { width:30px; height:30px; }
+    .ch-tool { display:block; margin-top:.8rem; font-size:.72rem; font-weight:800; letter-spacing:.03em; text-transform:uppercase; color:var(--persona); }
+    .ch-tool small { display:block; font-size:.64rem; font-weight:600; letter-spacing:0; text-transform:none; color:var(--text-3); margin-top:3px; line-height:1.35; }
+    .ch-title { font-size:.92rem; font-weight:700; color:var(--text-strong); margin:.45rem 0 .3rem; }
+    .ch-desc { font-size:.82rem; color:var(--text-2); line-height:1.5; margin:0; }
+
+    .ch-teams { margin-top:2.75rem; display:flex; gap:1.1rem; align-items:center;
+      background:rgba(var(--persona-rgb)/.06); border:1px solid rgba(var(--persona-rgb)/.18); border-left:3px solid var(--persona);
+      border-radius:14px; padding:1.1rem 1.4rem; }
+    .ch-teams-ic { flex-shrink:0; height:50px; padding:0 14px; border-radius:12px; background:#fff; border:1px solid var(--line-2); display:flex; align-items:center; gap:11px; }
+    .ch-teams-ic img { width:28px; height:28px; object-fit:contain; }
+    .ch-teams-ic svg { width:24px; height:24px; color:var(--persona); }
+    .ch-teams-sep { width:1px; height:24px; background:var(--line-2); }
+    .ch-teams-tool { font-size:.7rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:var(--persona); }
+    .ch-teams p { margin:.15rem 0 0; font-size:.92rem; color:var(--text-1); line-height:1.55; }
+
+    .ch-data { margin-top:2.5rem; display:flex; gap:1.25rem; align-items:center; flex-wrap:wrap;
+      background:var(--card-bg); border:1px solid var(--line-2); border-radius:16px; padding:1.25rem 1.5rem; box-shadow:0 24px 48px -36px var(--persona-soft); }
+    .ch-data-ic { flex-shrink:0; width:50px; height:50px; border-radius:12px; background:rgba(var(--persona-rgb)/.10); color:var(--persona); display:flex; align-items:center; justify-content:center; }
+    .ch-data-ic svg { width:28px; height:28px; }
+    .ch-data-txt { flex:1; min-width:240px; }
+    .ch-data-tool { font-size:.7rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:var(--persona); }
+    .ch-data-txt p { margin:.15rem 0 0; font-size:.92rem; color:var(--text-1); line-height:1.55; }
+    .ch-data-logos { display:flex; gap:.6rem; flex-shrink:0; }
+    .ch-data-chip { display:flex; align-items:center; gap:9px; background:#fff; border:1px solid var(--line-2); border-radius:11px; padding:8px 13px; }
+    .ch-data-chip img { width:26px; height:26px; object-fit:contain; }
+    .ch-data-chip b { font-size:.8rem; font-weight:700; color:var(--text-strong); white-space:nowrap; }
+    @media(max-width:680px){ .ch-data-logos{ width:100%; } .ch-data-chip{ flex:1; justify-content:center; } }
+
+    @media(max-width:860px){
+      .ch-flow { grid-template-columns:1fr; gap:0; max-width:460px; margin-inline:auto; }
+      .ch-flow::before { top:0; bottom:0; left:36px; right:auto; width:3px; height:auto; background:linear-gradient(180deg, rgba(var(--persona-rgb)/.2), var(--persona), rgba(var(--persona-rgb)/.2)); }
+      .ch-flow::after { display:none; }
+      .ch-step { display:grid; grid-template-columns:72px 1fr; gap:1rem; text-align:left; padding:.55rem 0; align-items:center; }
+      .ch-node--multi { width:72px; padding:0; flex-wrap:wrap; gap:5px; } .ch-node--multi img{ width:22px; height:22px; }
+      .ch-node { margin:0; } .ch-tool { margin-top:.15rem; } .ch-title{margin-top:.1rem;}
+    }
+  </style>
+</head>
+<body class="parcours-page is-avocats">
+
+<div class="mv-tag">Concept 11b — Cheminement par les outils <span>· vrais logos couleur (Outlook · Word · Excel/Capital IQ Pro/Epsilon · PowerPoint · Teams)</span></div>
+<section class="section methodo ch">
+  <div class="section-inner">
+    <div class="section-eyebrow">Notre méthode</div>
+    <h2 class="section-title">De votre premier échange au rapport final.</h2>
+
+    <div class="ch-flow">
+      <div class="ch-step">
+        <div class="ch-node"><img src="/assets/img/tools/outlook.png" alt="Microsoft Outlook" /></div>
+        <span class="ch-tool">Outlook</span>
+        <div class="ch-title">Premiers échanges</div>
+        <p class="ch-desc">On comprend votre contexte et l'enjeu de la mission.</p>
+      </div>
+
+      <div class="ch-step">
+        <div class="ch-node">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 h8 l6 6 v17 a1 1 0 0 1 -1 1 H9 a1 1 0 0 1 -1 -1 V5 a1 1 0 0 1 1 -1Z"/><path d="M17 4 v6 h6"/><line x1="12" y1="16" x2="20" y2="16"/><line x1="12" y1="20" x2="20" y2="20"/><line x1="12" y1="24" x2="17" y2="24"/></svg>
+        </div>
+        <span class="ch-tool">Documents</span>
+        <div class="ch-title">Collecte des pièces</div>
+        <p class="ch-desc">Comptes, statuts, prévisionnel : on réunit le dossier.</p>
+      </div>
+
+      <div class="ch-step">
+        <div class="ch-node"><img src="/assets/img/tools/excel.png" alt="Microsoft Excel" /></div>
+        <span class="ch-tool">Excel</span>
+        <div class="ch-title">Expertise &amp; évaluation</div>
+        <p class="ch-desc">Modélisation financière, nourrie par nos bases de données de marché.</p>
+      </div>
+
+      <div class="ch-step">
+        <div class="ch-node"><img src="/assets/img/tools/powerpoint.png" alt="Microsoft PowerPoint" /></div>
+        <span class="ch-tool">PowerPoint</span>
+        <div class="ch-title">Rapport final</div>
+        <p class="ch-desc">Une restitution claire, structurée et défendable.</p>
+      </div>
+
+      <div class="ch-step">
+        <div class="ch-node"><img src="/assets/img/tools/outlook.png" alt="Microsoft Outlook" /></div>
+        <span class="ch-tool">Outlook</span>
+        <div class="ch-title">Restitution</div>
+        <p class="ch-desc">Le rapport vous est transmis, exploitable tel quel.</p>
+      </div>
+    </div>
+
+    <div class="ch-data">
+      <span class="ch-data-ic"><svg viewBox="0 0 24 24"><use href="/assets/ncf-icons/icons-sprite.svg#data"/></svg></span>
+      <div class="ch-data-txt">
+        <span class="ch-data-tool">Nos bases de données</span>
+        <p>Comparables sectoriels et transactions réelles, issus de bases professionnelles de référence.</p>
+      </div>
+      <div class="ch-data-logos">
+        <span class="ch-data-chip"><img src="/assets/img/tools/capital-iq-pro.jpg" alt="S&P Capital IQ Pro" /><b>Capital IQ Pro</b></span>
+        <span class="ch-data-chip"><img src="/assets/img/tools/epsilon-research.jpg" alt="Epsilon Research IQ" /><b>Epsilon Research IQ</b></span>
+      </div>
+    </div>
+
+    <div class="ch-teams">
+      <span class="ch-teams-ic">
+        <img src="/assets/img/tools/teams.png" alt="Microsoft Teams" />
+        <span class="ch-teams-sep"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Téléphone"><path d="M5 4h3l2 5-2 1a10 10 0 005 5l1-2 5 2v3a2 2 0 01-2 2A15 15 0 013 6a2 2 0 012-2z"/></svg>
+      </span>
+      <div>
+        <span class="ch-teams-tool">Teams ou téléphone · tout au long de la mission</span>
+        <p>Des points d'échange réguliers, en visio ou par téléphone, pour ajuster les hypothèses au bon moment et garantir la qualité du rapport.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

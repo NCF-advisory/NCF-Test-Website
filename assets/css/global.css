@@ -360,7 +360,11 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
   display: flex; align-items: center; gap: 10px;
   font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase;
   color: var(--text-3);
+  text-decoration: none;
 }
+a.footer-novances { transition: color 0.2s ease, opacity 0.2s ease; }
+a.footer-novances:hover { color: var(--text-2); }
+a.footer-novances:hover img { opacity: 1; }
 .footer-novances strong { color: var(--text-strong); font-weight: 600; }
 .footer-novances img {
   height: 22px; width: auto; display: block;

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prototype — CTA Parler à un expert (3 variantes)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/global.css" />
+  <link rel="stylesheet" href="/assets/css/pages/home.css" />
+  <style>
+    body { background: var(--bg-base); }
+    .variant-tag {
+      max-width: 1100px; margin: 2.5rem auto 0; padding: 0 2rem;
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent-deep);
+    }
+    .variant-tag span { color: var(--text-3); font-weight: 600; letter-spacing: 0; text-transform: none; }
+
+    /* ───────── Variante 1 — Signature humaine (avatar rond) ───────── */
+    .cta-expert {
+      display: flex; align-items: center; gap: 14px;
+      margin-top: 1.75rem; padding: 0.9rem 1rem;
+      background: var(--card-bg-soft);
+      border: 1px solid var(--line-2);
+      border-left: 3px solid var(--accent);
+      border-radius: 12px;
+    }
+    .cta-expert-photo {
+      width: 60px; height: 60px; border-radius: 50%; object-fit: cover;
+      border: 2px solid #fff; box-shadow: 0 6px 16px -6px rgba(6,24,56,0.4); flex-shrink: 0;
+    }
+    .cta-expert-tag {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent-deep); margin-bottom: 3px;
+    }
+    .cta-expert-name { font-size: 0.98rem; font-weight: 700; color: var(--text-strong); line-height: 1.15; }
+    .cta-expert-role { font-size: 0.8rem; color: var(--text-2); margin-top: 1px; }
+
+    /* ───────── Variante 2 — Portrait médaillon en tête ───────── */
+    .cta-portrait-head { display: flex; align-items: center; gap: 1.1rem; }
+    .cta-portrait {
+      width: 104px; height: 128px; border-radius: 14px; object-fit: cover; flex-shrink: 0;
+      border: 3px solid #fff; box-shadow: 0 18px 36px -18px rgba(6,24,56,0.45);
+    }
+    .cta-portrait-head h2 { margin-top: 0.35rem; }
+    .cta-portrait-meta {
+      font-size: 0.8rem; color: var(--text-2); margin-top: 0.55rem;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .cta-portrait-meta strong { color: var(--text-strong); font-weight: 700; }
+    .cta-portrait-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--line-4); }
+
+    /* ───────── Variante 3 — Carte engagement / verbatim ───────── */
+    .cta-pledge {
+      display: flex; gap: 1.1rem; align-items: center;
+      margin-top: 1.75rem; padding: 1.2rem 1.3rem;
+      background: var(--card-bg);
+      border: 1px solid var(--line-2);
+      border-radius: 14px;
+      box-shadow: 0 24px 48px -34px var(--accent-a-22);
+    }
+    .cta-pledge-photo {
+      width: 76px; height: 96px; border-radius: 12px; object-fit: cover; flex-shrink: 0;
+      border: 2px solid #fff; box-shadow: 0 10px 22px -10px rgba(6,24,56,0.4);
+    }
+    .cta-pledge-quote {
+      font-size: 0.95rem; line-height: 1.55; color: var(--text-1); font-weight: 500; margin: 0;
+    }
+    .cta-pledge-name { font-size: 0.82rem; color: var(--text-2); margin-top: 0.6rem; }
+    .cta-pledge-name strong { color: var(--text-strong); font-weight: 700; }
+
+    /* ───────── Variante 4 — Portrait en filigrane (fond de la colonne) ───────── */
+    .cta-side--bg { position: relative; isolation: isolate; }
+    .cta-side--bg::before {
+      content: '';
+      position: absolute; inset: -1rem -1.5rem;
+      z-index: -1;
+      background-image: url(/assets/img/team/frederic-lemonnier.jpg);
+      background-size: cover;
+      background-position: 78% 22%;
+      opacity: 0.16;
+      -webkit-mask-image: radial-gradient(125% 115% at 82% 28%, #000 0%, #000 38%, transparent 78%);
+      mask-image: radial-gradient(125% 115% at 82% 28%, #000 0%, #000 38%, transparent 78%);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════ VARIANTE 1 ════════ -->
+<div class="variant-tag">Variante 1 — Signature humaine <span>· petit portrait rond + « Votre interlocuteur »</span></div>
+<section class="cta-section" id="v1">
+  <div class="cta-inner">
+    <div class="cta-side">
+      <div class="section-eyebrow">Contact</div>
+      <h2>Parler à un expert.</h2>
+      <p class="cta-lead">Un premier échange confidentiel, sans engagement. Précisez votre situation et un membre de l'équipe NCF vous répond sous 24 h ouvrées.</p>
+
+      <div class="cta-expert">
+        <img class="cta-expert-photo" src="/assets/img/team/frederic-lemonnier.jpg" alt="Frédéric Lemonnier" />
+        <div>
+          <div class="cta-expert-tag">Votre interlocuteur</div>
+          <div class="cta-expert-name">Frédéric Lemonnier</div>
+          <div class="cta-expert-role">Associé · Cabinet NCF</div>
+        </div>
+      </div>
+
+      <div class="cta-contacts">
+        <div class="cta-contact">
+          <div class="cta-contact-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M 6 5 Q 5 5 5 6 L 5 8 Q 5 14 10 17 Q 13 19 16 19 L 18 19 Q 19 19 19 18 L 19 16 L 15 14 L 13 16 Q 10 14 8 11 L 10 9 L 8 5 Z"/></svg></div>
+          <div><div class="cta-contact-label">Téléphone</div><a class="cta-contact-val" href="tel:+33667104698">06 67 10 46 98</a></div>
+        </div>
+        <div class="cta-contact">
+          <div class="cta-contact-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="7" width="16" height="11"/><path d="M 4 8 L 12 13 L 20 8"/></svg></div>
+          <div><div class="cta-contact-label">Email</div><a class="cta-contact-val" href="#">ncf@ncf-advisory.fr</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="form-card">
+        <div class="form-row">
+          <div class="form-field"><label class="form-label">Prénom *</label><input class="form-input" placeholder="Jean" /></div>
+          <div class="form-field"><label class="form-label">Nom *</label><input class="form-input" placeholder="Dupont" /></div>
+        </div>
+        <div class="form-field"><label class="form-label">Email *</label><input class="form-input" placeholder="jean.dupont@entreprise.fr" /></div>
+        <div class="form-field"><label class="form-label">Message</label><textarea class="form-textarea" placeholder="Décrivez brièvement votre projet…"></textarea></div>
+        <button class="btn-primary form-submit">Envoyer ma demande
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ VARIANTE 2 ════════ -->
+<div class="variant-tag">Variante 2 — Portrait médaillon <span>· portrait vertical en tête, à côté du titre</span></div>
+<section class="cta-section" id="v2">
+  <div class="cta-inner">
+    <div class="cta-side">
+      <div class="cta-portrait-head">
+        <img class="cta-portrait" src="/assets/img/team/frederic-lemonnier.jpg" alt="Frédéric Lemonnier" />
+        <div>
+          <div class="section-eyebrow">Contact</div>
+          <h2>Parler à un expert.</h2>
+          <div class="cta-portrait-meta"><strong>Frédéric Lemonnier</strong><span class="dot"></span>Associé · Cabinet NCF</div>
+        </div>
+      </div>
+      <p class="cta-lead">Un premier échange confidentiel, sans engagement. Précisez votre situation et un membre de l'équipe NCF vous répond sous 24 h ouvrées.</p>
+
+      <div class="cta-contacts">
+        <div class="cta-contact">
+          <div class="cta-contact-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M 6 5 Q 5 5 5 6 L 5 8 Q 5 14 10 17 Q 13 19 16 19 L 18 19 Q 19 19 19 18 L 19 16 L 15 14 L 13 16 Q 10 14 8 11 L 10 9 L 8 5 Z"/></svg></div>
+          <div><div class="cta-contact-label">Téléphone</div><a class="cta-contact-val" href="tel:+33667104698">06 67 10 46 98</a></div>
+        </div>
+        <div class="cta-contact">
+          <div class="cta-contact-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="7" width="16" height="11"/><path d="M 4 8 L 12 13 L 20 8"/></svg></div>
+          <div><div class="cta-contact-label">Email</div><a class="cta-contact-val" href="#">ncf@ncf-advisory.fr</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="form-card">
+        <div class="form-row">
+          <div class="form-field"><label class="form-label">Prénom *</label><input class="form-input" placeholder="Jean" /></div>
+          <div class="form-field"><label class="form-label">Nom *</label><input class="form-input" placeholder="Dupont" /></div>
+        </div>
+        <div class="form-field"><label class="form-label">Email *</label><input class="form-input" placeholder="jean.dupont@entreprise.fr" /></div>
+        <div class="form-field"><label class="form-label">Message</label><textarea class="form-textarea" placeholder="Décrivez brièvement votre projet…"></textarea></div>
+        <button class="btn-primary form-submit">Envoyer ma demande
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ VARIANTE 3 ════════ -->
+<div class="variant-tag">Variante 3 — Carte engagement <span>· portrait + phrase à la première personne</span></div>
+<section class="cta-section" id="v3">
+  <div class="cta-inner">
+    <div class="cta-side">
+      <div class="section-eyebrow">Contact</div>
+      <h2>Parler à un expert.</h2>
+      <p class="cta-lead">Un premier échange confidentiel, sans engagement. Précisez votre situation et un membre de l'équipe NCF vous répond sous 24 h ouvrées.</p>
+
+      <div class="cta-pledge">
+        <img class="cta-pledge-photo" src="/assets/img/team/frederic-lemonnier.jpg" alt="Frédéric Lemonnier" />
+        <div class="cta-pledge-body">
+          <p class="cta-pledge-quote">« Je m'assure personnellement que chaque demande reçoit une réponse claire et rigoureuse, sous 24 h. »</p>
+          <div class="cta-pledge-name"><strong>Frédéric Lemonnier</strong> — Associé, Cabinet NCF</div>
+        </div>
+      </div>
+
+      <div class="cta-contacts">
+        <div class="cta-contact">
+          <div class="cta-contact-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M 6 5 Q 5 5 5 6 L 5 8 Q 5 14 10 17 Q 13 19 16 19 L 18 19 Q 19 19 19 18 L 19 16 L 15 14 L 13 16 Q 10 14 8 11 L 10 9 L 8 5 Z"/></svg></div>
+          <div><div class="cta-contact-label">Téléphone</div><a class="cta-contact-val" href="tel:+33667104698">06 67 10 46 98</a></div>
+        </div>
+        <div class="cta-contact">
+          <div class="cta-contact-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="7" width="16" height="11"/><path d="M 4 8 L 12 13 L 20 8"/></svg></div>
+          <div><div class="cta-contact-label">Email</div><a class="cta-contact-val" href="#">ncf@ncf-advisory.fr</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="form-card">
+        <div class="form-row">
+          <div class="form-field"><label class="form-label">Prénom *</label><input class="form-input" placeholder="Jean" /></div>
+          <div class="form-field"><label class="form-label">Nom *</label><input class="form-input" placeholder="Dupont" /></div>
+        </div>
+        <div class="form-field"><label class="form-label">Email *</label><input class="form-input" placeholder="jean.dupont@entreprise.fr" /></div>
+        <div class="form-field"><label class="form-label">Message</label><textarea class="form-textarea" placeholder="Décrivez brièvement votre projet…"></textarea></div>
+        <button class="btn-primary form-submit">Envoyer ma demande
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ VARIANTE 4 ════════ -->
+<div class="variant-tag">Variante 4 — Portrait en filigrane <span>· photo en fond de la colonne, opacité faible</span></div>
+<section class="cta-section" id="v4">
+  <div class="cta-inner">
+    <div class="cta-side cta-side--bg">
+      <div class="section-eyebrow">Contact</div>
+      <h2>Parler à un expert.</h2>
+      <p class="cta-lead">Un premier échange confidentiel, sans engagement. Précisez votre situation et un membre de l'équipe NCF vous répond sous 24 h ouvrées.</p>
+
+      <div class="cta-contacts">
+        <div class="cta-contact">
+          <div class="cta-contact-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M 6 5 Q 5 5 5 6 L 5 8 Q 5 14 10 17 Q 13 19 16 19 L 18 19 Q 19 19 19 18 L 19 16 L 15 14 L 13 16 Q 10 14 8 11 L 10 9 L 8 5 Z"/></svg></div>
+          <div><div class="cta-contact-label">Téléphone</div><a class="cta-contact-val" href="tel:+33667104698">06 67 10 46 98</a></div>
+        </div>
+        <div class="cta-contact">
+          <div class="cta-contact-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="7" width="16" height="11"/><path d="M 4 8 L 12 13 L 20 8"/></svg></div>
+          <div><div class="cta-contact-label">Email</div><a class="cta-contact-val" href="#">ncf@ncf-advisory.fr</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="form-card">
+        <div class="form-row">
+          <div class="form-field"><label class="form-label">Prénom *</label><input class="form-input" placeholder="Jean" /></div>
+          <div class="form-field"><label class="form-label">Nom *</label><input class="form-input" placeholder="Dupont" /></div>
+        </div>
+        <div class="form-field"><label class="form-label">Email *</label><input class="form-input" placeholder="jean.dupont@entreprise.fr" /></div>
+        <div class="form-field"><label class="form-label">Message</label><textarea class="form-textarea" placeholder="Décrivez brièvement votre projet…"></textarea></div>
+        <button class="btn-primary form-submit">Envoyer ma demande
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
