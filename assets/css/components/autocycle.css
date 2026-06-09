@@ -1,0 +1,480 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   AUTOCYCLE — composant « Pourquoi nous » à onglets auto-cyclés
+   3 arguments différenciants, vitrine qui défile en continu (motion).
+   Couleur d'accent HÉRITÉE de la page via var(--persona) (body.is-<persona>).
+   Markup : section.why > .why__inner > .why__head + .tabs#tabs   ·   JS : /assets/js/autocycle.js
+   ═══════════════════════════════════════════════════════════════════════ */
+
+        .why {
+      position: relative;
+      padding: clamp(4rem, 9vh, 6.5rem) clamp(1.25rem, 5vw, 3rem);
+      background:
+        radial-gradient(900px 520px at 18% 12%, rgba(var(--persona-rgb) / .06), transparent 60%),
+        var(--bg-base);
+      /* tempo du composant */
+      --cycle: 4500ms;
+      --xfade: 640ms;
+      --ease-out: cubic-bezier(.22, 1, .36, 1);
+      --ease-soft: cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .why__inner {
+      width: 100%;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    /* ── En-tête de section ── */
+    .why__head {
+      max-width: 720px;
+      margin: 0 0 clamp(2.25rem, 5vw, 3.5rem);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .6em;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--persona);
+      margin-bottom: 1.1rem;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 1.9rem;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--persona);
+      opacity: .55;
+    }
+
+    .why__title {
+      font-size: clamp(1.9rem, 4.4vw, 3rem);
+      line-height: 1.08;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      color: var(--text-strong);
+    }
+    .why__title span { color: var(--persona); }
+
+    /* ── Conteneur onglets ── */
+    .tabs {
+      position: relative;
+      border-radius: 22px;
+      background: var(--card-bg);
+      border: 1px solid var(--line-2);
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, .7) inset,
+        0 24px 60px -32px rgba(6, 24, 56, .35),
+        0 4px 14px -8px rgba(6, 24, 56, .18);
+      overflow: hidden;
+    }
+
+    /* ── Barre d'onglets (libellés) ── */
+    .tabs__nav {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      position: relative;
+      border-bottom: 1px solid var(--line-2);
+      background: rgba(var(--persona-rgb) / .025);
+    }
+
+    .tab {
+      appearance: none;
+      -webkit-appearance: none;
+      background: none;
+      border: 0;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      padding: clamp(1rem, 2.4vw, 1.4rem) clamp(1rem, 2.4vw, 1.6rem);
+      display: flex;
+      flex-direction: column;
+      gap: .35rem;
+      position: relative;
+      color: var(--text-3);
+      transition: color .35s ease, background .35s ease;
+      isolation: isolate;
+    }
+    .tab + .tab { border-left: 1px solid var(--line-1); }
+    .tab:hover { color: var(--text-2); }
+    .tab:focus-visible {
+      outline: 2px solid var(--persona);
+      outline-offset: -3px;
+      border-radius: 6px;
+    }
+
+    .tab__idx {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      color: var(--persona);
+      opacity: .55;
+      transition: opacity .35s ease;
+      font-variant-numeric: tabular-nums;
+    }
+    .tab__label {
+      font-size: clamp(.86rem, 1.6vw, .98rem);
+      font-weight: 600;
+      letter-spacing: -.01em;
+      line-height: 1.25;
+    }
+
+    .tab[aria-selected="true"] {
+      color: var(--text-strong);
+      background: var(--bg-mid);
+    }
+    .tab[aria-selected="true"] .tab__idx { opacity: 1; }
+
+    /* Piste + remplisseur de progression (sous la nav) */
+    .tabs__track {
+      position: absolute;
+      left: 0; right: 0; bottom: -1px;
+      height: 3px;
+      background: var(--line-2);
+      z-index: 3;
+    }
+    .tabs__fill {
+      position: absolute;
+      top: 0; bottom: 0;
+      width: calc(100% / 3);
+      background: linear-gradient(90deg,
+        rgba(var(--persona-rgb) / .5),
+        var(--persona));
+      border-radius: 3px;
+      transform-origin: left center;
+      transform: scaleX(0);
+      /* left animé par JS (saut d'onglet) ; scaleX animé par la classe .run */
+      transition: left var(--xfade) var(--ease-out);
+      box-shadow: 0 0 12px -2px rgba(var(--persona-rgb) / .5);
+    }
+    .tabs__fill::after {
+      content: "";
+      position: absolute;
+      right: 0; top: 50%;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--persona);
+      box-shadow: 0 0 0 4px rgba(var(--persona-rgb) / .16);
+      transform: translate(50%, -50%);
+      opacity: 0;
+      transition: opacity .3s ease;
+    }
+    .tabs.is-running .tabs__fill::after { opacity: 1; }
+
+    .tabs.is-running .tabs__fill {
+      transform: scaleX(1);
+      transition:
+        left var(--xfade) var(--ease-out),
+        transform var(--cycle) linear;
+    }
+    .tabs.is-paused .tabs__fill {
+      /* fige la progression là où elle en est */
+      transition: left var(--xfade) var(--ease-out);
+    }
+
+    /* ── Scène des panneaux ── */
+    .tabs__stage {
+      position: relative;
+      display: grid;
+    }
+
+    .panel {
+      grid-area: 1 / 1;
+      padding: clamp(1.75rem, 4.5vw, 3.25rem) clamp(1.5rem, 4.5vw, 3.5rem);
+      display: grid;
+      grid-template-columns: 1fr clamp(220px, 32%, 320px);
+      gap: clamp(1.75rem, 4.5vw, 3.5rem);
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition:
+        opacity var(--xfade) var(--ease-out),
+        transform var(--xfade) var(--ease-out),
+        visibility 0s linear var(--xfade);
+      pointer-events: none;
+    }
+    .panel.is-active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      transition:
+        opacity var(--xfade) var(--ease-out),
+        transform var(--xfade) var(--ease-out),
+        visibility 0s;
+      pointer-events: auto;
+    }
+
+    /* ── Colonne texte ── */
+    .panel__body {
+      min-width: 0;
+      grid-column: 1;
+      order: 1;
+    }
+
+    .panel__tag {
+      display: inline-flex;
+      align-items: center;
+      gap: .5em;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--persona);
+      background: rgba(var(--persona-rgb) / .08);
+      border: 1px solid rgba(var(--persona-rgb) / .18);
+      padding: .42em .85em;
+      border-radius: 999px;
+      margin-bottom: 1.1rem;
+    }
+    .panel__tag::before {
+      content: "";
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--persona);
+    }
+
+    .panel__title {
+      font-size: clamp(1.3rem, 2.8vw, 1.8rem);
+      line-height: 1.16;
+      font-weight: 700;
+      letter-spacing: -.015em;
+      color: var(--text-strong);
+      margin-bottom: .9rem;
+    }
+
+    .panel__text {
+      font-size: clamp(.98rem, 1.7vw, 1.08rem);
+      line-height: 1.62;
+      color: var(--text-2);
+      max-width: 52ch;
+    }
+
+    /* Puces interlocuteurs (arg 2) */
+    .panel__chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .55rem;
+      margin-top: 1.5rem;
+    }
+    .chip {
+      font-size: .82rem;
+      font-weight: 600;
+      letter-spacing: -.005em;
+      color: var(--text-1);
+      background: var(--bg-mid);
+      border: 1px solid var(--line-2);
+      padding: .5em .9em;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: .55em;
+    }
+    .chip::before {
+      content: "";
+      width: 6px; height: 6px;
+      border-radius: 2px;
+      background: var(--persona);
+      opacity: .7;
+    }
+
+    /* ── Colonne visuelle : grand médaillon animé ── */
+    .panel__media {
+      grid-column: 2;
+      order: 2;
+      position: relative;
+      aspect-ratio: 1 / 1;
+      display: grid;
+      place-items: center;
+      justify-self: center;
+      align-self: center;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    /* Anneaux concentriques qui pulsent en continu */
+    .panel__ring {
+      position: absolute;
+      top: 50%; left: 50%;
+      border-radius: 50%;
+      border: 1px solid rgba(var(--persona-rgb) / .28);
+      transform: translate(-50%, -50%);
+      will-change: transform, opacity;
+    }
+    .panel__ring--1 { width: 100%; height: 100%; opacity: .5; }
+    .panel__ring--2 { width: 72%;  height: 72%;  opacity: .75; border-color: rgba(var(--persona-rgb) / .35); }
+    .panel__ring--3 {
+      width: 46%; height: 46%;
+      border: 0;
+      background:
+        radial-gradient(120% 120% at 32% 26%, rgba(var(--persona-rgb) / .16), rgba(var(--persona-rgb) / .05));
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .6),
+        0 18px 40px -22px rgba(var(--persona-rgb) / .8);
+    }
+
+    /* Onde de pulsation qui s'écarte en boucle */
+    .panel__pulse {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 46%; height: 46%;
+      border-radius: 50%;
+      border: 1px solid rgba(var(--persona-rgb) / .45);
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0;
+      will-change: transform, opacity;
+    }
+
+    /* Médaillon central : icône qui flotte */
+    .panel__medal {
+      position: relative;
+      z-index: 2;
+      width: 38%;
+      height: 38%;
+      border-radius: 28%;
+      display: grid;
+      place-items: center;
+      color: var(--persona);
+      background: var(--bg-mid);
+      border: 1px solid rgba(var(--persona-rgb) / .26);
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, .8) inset,
+        0 14px 30px -18px rgba(var(--persona-rgb) / .75);
+      will-change: transform;
+    }
+    .panel__medal svg {
+      width: 48%;
+      height: 48%;
+    }
+
+    /* Animations d'ambiance — vivent en continu (pas seulement au survol) */
+    .panel.is-active .panel__ring--1 { animation: breathe 5.4s var(--ease-soft) infinite; }
+    .panel.is-active .panel__ring--2 { animation: breathe 5.4s var(--ease-soft) infinite .9s; }
+    .panel.is-active .panel__medal   { animation: float 4.6s ease-in-out infinite; }
+    .panel.is-active .panel__pulse   { animation: pulse 4.5s var(--ease-soft) infinite; }
+
+    @keyframes breathe {
+      0%, 100% { transform: translate(-50%, -50%) scale(1);    opacity: var(--o, .5); }
+      50%      { transform: translate(-50%, -50%) scale(1.06); opacity: calc(var(--o, .5) * .55); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(-4%) rotate(-1.2deg); }
+      50%      { transform: translateY(4%)  rotate(1.2deg); }
+    }
+    @keyframes pulse {
+      0%   { transform: translate(-50%, -50%) scale(.92); opacity: 0; }
+      18%  { opacity: .55; }
+      80%  { opacity: 0; }
+      100% { transform: translate(-50%, -50%) scale(2.05); opacity: 0; }
+    }
+
+    /* Entrée du médaillon au changement d'onglet */
+    .panel.is-active .panel__media { animation: medalIn var(--xfade) var(--ease-out) both; }
+    @keyframes medalIn {
+      0%   { opacity: 0; transform: translateY(10px) scale(.92); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Animation d'entrée échelonnée des éléments texte du panneau actif */
+    .panel.is-active .panel__tag   { animation: itemIn 540ms var(--ease-out) both 80ms; }
+    .panel.is-active .panel__title { animation: itemIn 580ms var(--ease-out) both 170ms; }
+    .panel.is-active .panel__text  { animation: itemIn 620ms var(--ease-out) both 260ms; }
+    .panel.is-active .chip         { animation: itemIn 560ms var(--ease-out) both calc(360ms + var(--i, 0) * 80ms); }
+
+    @keyframes itemIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Pied de scène : dots + compteur discret */
+    .tabs__foot {
+      display: flex;
+      align-items: center;
+      gap: .9rem;
+      padding: 0 clamp(1.5rem, 4.5vw, 3.5rem) clamp(1.5rem, 4vw, 2.6rem);
+    }
+    .tabs__dots { display: flex; gap: .55rem; }
+    .dot {
+      appearance: none;
+      border: 0;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--line-3);
+      cursor: pointer;
+      padding: 0;
+      transition: background .3s ease, transform .3s ease, box-shadow .3s ease;
+    }
+    .dot[aria-current="true"] {
+      background: var(--persona);
+      transform: scale(1.25);
+      box-shadow: 0 0 0 4px rgba(var(--persona-rgb) / .14);
+    }
+    .dot:focus-visible { outline: 2px solid var(--persona); outline-offset: 3px; }
+    .tabs__state {
+      font-size: .74rem;
+      font-weight: 600;
+      letter-spacing: .02em;
+      color: var(--text-3);
+      font-variant-numeric: tabular-nums;
+    }
+    .tabs__state b { color: var(--text-strong); font-weight: 700; }
+
+    /* ── Responsive < 820px : 1 colonne, visuel au-dessus du texte ── */
+    @media (max-width: 820px) {
+      .panel {
+        grid-template-columns: 1fr;
+        gap: clamp(1.5rem, 5vw, 2rem);
+        justify-items: center;
+        text-align: left;
+      }
+      .panel__media {
+        grid-column: 1;
+        order: 1;
+        max-width: clamp(160px, 42vw, 220px);
+      }
+      .panel__body {
+        grid-column: 1;
+        order: 2;
+        width: 100%;
+      }
+      .panel__text { max-width: 60ch; }
+    }
+
+    @media (max-width: 560px) {
+      .tab__label { font-size: .82rem; }
+      .tab { padding: .9rem .85rem; }
+      .tab__idx { font-size: .68rem; }
+    }
+
+    /* ── Reduced motion : tout révélé, pas d'autoplay ── */
+    @media (prefers-reduced-motion: reduce) {
+      .tabs__fill,
+      .panel,
+      .panel.is-active .panel__media,
+      .panel.is-active .panel__ring--1,
+      .panel.is-active .panel__ring--2,
+      .panel.is-active .panel__medal,
+      .panel.is-active .panel__pulse,
+      .panel.is-active .panel__tag,
+      .panel.is-active .panel__title,
+      .panel.is-active .panel__text,
+      .panel.is-active .chip {
+        animation: none !important;
+        transition: opacity .2s ease !important;
+        transform: none !important;
+      }
+      .panel__ring,
+      .panel__medal { transform: translate(-50%, -50%) !important; }
+      .panel__medal { left: 50%; top: 50%; position: absolute; }
+      .panel__pulse { display: none; }
+      .tabs__fill { display: none; }
+      .panel {
+        opacity: 1;
+        visibility: visible;
+      }
+      .panel:not(.is-active) { display: none; }
+    }
+  

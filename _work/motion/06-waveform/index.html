@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onde de défense — Pourquoi nous · Avocats</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/global.css">
+  <style>
+    :root {
+      --persona: var(--p-avocat);
+      --persona-soft: var(--p-avocat-soft);
+      --persona-rgb: 79 70 229;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      background: var(--bg-base);
+      color: var(--text-1);
+      font-family: "Inter", system-ui, sans-serif;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .wf {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: clamp(4rem, 9vw, 8rem) clamp(1.25rem, 5vw, 3rem) clamp(5rem, 10vw, 9rem);
+    }
+
+    /* ---------- Header ---------- */
+    .wf-head {
+      max-width: 760px;
+      margin: 0 auto clamp(3rem, 6vw, 5rem);
+      text-align: center;
+    }
+
+    .wf-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--persona);
+      margin: 0 0 1.25rem;
+    }
+    .wf-eyebrow::before {
+      content: "";
+      width: 26px;
+      height: 1.5px;
+      background: currentColor;
+      opacity: 0.55;
+    }
+    /* live pulsing dot in the eyebrow — "on parle" */
+    .wf-eyebrow-dot {
+      position: relative;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--persona);
+    }
+    .wf-eyebrow-dot::after {
+      content: "";
+      position: absolute; inset: -4px;
+      border-radius: 50%;
+      border: 1.5px solid var(--persona);
+      animation: dotPing 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+    @keyframes dotPing {
+      0%   { transform: scale(0.5); opacity: 0.9; }
+      80%, 100% { transform: scale(1.9); opacity: 0; }
+    }
+
+    .wf-title {
+      font-size: clamp(1.9rem, 4.4vw, 3rem);
+      line-height: 1.08;
+      font-weight: 800;
+      letter-spacing: -0.022em;
+      color: var(--text-strong);
+      margin: 0;
+    }
+    .wf-title span { color: var(--persona); }
+
+    .wf-sub {
+      margin: 1.4rem auto 0;
+      max-width: 540px;
+      font-size: 1.02rem;
+      line-height: 1.7;
+      color: var(--text-2);
+    }
+
+    /* ---------- Waveform stage ---------- */
+    .wf-stage {
+      position: relative;
+      border-radius: 22px;
+      background: var(--card-bg);
+      border: 1px solid var(--line-2);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset, 0 24px 60px -38px rgba(6, 24, 56, 0.45);
+      overflow: hidden;
+    }
+
+    /* The continuously pulsing equalizer band */
+    .wf-band {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(3px, 0.7vw, 7px);
+      height: clamp(110px, 16vw, 158px);
+      padding: 0 clamp(1.25rem, 4vw, 2.75rem);
+      background:
+        radial-gradient(120% 140% at 50% 0%, rgba(var(--persona-rgb) / 0.07) 0%, transparent 62%),
+        var(--bg-elevated);
+      border-bottom: 1px solid var(--line-2);
+      overflow: hidden;
+    }
+    /* faint baseline through the equalizer */
+    .wf-band::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; top: 50%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(var(--persona-rgb) / 0.22) 18%, rgba(var(--persona-rgb) / 0.22) 82%, transparent);
+      transform: translateY(-0.5px);
+    }
+
+    .wf-bar {
+      width: clamp(3px, 0.7vw, 6px);
+      flex: 0 0 auto;
+      border-radius: 99px;
+      background: linear-gradient(180deg,
+        rgba(var(--persona-rgb) / 0.85) 0%,
+        rgba(var(--persona-rgb) / 0.55) 100%);
+      transform-origin: center;
+      will-change: transform;
+      /* height is the full track; we scaleY in JS for a smooth equalizer */
+      height: 64%;
+      transform: scaleY(0.18);
+    }
+
+    /* ---------- Replies / dialogue ---------- */
+    .wf-replies {
+      position: relative;
+      padding: clamp(1.75rem, 3.5vw, 2.75rem) clamp(1.25rem, 4vw, 2.75rem) clamp(2rem, 4vw, 3rem);
+      display: grid;
+      gap: clamp(0.9rem, 1.8vw, 1.25rem);
+    }
+
+    .wf-reply {
+      position: relative;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: clamp(0.9rem, 2vw, 1.4rem);
+      padding: clamp(1.05rem, 2.4vw, 1.5rem) clamp(1.1rem, 2.6vw, 1.7rem);
+      border-radius: 16px;
+      background: var(--card-bg-soft);
+      border: 1px solid var(--line-2);
+      transition: border-color 0.6s ease, box-shadow 0.6s ease, background 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform, opacity;
+    }
+    /* speech-bubble tail toward the waveform */
+    .wf-reply::before {
+      content: "";
+      position: absolute;
+      top: -7px;
+      left: clamp(34px, 7vw, 52px);
+      width: 13px; height: 13px;
+      background: var(--card-bg-soft);
+      border-left: 1px solid var(--line-2);
+      border-top: 1px solid var(--line-2);
+      transform: rotate(45deg);
+      transition: background 0.6s ease, border-color 0.6s ease, box-shadow 0.6s ease;
+    }
+
+    /* Active reply — currently "speaking" */
+    .wf-reply.is-active {
+      background: #fff;
+      border-color: rgba(var(--persona-rgb) / 0.4);
+      box-shadow:
+        0 0 0 1px rgba(var(--persona-rgb) / 0.18),
+        0 18px 44px -26px rgba(var(--persona-rgb) / 0.55);
+      transform: translateY(-2px);
+    }
+    .wf-reply.is-active::before {
+      background: #fff;
+      border-color: rgba(var(--persona-rgb) / 0.4);
+    }
+    /* dimmed when another is speaking */
+    .wf-reply.is-dim { opacity: 0.5; }
+
+    /* left accent rail that "fills" while active */
+    .wf-rail {
+      position: absolute;
+      left: 0; top: 14px; bottom: 14px;
+      width: 3px;
+      border-radius: 99px;
+      background: rgba(var(--persona-rgb) / 0.18);
+      overflow: hidden;
+    }
+    .wf-rail::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: 100%;
+      top: 0;
+      background: var(--persona);
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.45s ease;
+    }
+    .wf-reply.is-active .wf-rail::after { transform: scaleY(1); }
+
+    .wf-icon {
+      flex: 0 0 auto;
+      width: clamp(42px, 7vw, 52px);
+      height: clamp(42px, 7vw, 52px);
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: var(--persona-soft);
+      color: var(--persona);
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), background 0.6s ease;
+    }
+    .wf-reply.is-active .wf-icon {
+      transform: scale(1.06);
+      background: rgba(var(--persona-rgb) / 0.2);
+    }
+    .wf-icon svg {
+      width: 56%;
+      height: 56%;
+      stroke-width: 1.7;
+    }
+
+    .wf-body { min-width: 0; }
+
+    .wf-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--persona);
+      padding: 0.25rem 0.6rem;
+      border-radius: 99px;
+      background: var(--persona-soft);
+      margin: 0 0 0.65rem;
+    }
+
+    .wf-rtitle {
+      font-size: clamp(1.08rem, 2.1vw, 1.32rem);
+      line-height: 1.25;
+      font-weight: 700;
+      letter-spacing: -0.012em;
+      color: var(--text-strong);
+      margin: 0 0 0.55rem;
+    }
+
+    .wf-text {
+      font-size: 0.96rem;
+      line-height: 1.68;
+      color: var(--text-2);
+      margin: 0;
+    }
+    .wf-reply.is-active .wf-text { color: var(--text-1); }
+
+    .wf-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.95rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .wf-chips li {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-1);
+      padding: 0.32rem 0.7rem;
+      border-radius: 8px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--line-2);
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease, border-color 0.5s ease;
+    }
+    .wf-reply.is-active .wf-chips li {
+      border-color: rgba(var(--persona-rgb) / 0.28);
+    }
+
+    /* progress ticks under the stage */
+    .wf-ticks {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: clamp(1.5rem, 3vw, 2.25rem);
+    }
+    .wf-tick {
+      width: 30px;
+      height: 4px;
+      border-radius: 99px;
+      background: var(--line-2);
+      overflow: hidden;
+      cursor: pointer;
+      border: none;
+      padding: 0;
+      position: relative;
+    }
+    .wf-tick::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      transform: translateX(-101%);
+      background: var(--persona);
+    }
+    .wf-tick.is-active::after {
+      transform: translateX(0);
+      transition: transform var(--cycle, 4200ms) linear;
+    }
+    .wf-tick.is-done::after { transform: translateX(0); }
+
+    @media (max-width: 560px) {
+      .wf-reply { grid-template-columns: 1fr; }
+      .wf-reply::before { left: clamp(20px, 8vw, 30px); }
+    }
+
+    /* ---------- Reduced motion: freeze on an aesthetic state, show everything ---------- */
+    @media (prefers-reduced-motion: reduce) {
+      .wf-eyebrow-dot::after { animation: none; }
+      .wf-bar { transition: none !important; }
+      .wf-reply { opacity: 1 !important; transform: none !important; }
+      .wf-reply.is-dim { opacity: 1 !important; }
+      .wf-rail::after { transform: scaleY(1) !important; transition: none !important; }
+      .wf-tick.is-active::after { transition: none !important; transform: translateX(0) !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wf">
+    <header class="wf-head">
+      <p class="wf-eyebrow"><span class="wf-eyebrow-dot" aria-hidden="true"></span>Pourquoi nous</p>
+      <h2 class="wf-title">Une valeur qui se <span>défend</span>, pas seulement qui se calcule</h2>
+      <p class="wf-sub">Trois prises de parole, un même fil : la rigueur du chiffre tenue par la voix qui la porte.</p>
+    </header>
+
+    <section class="wf-stage" aria-label="Nos trois arguments différenciants">
+      <!-- Continuous equalizer / waveform -->
+      <div class="wf-band" id="band" aria-hidden="true"></div>
+
+      <!-- Dialogue replies highlighted in sequence -->
+      <div class="wf-replies" id="replies">
+
+        <article class="wf-reply" data-i="0">
+          <span class="wf-rail" aria-hidden="true"></span>
+          <span class="wf-icon">
+            <svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#balance"/></svg>
+          </span>
+          <div class="wf-body">
+            <span class="wf-tag">Double casquette</span>
+            <h3 class="wf-rtitle">Du théoricien au praticien</h3>
+            <p class="wf-text">Évaluation ET fusion-acquisition sous le même toit : la rigueur technique de l'évaluation, et la connaissance du terrain et de la négociation. C'est ce qui nous permet de faire le pont entre le Guide de l'évaluation fiscale et la réalité du marché.</p>
+          </div>
+        </article>
+
+        <article class="wf-reply" data-i="1">
+          <span class="wf-rail" aria-hidden="true"></span>
+          <span class="wf-icon">
+            <svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#seal"/></svg>
+          </span>
+          <div class="wf-body">
+            <span class="wf-tag">Opposable &amp; adapté</span>
+            <h3 class="wf-rtitle">Un rapport qui tient, calibré pour son destinataire</h3>
+            <p class="wf-text">Méthodes reconnues, doctrine fiscale, jurisprudence : opposable à l'administration et repris tel quel dans vos actes. Nous adaptons l'argumentation selon l'interlocuteur visé.</p>
+            <ul class="wf-chips">
+              <li>Administration fiscale</li>
+              <li>Commissaire aux apports</li>
+              <li>Juge</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="wf-reply" data-i="2">
+          <span class="wf-rail" aria-hidden="true"></span>
+          <span class="wf-icon">
+            <svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#conversation"/></svg>
+          </span>
+          <div class="wf-body">
+            <span class="wf-tag">Défense orale</span>
+            <h3 class="wf-rtitle">Au-delà du document</h3>
+            <p class="wf-text">Nous ne livrons pas qu'un rapport : nous intervenons pour défendre de vive voix la valeur retenue face à un tiers. Notre pratique de la cession en fait un point d'appui pour rapprocher les parties.</p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <div class="wf-ticks" id="ticks" role="tablist" aria-label="Argument en cours">
+      <button class="wf-tick" type="button" aria-label="Argument 1"></button>
+      <button class="wf-tick" type="button" aria-label="Argument 2"></button>
+      <button class="wf-tick" type="button" aria-label="Argument 3"></button>
+    </div>
+  </main>
+
+  <script>
+  (function () {
+    "use strict";
+
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var band = document.getElementById("band");
+    var replies = Array.prototype.slice.call(document.querySelectorAll(".wf-reply"));
+    var ticks = Array.prototype.slice.call(document.querySelectorAll(".wf-tick"));
+
+    var CYCLE = 4200;          // ms each argument stays "speaking"
+    var BAR_COUNT = 0;         // computed from width
+    document.documentElement.style.setProperty("--cycle", CYCLE + "ms");
+
+    /* ----- Build equalizer bars to fill the band width ----- */
+    var bars = [];
+    var phases = [];           // per-bar phase offset for organic motion
+    function buildBars() {
+      band.innerHTML = "";
+      bars = [];
+      phases = [];
+      var w = band.clientWidth || 800;
+      var unit = w < 480 ? 9 : (w < 760 ? 11 : 13); // bar + gap budget
+      BAR_COUNT = Math.max(18, Math.floor((w - 80) / unit));
+      var frag = document.createDocumentFragment();
+      for (var i = 0; i < BAR_COUNT; i++) {
+        var b = document.createElement("span");
+        b.className = "wf-bar";
+        frag.appendChild(b);
+        bars.push(b);
+        phases.push(Math.random() * Math.PI * 2);
+      }
+      band.appendChild(frag);
+    }
+
+    /* ----- Reduced motion: freeze on an aesthetic, symmetric waveform ----- */
+    function freezeBars() {
+      for (var i = 0; i < bars.length; i++) {
+        var t = i / (bars.length - 1);            // 0..1
+        // a calm, centered envelope so the still band looks intentional
+        var env = 0.22 + 0.78 * Math.pow(Math.sin(t * Math.PI), 1.1);
+        var ripple = 0.10 * Math.sin(t * Math.PI * 9);
+        var s = Math.max(0.12, Math.min(1, env * 0.7 + 0.18 + ripple));
+        bars[i].style.transform = "scaleY(" + s.toFixed(3) + ")";
+      }
+    }
+
+    if (reduce.matches) {
+      buildBars();
+      freezeBars();
+      // show every reply, mark all rails filled, ticks done
+      replies.forEach(function (r) { r.classList.remove("is-dim"); });
+      ticks.forEach(function (t) { t.classList.add("is-done"); });
+      replies[replies.length - 1].classList.add("is-active");
+      return;
+    }
+
+    buildBars();
+
+    var ro = (typeof ResizeObserver !== "undefined") ? new ResizeObserver(buildBars) : null;
+    if (ro) ro.observe(band);
+
+    /* ----- Sequencer: which reply is "speaking" ----- */
+    var active = -1;
+    var running = false;
+    var timer = null;
+
+    function setActive(i) {
+      active = i;
+      replies.forEach(function (r, k) {
+        r.classList.toggle("is-active", k === i);
+        r.classList.toggle("is-dim", k !== i);
+      });
+      ticks.forEach(function (t, k) {
+        t.classList.remove("is-active");
+        t.classList.toggle("is-done", k < i);
+      });
+      // restart the active tick fill cleanly
+      void ticks[i].offsetWidth;
+      ticks[i].classList.add("is-active");
+    }
+
+    function advance() {
+      setActive((active + 1) % replies.length);
+      timer = setTimeout(advance, CYCLE);
+    }
+
+    function start() {
+      if (running) return;
+      running = true;
+      tick();                     // start waveform loop
+      advance();                  // start dialogue sequence
+    }
+    function stop() {
+      running = false;
+      if (timer) { clearTimeout(timer); timer = null; }
+      if (raf) { cancelAnimationFrame(raf); raf = null; }
+    }
+
+    /* manual control via ticks */
+    ticks.forEach(function (t, k) {
+      t.addEventListener("click", function () {
+        if (timer) { clearTimeout(timer); }
+        setActive(k);
+        timer = setTimeout(advance, CYCLE);
+      });
+    });
+
+    /* ----- Continuous equalizer animation ----- */
+    var raf = null;
+    var startT = 0;
+
+    function tick(now) {
+      if (!running) return;
+      if (!startT) startT = now || performance.now();
+      var t = ((now || performance.now()) - startT) / 1000;
+
+      // travelling-wave envelope: a soft "voice" pulse sweeping across the band,
+      // amplified around the currently speaking reply's rhythm.
+      var n = bars.length;
+      var sweep = (t * 0.55) % 1;                 // 0..1 moving crest
+      for (var i = 0; i < n; i++) {
+        var u = i / (n - 1);                       // 0..1
+        // base oscillation, each bar slightly phase-shifted -> equalizer feel
+        var osc = Math.sin(t * 4.2 + phases[i] + u * 6.0);
+        var osc2 = Math.sin(t * 7.7 + phases[i] * 1.7);
+        var base = 0.34 + 0.26 * osc + 0.14 * osc2;
+        // moving crest bump for a "wave of speech" passing through
+        var d = Math.abs(u - sweep);
+        d = Math.min(d, 1 - d);                    // wrap-around distance
+        var crest = Math.exp(-(d * d) / 0.012) * 0.55;
+        var s = base + crest;
+        if (s < 0.1) s = 0.1;
+        if (s > 1) s = 1;
+        bars[i].style.transform = "scaleY(" + s.toFixed(3) + ")";
+      }
+      raf = requestAnimationFrame(tick);
+    }
+
+    /* ----- Only run while visible (perf + intent) ----- */
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            startT = 0;                 // resync wave on re-entry
+            start();
+          } else {
+            stop();
+          }
+        });
+      }, { threshold: 0.25 });
+      io.observe(document.querySelector(".wf-stage"));
+    } else {
+      start();
+    }
+  })();
+  </script>
+</body>
+</html>

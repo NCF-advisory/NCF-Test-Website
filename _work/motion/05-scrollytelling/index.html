@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pourquoi nous — scrollytelling à focus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/global.css">
+  <style>
+    :root {
+      --persona: var(--p-avocat);
+      --persona-soft: var(--p-avocat-soft);
+      --persona-rgb: 79 70 229;
+    }
+
+    html { scroll-behavior: auto; }
+    body { background: var(--bg-base); }
+
+    /* ─────────────────────────────────────────────
+       SECTION WRAPPER
+    ───────────────────────────────────────────── */
+    .scrolly {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(4rem, 9vh, 8rem) clamp(1.25rem, 5vw, 4rem) 0;
+    }
+
+    /* ── En-tête éditorial ── */
+    .scrolly-head {
+      max-width: 760px;
+      margin: 0 auto clamp(2rem, 6vh, 5rem);
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--persona);
+    }
+    .eyebrow::before {
+      content: '';
+      width: 26px;
+      height: 1.5px;
+      background: var(--persona);
+      opacity: 0.7;
+    }
+    .scrolly-head h2 {
+      margin-top: 1.1rem;
+      font-size: clamp(1.9rem, 4.6vw, 3rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      font-weight: 800;
+      color: var(--text-strong);
+    }
+    .scrolly-head h2 span { color: var(--persona); }
+    .scrolly-head p {
+      margin-top: 1.15rem;
+      max-width: 56ch;
+      font-size: clamp(1rem, 1.4vw, 1.12rem);
+      line-height: 1.65;
+      color: var(--text-2);
+    }
+
+    /* ─────────────────────────────────────────────
+       SCROLLYTELLING — piste haute + scène sticky
+       3 "tranches" de scroll, une par argument.
+       Rythme : ~1,15 viewport par argument (entrée + focus + sortie).
+    ───────────────────────────────────────────── */
+    .scrolly-track {
+      position: relative;
+      /* lead-in (.5) + 3 args + lead-out (.5) ≈ 1,15 vh / argument */
+      height: 345vh;
+    }
+
+    .stage {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: clamp(1.5rem, 5vw, 5rem);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    /* ── Atmosphère de fond : halos persona qui dérivent en boucle ──
+       Continu, indépendant du scroll : la scène n'est jamais figée. */
+    .ambient {
+      position: absolute;
+      inset: -25%;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .ambient::before,
+    .ambient::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(70px);
+      opacity: 0.55;
+      mix-blend-mode: multiply;
+      will-change: transform;
+    }
+    .ambient::before {
+      width: 48vw;
+      height: 48vw;
+      top: 4%;
+      left: 6%;
+      background: radial-gradient(circle at 50% 50%,
+        rgba(var(--persona-rgb) / 0.20) 0%,
+        rgba(var(--persona-rgb) / 0.06) 45%,
+        transparent 72%);
+      animation: drift-a 26s ease-in-out infinite;
+    }
+    .ambient::after {
+      width: 40vw;
+      height: 40vw;
+      bottom: 2%;
+      right: 4%;
+      background: radial-gradient(circle at 50% 50%,
+        rgba(var(--persona-rgb) / 0.16) 0%,
+        rgba(var(--persona-rgb) / 0.05) 48%,
+        transparent 74%);
+      animation: drift-b 32s ease-in-out infinite;
+    }
+    /* fin filet lumineux qui balaye lentement la scène */
+    .ambient-sheen {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(120% 80% at 50% 0%,
+        rgba(var(--persona-rgb) / 0.05) 0%,
+        transparent 55%);
+      animation: sheen 18s ease-in-out infinite;
+    }
+    @keyframes drift-a {
+      0%   { transform: translate3d(0, 0, 0) scale(1); }
+      33%  { transform: translate3d(7vw, 4vh, 0) scale(1.12); }
+      66%  { transform: translate3d(-3vw, 8vh, 0) scale(0.95); }
+      100% { transform: translate3d(0, 0, 0) scale(1); }
+    }
+    @keyframes drift-b {
+      0%   { transform: translate3d(0, 0, 0) scale(1); }
+      40%  { transform: translate3d(-6vw, -5vh, 0) scale(1.08); }
+      75%  { transform: translate3d(4vw, -2vh, 0) scale(0.92); }
+      100% { transform: translate3d(0, 0, 0) scale(1); }
+    }
+    @keyframes sheen {
+      0%, 100% { opacity: 0.5; }
+      50%      { opacity: 1; }
+    }
+
+    /* ─────────────────────────────────────────────
+       INDICATEUR — rail de progression vertical continu
+       Une ligne qui se remplit en persona + 3 jalons numérotés.
+    ───────────────────────────────────────────── */
+    .progress {
+      position: relative;
+      align-self: center;
+      width: 46px;
+      display: flex;
+      justify-content: center;
+    }
+    /* rail (piste) */
+    .progress-rail {
+      position: relative;
+      width: 3px;
+      height: clamp(220px, 46vh, 360px);
+      border-radius: 3px;
+      background: var(--line-2);
+      overflow: visible;
+    }
+    /* remplissage continu piloté par --p (0→1) */
+    .progress-fill {
+      position: absolute;
+      left: 0; top: 0; right: 0;
+      height: calc(var(--p, 0) * 100%);
+      border-radius: 3px;
+      background: linear-gradient(180deg,
+        var(--persona) 0%,
+        rgba(var(--persona-rgb) / 0.75) 100%);
+      box-shadow: 0 0 14px -2px rgba(var(--persona-rgb) / 0.6);
+      transition: height 0.12s linear;
+    }
+    /* tête lumineuse qui suit le front du remplissage */
+    .progress-head {
+      position: absolute;
+      left: 50%;
+      top: calc(var(--p, 0) * 100%);
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--persona);
+      box-shadow:
+        0 0 0 4px rgba(var(--persona-rgb) / 0.18),
+        0 0 16px 2px rgba(var(--persona-rgb) / 0.55);
+      transform: translate(-50%, -50%);
+      transition: top 0.12s linear;
+    }
+    /* pulsation continue de la tête (vie au repos) */
+    .progress-head::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1.5px solid var(--persona);
+      animation: headPulse 2.4s ease-out infinite;
+    }
+    @keyframes headPulse {
+      0%   { transform: scale(1);   opacity: 0.6; }
+      70%  { transform: scale(2.6); opacity: 0; }
+      100% { transform: scale(2.6); opacity: 0; }
+    }
+
+    /* jalons numérotés ancrés sur le rail */
+    .milestone {
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-3);
+      background: var(--bg-mid);
+      border: 1.5px solid var(--line-2);
+      transition: color 0.4s ease, border-color 0.4s ease,
+                  background 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
+    }
+    .milestone.is-active {
+      color: var(--persona);
+      border-color: var(--persona);
+      transform: translate(-50%, -50%) scale(1.18);
+      box-shadow: 0 6px 20px -6px rgba(var(--persona-rgb) / 0.55);
+    }
+    .milestone.is-done {
+      color: #fff;
+      background: var(--persona);
+      border-color: var(--persona);
+    }
+
+    /* ── Scène : pile de cartes argument ── */
+    .deck {
+      position: relative;
+      height: clamp(420px, 64vh, 560px);
+    }
+    .arg {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 640px;
+      /* défauts pilotés par JS via variables */
+      opacity: var(--op, 0);
+      transform:
+        translateY(var(--ty, 48px))
+        scale(var(--sc, 0.9));
+      filter: blur(var(--bl, 8px));
+      will-change: transform, opacity, filter;
+      pointer-events: none;
+    }
+    .arg.is-focus { pointer-events: auto; }
+
+    .arg-icon {
+      position: relative;
+      width: clamp(56px, 7vw, 76px);
+      height: clamp(56px, 7vw, 76px);
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      color: var(--persona);
+      background:
+        linear-gradient(155deg,
+          rgba(var(--persona-rgb) / 0.10) 0%,
+          rgba(var(--persona-rgb) / 0.02) 100%);
+      border: 1px solid rgba(var(--persona-rgb) / 0.18);
+      box-shadow:
+        0 1px 0 rgba(255,255,255,0.6) inset,
+        0 20px 40px -24px rgba(var(--persona-rgb) / 0.5);
+      margin-bottom: 1.6rem;
+    }
+    .arg-icon svg {
+      width: clamp(28px, 3.4vw, 38px);
+      height: clamp(28px, 3.4vw, 38px);
+      stroke-width: 1.5;
+    }
+    /* halo respirant en continu autour de l'icône focalisée */
+    .arg-icon::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: inherit;
+      border: 1px solid rgba(var(--persona-rgb) / 0.35);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .arg.is-focus .arg-icon::after {
+      animation: iconBreath 3.6s ease-in-out infinite;
+    }
+    @keyframes iconBreath {
+      0%, 100% { opacity: 0.25; transform: scale(1); }
+      50%      { opacity: 0.7;  transform: scale(1.07); }
+    }
+
+    .arg-tag {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--persona);
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      background: var(--persona-soft);
+      margin-bottom: 1rem;
+    }
+    .arg-num {
+      font-variant-numeric: tabular-nums;
+      opacity: 0.65;
+    }
+
+    .arg h3 {
+      font-size: clamp(1.55rem, 3.4vw, 2.5rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      font-weight: 800;
+      color: var(--text-strong);
+      margin-bottom: 1.1rem;
+    }
+    .arg p {
+      font-size: clamp(1rem, 1.45vw, 1.18rem);
+      line-height: 1.62;
+      color: var(--text-1);
+      max-width: 54ch;
+    }
+
+    /* puces interlocuteurs (arg 2) */
+    .arg-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1.5rem;
+    }
+    .arg-chips span {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-2);
+      padding: 0.45rem 0.95rem;
+      border-radius: 999px;
+      background: var(--bg-mid);
+      border: 1px solid var(--line-2);
+      box-shadow: 0 6px 16px -12px rgba(var(--persona-rgb) / 0.4);
+    }
+
+    /* indice de progression discret en bas de scène */
+    .scroll-hint {
+      position: absolute;
+      bottom: clamp(1.5rem, 4vh, 3rem);
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--text-3);
+      transition: opacity 0.4s ease;
+    }
+    .scroll-hint .line {
+      width: 1px;
+      height: 26px;
+      background: var(--line-3);
+      position: relative;
+      overflow: hidden;
+    }
+    .scroll-hint .line::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--persona);
+      transform: translateY(-100%);
+      animation: hintRun 1.8s cubic-bezier(.7,0,.3,1) infinite;
+    }
+    @keyframes hintRun {
+      0%   { transform: translateY(-100%); }
+      55%  { transform: translateY(0%); }
+      100% { transform: translateY(100%); }
+    }
+
+    .spacer { height: 30vh; }
+
+    /* ─────────────────────────────────────────────
+       RESPONSIVE < 820px
+    ───────────────────────────────────────────── */
+    @media (max-width: 820px) {
+      .stage {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+        align-content: center;
+      }
+      /* rail horizontal en haut de scène */
+      .progress {
+        width: 100%;
+        align-self: start;
+        margin-bottom: 0.5rem;
+      }
+      .progress-rail {
+        width: min(80%, 360px);
+        height: 3px;
+      }
+      .progress-fill {
+        top: 0; bottom: 0; left: 0; right: auto;
+        height: auto;
+        width: calc(var(--p, 0) * 100%);
+        background: linear-gradient(90deg,
+          var(--persona) 0%,
+          rgba(var(--persona-rgb) / 0.75) 100%);
+        transition: width 0.12s linear;
+      }
+      .progress-head {
+        top: 50%;
+        left: calc(var(--p, 0) * 100%);
+        transition: left 0.12s linear;
+      }
+      .milestone {
+        top: 50%;
+        left: var(--mx, 0%);
+      }
+      .deck { height: clamp(440px, 66vh, 600px); }
+      .arg h3 { font-size: clamp(1.45rem, 6.6vw, 2rem); }
+      .arg p { font-size: clamp(0.98rem, 3.6vw, 1.08rem); }
+      .scroll-hint { display: none; }
+    }
+
+    /* ─────────────────────────────────────────────
+       REDUCED MOTION — pas de sticky, tout empilé/lisible
+    ───────────────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      .scrolly-track { height: auto; }
+      .stage {
+        position: static;
+        height: auto;
+        display: block;
+        overflow: visible;
+        padding-bottom: 4rem;
+      }
+      .ambient, .progress { display: none; }
+      .deck { height: auto; }
+      .arg {
+        position: static;
+        inset: auto;
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+        pointer-events: auto;
+        max-width: 720px;
+        margin: 0 auto clamp(2.5rem, 6vh, 4rem);
+        padding-bottom: clamp(2rem, 5vh, 3rem);
+        border-bottom: 1px solid var(--line-1);
+      }
+      .arg:last-of-type { border-bottom: none; }
+      .arg-icon::after { animation: none; }
+      .scroll-hint { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="scrolly" aria-labelledby="why-title">
+    <div class="scrolly-head">
+      <span class="eyebrow">Pourquoi nous</span>
+      <h2 id="why-title">Trois raisons de nous confier la <span>valeur</span> que vous défendrez.</h2>
+      <p>Un cabinet d'évaluation qui pense comme un praticien de la cession, et qui rédige des rapports pensés pour tenir devant ceux qui les liront.</p>
+    </div>
+
+    <div class="scrolly-track">
+      <div class="stage">
+
+        <!-- Atmosphère de fond animée en continu -->
+        <div class="ambient" aria-hidden="true">
+          <div class="ambient-sheen"></div>
+        </div>
+
+        <!-- Indicateur : rail de progression vertical -->
+        <div class="progress" aria-hidden="true">
+          <div class="progress-rail">
+            <div class="progress-fill"></div>
+            <div class="progress-head"></div>
+            <span class="milestone" data-step="0" style="top:0%">1</span>
+            <span class="milestone" data-step="1" style="top:50%">2</span>
+            <span class="milestone" data-step="2" style="top:100%">3</span>
+          </div>
+        </div>
+
+        <!-- Pile de cartes argument -->
+        <div class="deck">
+
+          <article class="arg" data-arg="0">
+            <div class="arg-icon">
+              <svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#balance"/></svg>
+            </div>
+            <span class="arg-tag"><span class="arg-num">01</span> Double casquette</span>
+            <h3>Du théoricien au praticien</h3>
+            <p>Évaluation ET fusion-acquisition sous le même toit : la rigueur technique de l'évaluation, et la connaissance du terrain et de la négociation. C'est ce qui nous permet de faire le pont entre le Guide de l'évaluation fiscale et la réalité du marché.</p>
+          </article>
+
+          <article class="arg" data-arg="1">
+            <div class="arg-icon">
+              <svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#seal"/></svg>
+            </div>
+            <span class="arg-tag"><span class="arg-num">02</span> Opposable &amp; adapté</span>
+            <h3>Un rapport qui tient, calibré pour son destinataire</h3>
+            <p>Méthodes reconnues, doctrine fiscale, jurisprudence : opposable à l'administration et repris tel quel dans vos actes. Nous adaptons l'argumentation selon l'interlocuteur visé.</p>
+            <div class="arg-chips">
+              <span>Administration fiscale</span>
+              <span>Commissaire aux apports</span>
+              <span>Juge</span>
+            </div>
+          </article>
+
+          <article class="arg" data-arg="2">
+            <div class="arg-icon">
+              <svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#conversation"/></svg>
+            </div>
+            <span class="arg-tag"><span class="arg-num">03</span> Défense orale</span>
+            <h3>Au-delà du document</h3>
+            <p>Nous ne livrons pas qu'un rapport : nous intervenons pour défendre de vive voix la valeur retenue face à un tiers. Notre pratique de la cession en fait un point d'appui pour rapprocher les parties.</p>
+          </article>
+
+          <div class="scroll-hint" data-hint>
+            <span>Défilez</span>
+            <span class="line"></span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="spacer"></div>
+
+  <script>
+  (function () {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (reduce.matches) return; // fallback CSS gère l'affichage empilé
+
+    var track      = document.querySelector('.scrolly-track');
+    var args       = Array.prototype.slice.call(document.querySelectorAll('.arg'));
+    var milestones = Array.prototype.slice.call(document.querySelectorAll('.milestone'));
+    var progress   = document.querySelector('.progress');
+    var hint       = document.querySelector('[data-hint]');
+    var N          = args.length;
+
+    // courbe d'easing douce pour des transitions cinématiques (pas de saut)
+    function easeInOut(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2; }
+    function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+
+    var ticking = false;
+    var lastActive = -1;
+
+    function update() {
+      ticking = false;
+
+      var rect = track.getBoundingClientRect();
+      var vh = window.innerHeight;
+      var scrollable = rect.height - vh;
+      // progression globale 0→1 sur toute la piste sticky
+      var prog = scrollable > 0 ? clamp01((-rect.top) / scrollable) : 0;
+
+      // Lead-in / lead-out : on réserve ~14% en entrée et en sortie
+      // pour que le 1er argument soit déjà posé et le 3e tienne avant de partir.
+      var IN = 0.14, OUT = 0.14;
+      var core = clamp01((prog - IN) / (1 - IN - OUT));
+
+      // position continue sur l'axe des arguments : 0..(N-1)
+      var pos = core * (N - 1);
+      var active = Math.round(pos);
+
+      // ── Cartes : focus = proche de son index ──
+      for (var i = 0; i < N; i++) {
+        var d = pos - i;            // <0 : pas encore atteint, >0 : déjà passé
+        var ad = Math.abs(d);
+
+        var op, sc, ty, bl;
+        if (ad <= 1) {
+          var e = easeInOut(clamp01(1 - ad)); // 1 au focus, 0 à une carte
+          op = e;
+          sc = 0.9 + 0.1 * e;                 // entrant avance vers 1.0
+          bl = (1 - e) * 8;                   // 8px → 0
+          // passé (d>0) : recule vers le haut ; futur (d<0) : avance depuis le bas
+          ty = -d * 52;
+        } else {
+          // hors champ : la sortante recule franchement (scale 0.86) + blur
+          op = 0;
+          sc = d > 0 ? 0.86 : 0.9;
+          bl = 9;
+          ty = d > 0 ? -60 : 60;
+        }
+
+        var a = args[i];
+        a.style.setProperty('--op', op.toFixed(3));
+        a.style.setProperty('--sc', sc.toFixed(3));
+        a.style.setProperty('--ty', ty.toFixed(1) + 'px');
+        a.style.setProperty('--bl', bl.toFixed(2) + 'px');
+        a.classList.toggle('is-focus', i === active);
+      }
+
+      // ── Rail de progression continu ──
+      if (progress) progress.style.setProperty('--p', core.toFixed(4));
+
+      if (active !== lastActive) {
+        milestones.forEach(function (m, i) {
+          m.classList.toggle('is-active', i === active);
+          m.classList.toggle('is-done', i < active);
+        });
+        lastActive = active;
+      }
+
+      // masquer l'indice "défilez" dès qu'on entre dans le récit
+      if (hint) hint.style.opacity = prog > 0.06 ? '0' : '1';
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+
+    // positionner les milestones en X pour le rail horizontal (< 820px)
+    function placeMilestones() {
+      var horizontal = window.matchMedia('(max-width: 820px)').matches;
+      milestones.forEach(function (m, i) {
+        m.style.setProperty('--mx', horizontal ? (i / (N - 1) * 100) + '%' : '');
+      });
+    }
+    placeMilestones();
+    window.addEventListener('resize', placeMilestones, { passive: true });
+
+    // état initial
+    update();
+
+    // si l'utilisateur active reduced-motion en cours de route, nettoyer
+    reduce.addEventListener('change', function (e) {
+      if (e.matches) {
+        window.removeEventListener('scroll', onScroll);
+        args.forEach(function (a) {
+          a.style.removeProperty('--op');
+          a.style.removeProperty('--sc');
+          a.style.removeProperty('--ty');
+          a.style.removeProperty('--bl');
+        });
+      }
+    });
+  })();
+  </script>
+
+</body>
+</html>
