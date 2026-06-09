@@ -10,7 +10,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="NCF Advisory" />
   <meta property="og:title" content="Avocats : l'évaluation opposable qui sécurise vos opérations" />
-  <meta property="og:description" content="Un rapport documenté qui tient en cas de contrôle et que vous reprenez dans vos actes, du fiscal au transactionnel." />
+  <meta property="og:description" content="Un rapport documenté qui résiste au contrôle et que vous reprenez dans vos actes, du fiscal au transactionnel." />
   <meta property="og:url" content="https://novances-evaluation.fr/avocats/" />
   <meta property="og:image" content="https://novances-evaluation.fr/assets/img/brand/logo-ncf-bl-marine.png" />
   <meta name="twitter:card" content="summary" />
@@ -23,8 +23,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/css/global.css" />
-  <link rel="stylesheet" href="/assets/css/components/thread.css" />
   <link rel="stylesheet" href="/assets/css/pages/parcours.css" />
+  <link rel="stylesheet" href="/assets/css/components/autocycle.css" />
 </head>
 <body class="parcours-page is-avocats">
 
@@ -91,79 +91,104 @@
   </div>
 </section>
 
-<!-- ═══════════════════ BLOC 2, PARCOURS (fil conducteur escalier) ═══════════════════ -->
-<section class="parcours" id="parcours"
-  data-thread-front="0.78"
-  data-thread-card-delay="180">
-
-  <div class="parcours-intro">
-    <div class="section-eyebrow rv">Pourquoi nous</div>
-    <h2 class="parcours-title rv d1">Une pièce documentée <span class="accent">de l'acte au contrôle.</span></h2>
-    <p class="parcours-lede rv d2">
-      Opposabilité, lecture de marché, expérience de la cession. Voici le fil qui les relie.
-    </p>
-  </div>
-
-  <div class="parcours-track">
-    <div class="parcours-thread-wrap" aria-hidden="true">
-      <svg aria-hidden="true" id="thread-svg" class="parcours-thread" viewBox="0 0 1200 1800" preserveAspectRatio="xMidYMid meet">
-        <!-- Fil droit central ; a chaque noeud, une branche rejoint la carte (droite, gauche, droite). -->
-        <path class="thread-line thread-line-glow" d="M 600 0 V 1800" />
-        <path id="thread-path" class="thread-line" d="M 600 0 V 1800" />
-
-        <g class="node-group" data-step="0" data-anchor-x="600" data-anchor-y="320">
-          <line class="thread-branch" x1="600" y1="320" x2="852" y2="320" />
-          <g transform="translate(600 320)">
-            <circle class="node-halo" r="22"/>
-            <circle class="node-ring" r="18" pathLength="100"/>
-            <circle class="node-dot"  r="6"/>
-          </g>
-        </g>
-        <g class="node-group" data-step="1" data-anchor-x="600" data-anchor-y="820">
-          <line class="thread-branch" x1="600" y1="820" x2="348" y2="820" />
-          <g transform="translate(600 820)">
-            <circle class="node-halo" r="22"/>
-            <circle class="node-ring" r="18" pathLength="100"/>
-            <circle class="node-dot"  r="6"/>
-          </g>
-        </g>
-        <g class="node-group" data-step="2" data-anchor-x="600" data-anchor-y="1320">
-          <line class="thread-branch" x1="600" y1="1320" x2="852" y2="1320" />
-          <g transform="translate(600 1320)">
-            <circle class="node-halo" r="22"/>
-            <circle class="node-ring" r="18" pathLength="100"/>
-            <circle class="node-dot"  r="6"/>
-          </g>
-        </g>
-      </svg>
+<!-- ═══════════════════ POURQUOI NOUS · autocycle (3 atouts) ═══════════════════ -->
+<section class="why" id="pourquoi" aria-label="Pourquoi nous">
+  <div class="why__inner">
+    <div class="why__head">
+      <span class="eyebrow">Pourquoi nous</span>
+      <h2 class="why__title">Trois atouts concrets pour <span>sécuriser vos opérations.</span></h2>
     </div>
 
-    <article class="parcours-card parcours-card--left" data-card-step="0">
-      <span class="parcours-card-num">01</span>
-      <span class="parcours-card-tag">Opposable</span>
-      <h3>Un rapport qui tient face à l'administration.</h3>
-      <p>Méthodes reconnues, argumentation écrite, références à la doctrine fiscale et à la jurisprudence. Vous le reprenez tel quel dans l'acte, sans retraitement.</p>
-    </article>
+    <div class="tabs" id="tabs">
+      <!-- Nav -->
+      <div class="tabs__nav" role="tablist" aria-label="Nos arguments différenciants">
+        <button class="tab" role="tab" id="tab-0" aria-controls="panel-0" aria-selected="true" type="button">
+          <span class="tab__idx">01</span>
+          <span class="tab__label">Double casquette</span>
+        </button>
+        <button class="tab" role="tab" id="tab-1" aria-controls="panel-1" aria-selected="false" type="button">
+          <span class="tab__idx">02</span>
+          <span class="tab__label">Opposable &amp; adapté</span>
+        </button>
+        <button class="tab" role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false" type="button">
+          <span class="tab__idx">03</span>
+          <span class="tab__label">Défense orale</span>
+        </button>
+        <div class="tabs__track" aria-hidden="true">
+          <div class="tabs__fill" id="fill"></div>
+        </div>
+      </div>
 
-    <article class="parcours-card parcours-card--right" data-card-step="1">
-      <span class="parcours-card-num">02</span>
-      <span class="parcours-card-tag">Guide &amp; marché</span>
-      <h3>Le pont entre le Guide fiscal et le marché.</h3>
-      <p>Là où le Guide de l'évaluation reste théorique et daté, nous apportons une lecture de terrain, fondée sur des comparables et des transactions réelles de PME.</p>
-    </article>
+      <!-- Scène -->
+      <div class="tabs__stage">
+        <!-- ARG 1 -->
+        <article class="panel is-active" role="tabpanel" id="panel-0" aria-labelledby="tab-0">
+          <div class="panel__body">
+            <span class="panel__tag">Double casquette</span>
+            <h3 class="panel__title">Évaluateurs autant que négociateurs</h3>
+            <p class="panel__text">Évaluation ET fusion-acquisition sous le même toit : la rigueur technique de l'évaluation, et la connaissance du terrain et de la négociation. C'est ce qui nous permet de faire le pont entre le Guide de l'évaluation fiscale et la réalité du marché.</p>
+          </div>
+          <div class="panel__media" aria-hidden="true">
+            <span class="panel__ring panel__ring--1" style="--o:.5"></span>
+            <span class="panel__ring panel__ring--2" style="--o:.75"></span>
+            <span class="panel__ring panel__ring--3"></span>
+            <span class="panel__pulse"></span>            <span class="panel__medal">
+              <svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#balance"/></svg>
+            </span>
+          </div>
+        </article>
 
-    <article class="parcours-card parcours-card--left" data-card-step="2">
-      <span class="parcours-card-num">03</span>
-      <span class="parcours-card-tag">Évaluation + cession</span>
-      <h3>L'argument des décotes, l'appui pour négocier.</h3>
-      <p>Notre pratique de la cession nous permet d'argumenter finement les décotes (Homme clé, clients, fournisseurs) : le rapport devient un point d'appui pour rapprocher les parties.</p>
-    </article>
+        <!-- ARG 2 -->
+        <article class="panel" role="tabpanel" id="panel-1" aria-labelledby="tab-1" hidden>
+          <div class="panel__body">
+            <span class="panel__tag">Opposable &amp; adapté</span>
+            <h3 class="panel__title">Un rapport solide face au contrôle</h3>
+            <p class="panel__text">Méthodes reconnues, doctrine fiscale, jurisprudence : opposable à l'administration et repris tel quel dans vos actes. Nous adaptons l'argumentation selon l'interlocuteur visé.</p>
+            <div class="panel__chips">
+              <span class="chip" style="--i:0">Administration fiscale</span>
+              <span class="chip" style="--i:1">Commissaire aux apports</span>
+              <span class="chip" style="--i:2">Juge</span>
+            </div>
+          </div>
+          <div class="panel__media" aria-hidden="true">
+            <span class="panel__ring panel__ring--1" style="--o:.5"></span>
+            <span class="panel__ring panel__ring--2" style="--o:.75"></span>
+            <span class="panel__ring panel__ring--3"></span>
+            <span class="panel__pulse"></span>            <span class="panel__medal">
+              <svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#seal"/></svg>
+            </span>
+          </div>
+        </article>
+
+        <!-- ARG 3 -->
+        <article class="panel" role="tabpanel" id="panel-2" aria-labelledby="tab-2" hidden>
+          <div class="panel__body">
+            <span class="panel__tag">Défense orale</span>
+            <h3 class="panel__title">Nous défendons votre valeur de vive voix</h3>
+            <p class="panel__text">Nous ne livrons pas qu'un rapport : nous intervenons pour défendre de vive voix la valeur retenue face à un tiers. Notre pratique de la cession en fait un point d'appui pour rapprocher les parties.</p>
+          </div>
+          <div class="panel__media" aria-hidden="true">
+            <span class="panel__ring panel__ring--1" style="--o:.5"></span>
+            <span class="panel__ring panel__ring--2" style="--o:.75"></span>
+            <span class="panel__ring panel__ring--3"></span>
+            <span class="panel__pulse"></span>            <span class="panel__medal">
+              <svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#conversation"/></svg>
+            </span>
+          </div>
+        </article>
+      </div>
+
+      <!-- Pied : dots + état -->
+      <div class="tabs__foot">
+        <div class="tabs__dots" aria-hidden="true">
+          <button class="dot" data-dot="0" aria-current="true" tabindex="-1" type="button"></button>
+          <button class="dot" data-dot="1" aria-current="false" tabindex="-1" type="button"></button>
+          <button class="dot" data-dot="2" aria-current="false" tabindex="-1" type="button"></button>
+        </div>
+        <span class="tabs__state"><b id="state-num">01</b> / 03 · défilement automatique</span>
+      </div>
+    </div>
   </div>
-
-  <div class="parcours-outro rv">
-    <p class="parcours-tagline">Comment ça se passe&nbsp;?</p>
-  </div>
-
 </section>
 
 <!-- ═══════════════════ BLOC 5, PROCESS 5 ÉTAPES ═══════════════════ -->
@@ -340,7 +365,7 @@
   <div class="section-inner">
     <div class="rv" style="max-width: 720px;">
       <div class="section-eyebrow">Cas d'école</div>
-      <h2 class="section-title">Donation avant cession : une valeur qui tient face au contrôle.</h2>
+      <h2 class="section-title">Donation avant cession : une valeur défendable face au contrôle.</h2>
       <p class="section-sub">
         Cas réel, anonymisé pour respecter la confidentialité, représentatif des dossiers confiés par des avocats fiscalistes.
       </p>
@@ -409,74 +434,6 @@
   </div>
 </section>
 
-<!-- ═══════════════════ AVIS GOOGLE ═══════════════════ -->
-<section class="section avis-section">
-  <div class="section-inner">
-    <div class="testi-external rv d2">
-    <div class="testi-stars" aria-label="5 étoiles sur 5">★ ★ ★ ★ ★</div>
-    <p class="testi-quote">
-    « Très bon professionnel, réactif et très compétent. Merci pour votre prestation. »
-    </p>
-    <div class="testi-meta">
-    <span><strong>Thib. Noyer</strong></span>
-    <a class="testi-source" href="https://www.google.com/maps/search/?api=1&query=NCF%20Advisory%2013%20Rue%20Claude%20Chappe%2069370%20Saint-Didier-au-Mont-d%27Or" target="_blank" rel="noopener noreferrer">
-    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22.6 12.2c0-.8-.1-1.5-.2-2.2H12v4.3h6c-.3 1.4-1.1 2.6-2.3 3.4v2.8h3.6c2.1-2 3.3-4.8 3.3-8.3z"/></svg>
-    Voir nos avis Google
-    <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
-    </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════ BLOC 8, FAQ ═══════════════════ -->
-<section class="section sec-dark" id="faq">
-  <div class="section-inner">
-    <div class="rv" style="max-width: 720px;">
-      <div class="section-eyebrow">Questions fréquentes</div>
-      <h2 class="section-title">Ce que nous demandent les cabinets d'avocats.</h2>
-    </div>
-
-    <div class="faq-list">
-      <details class="faq-item rv">
-        <summary>Jusqu'à quand l'administration peut-elle contrôler la valeur retenue ?</summary>
-        <div class="faq-body">
-          <p>Les opérations de donation, transmission, achat ou apport de titres peuvent être contrôlées plus de trois ans après l'opération. C'est précisément pourquoi un rapport documenté, établi au moment de l'acte, est indispensable.</p>
-          <p>Sans lui, il devient très difficile de justifier a posteriori les montants retenus, surtout si la société a depuis pris de la valeur.</p>
-        </div>
-      </details>
-
-      <details class="faq-item rv">
-        <summary>Votre rapport est-il opposable à l'administration ?</summary>
-        <div class="faq-body">
-          <p>Oui. Il s'appuie sur les méthodes reconnues, sur la doctrine fiscale et la jurisprudence, et propose une argumentation écrite. Il est conçu pour tenir en cas de contrôle et pour être repris tel quel dans votre acte.</p>
-        </div>
-      </details>
-
-      <details class="faq-item rv">
-        <summary>Vous appuyez-vous sur le Guide de l'évaluation de l'administration ?</summary>
-        <div class="faq-body">
-          <p>Nous le connaissons et le prenons en compte, mais il reste daté (2006) et appliqué de façon mécanique. Notre valeur ajoutée est de faire le pont entre ce cadre et la réalité du marché, en nous appuyant sur des comparables et des transactions réelles.</p>
-        </div>
-      </details>
-
-      <details class="faq-item rv">
-        <summary>Intervenez-vous dans un cadre contentieux ?</summary>
-        <div class="faq-body">
-          <p>Oui. Dans un litige (sortie d'associé, prix contesté, rachat de minoritaires), un rapport neutre et argumenté sécurise la défense méthodologique et sert de base aux discussions pour rapprocher les parties.</p>
-        </div>
-      </details>
-
-      <details class="faq-item rv">
-        <summary>À quel moment nous solliciter dans le calendrier ?</summary>
-        <div class="faq-body">
-          <p>En amont de l'acte, à une date de valeur cohérente avec votre opération. Après un premier échange de cadrage, un devis vous est remis sous 48 heures et le rapport est produit en quelques semaines selon la complexité.</p>
-        </div>
-      </details>
-    </div>
-  </div>
-</section>
-
 <!-- ═══════════════════ GROUPE NOVANCES (réassurance) ═══════════════════ -->
 <section class="section novances-band" id="novances">
   <div class="section-inner">
@@ -508,6 +465,54 @@
         <li class="novances-stat rv d4"><span class="novances-stat-num">40</span><span class="novances-stat-label">associés</span></li>
         <li class="novances-stat rv d1"><span class="novances-stat-num">350</span><span class="novances-stat-label">collaborateurs</span></li>
       </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ BLOC 8, FAQ ═══════════════════ -->
+<section class="section sec-dark" id="faq">
+  <div class="section-inner">
+    <div class="rv" style="max-width: 720px;">
+      <div class="section-eyebrow">Questions fréquentes</div>
+      <h2 class="section-title">Ce que nous demandent les cabinets d'avocats.</h2>
+    </div>
+
+    <div class="faq-list">
+      <details class="faq-item rv">
+        <summary>Jusqu'à quand l'administration peut-elle contrôler la valeur retenue ?</summary>
+        <div class="faq-body">
+          <p>Les opérations de donation, transmission, achat ou apport de titres peuvent être contrôlées plus de trois ans après l'opération. C'est précisément pourquoi un rapport documenté, établi au moment de l'acte, est indispensable.</p>
+          <p>Sans lui, il devient très difficile de justifier a posteriori les montants retenus, surtout si la société a depuis pris de la valeur.</p>
+        </div>
+      </details>
+
+      <details class="faq-item rv">
+        <summary>Votre rapport est-il opposable à l'administration ?</summary>
+        <div class="faq-body">
+          <p>Oui. Il s'appuie sur les méthodes reconnues, sur la doctrine fiscale et la jurisprudence, et propose une argumentation écrite. Il est conçu pour résister au contrôle et pour être repris tel quel dans votre acte.</p>
+        </div>
+      </details>
+
+      <details class="faq-item rv">
+        <summary>Vous appuyez-vous sur le Guide de l'évaluation de l'administration ?</summary>
+        <div class="faq-body">
+          <p>Nous le connaissons et le prenons en compte, mais il reste daté (2006) et appliqué de façon mécanique. Notre valeur ajoutée est de faire le pont entre ce cadre et la réalité du marché, en nous appuyant sur des comparables et des transactions réelles.</p>
+        </div>
+      </details>
+
+      <details class="faq-item rv">
+        <summary>Intervenez-vous dans un cadre contentieux ?</summary>
+        <div class="faq-body">
+          <p>Oui. Dans un litige (sortie d'associé, prix contesté, rachat de minoritaires), un rapport neutre et argumenté sécurise la défense méthodologique et sert de base aux discussions pour rapprocher les parties.</p>
+        </div>
+      </details>
+
+      <details class="faq-item rv">
+        <summary>À quel moment nous solliciter dans le calendrier ?</summary>
+        <div class="faq-body">
+          <p>En amont de l'acte, à une date de valeur cohérente avec votre opération. Après un premier échange de cadrage, un devis vous est remis sous 48 heures et le rapport est produit en quelques semaines selon la complexité.</p>
+        </div>
+      </details>
     </div>
   </div>
 </section>
@@ -581,7 +586,7 @@
   </div>
 </footer>
 <script src="/assets/js/site.js" defer></script>
-<script src="/assets/js/pages/transmission.js" defer></script>
+<script src="/assets/js/autocycle.js" defer></script>
 
 </body>
 </html>

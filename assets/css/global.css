@@ -190,10 +190,21 @@ body > * { position: relative; z-index: 1; }
   padding: 6px 0;
 }
 .nav-link:hover, .nav-link.active { color: var(--text-strong); }
-.nav-link.active::after {
+.nav-link::after {
   content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
   height: 2px; background: var(--accent);
   border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.nav-link:hover::after { opacity: 1; }
+/* Au survol, le soulignement prend la couleur de la page de destination (= sa couleur une fois active). */
+.nav-link[href="/entrepreneurs/"]:hover::after      { background: var(--p-entrepreneur); }
+.nav-link[href="/experts-comptables/"]:hover::after { background: var(--p-ec); }
+.nav-link[href="/avocats/"]:hover::after            { background: var(--p-avocat); }
+.nav-link[href="/notaires/"]:hover::after           { background: var(--p-notaire); }
+.nav-link.active::after {
+  opacity: 1;
   box-shadow: 0 0 8px var(--accent-a-30);
 }
 

@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="fr" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Système en orbite — Pourquoi nous · Avocats</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/global.css">
+  <style>
+    :root {
+      --persona: var(--p-avocat);
+      --persona-soft: var(--p-avocat-soft);
+      --persona-rgb: 79 70 229;
+
+      /* timings (single source of truth for the orbit + counter-spin) */
+      --orbit-dur: 42s;
+      --orbit-dur-slow: 150s;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg-base);
+      color: var(--text-1);
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    .orbit-section {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: clamp(4rem, 9vh, 7.5rem) clamp(1.25rem, 5vw, 3.5rem) clamp(5rem, 12vh, 9rem);
+    }
+
+    /* ---------- Header ---------- */
+    .o-head {
+      max-width: 720px;
+      margin-bottom: clamp(2.5rem, 6vh, 4.5rem);
+    }
+    .o-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--persona);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1.1rem;
+    }
+    .o-eyebrow::before {
+      content: '';
+      width: 26px;
+      height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--persona), transparent);
+    }
+    .o-title {
+      font-size: clamp(1.9rem, 4.2vw, 3rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      font-weight: 800;
+      color: var(--text-strong);
+      margin: 0 0 1rem;
+    }
+    .o-title span { color: var(--persona); }
+    .o-sub {
+      font-size: clamp(1rem, 1.4vw, 1.08rem);
+      line-height: 1.7;
+      color: var(--text-2);
+      margin: 0;
+      max-width: 560px;
+    }
+
+    /* ---------- Stage layout ---------- */
+    .o-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.96fr);
+      align-items: center;
+      gap: clamp(1.5rem, 4vw, 4.5rem);
+    }
+
+    /* ---------- Orbit system ---------- */
+    .o-system {
+      position: relative;
+      width: min(100%, 520px);
+      aspect-ratio: 1 / 1;
+      margin: 0 auto;
+      justify-self: center;
+      container-type: size;   /* enables cqmin for the orbit radius */
+    }
+
+    /* ambient field behind everything: a slow drifting persona glow */
+    .o-system::before {
+      content: '';
+      position: absolute;
+      inset: 6%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 50%,
+        rgba(var(--persona-rgb) / 0.10) 0%,
+        rgba(var(--persona-rgb) / 0.04) 42%,
+        transparent 70%);
+      animation: field-breathe 9s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes field-breathe {
+      0%, 100% { transform: scale(0.96); opacity: 0.75; }
+      50%      { transform: scale(1.05); opacity: 1; }
+    }
+
+    /* the single primary orbit ring (dashed persona) + faint inner accent */
+    .o-rings {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .o-rings svg { width: 100%; height: 100%; display: block; overflow: visible; }
+    .o-ring {
+      fill: none;
+      stroke: rgba(var(--persona-rgb) / 0.30);
+      stroke-width: 1;
+      stroke-dasharray: 2 8;
+      stroke-linecap: round;
+      transform-origin: center;
+      /* the dotted ring itself drifts very slowly — ambient life */
+      animation: ring-drift 120s linear infinite;
+    }
+    @keyframes ring-drift { to { transform: rotate(360deg); } }
+    .o-ring--inner {
+      stroke: rgba(var(--persona-rgb) / 0.10);
+      stroke-dasharray: none;
+      animation: none;
+    }
+
+    /* a faint sweeping comet on the active orbit (always travelling) */
+    .o-sweep {
+      fill: none;
+      stroke: rgba(var(--persona-rgb) / 0.55);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-dasharray: 50 999;
+      transform-origin: center;
+      animation: sweep var(--orbit-dur) linear infinite;
+      opacity: 0.7;
+      transition: opacity 1.4s ease;
+    }
+    @keyframes sweep { to { transform: rotate(360deg); } }
+
+    /* the turntable that carries satellites — rotation driven in JS (rAF)
+       so the slow-down on engage can ramp smoothly instead of snapping.
+       CSS keyframes can't ease an animation-duration change. */
+    .o-turntable {
+      position: absolute;
+      inset: 0;
+      transform-origin: center;
+      will-change: transform;
+    }
+    /* the sweep stays CSS-animated; it only dims on engage (no speed change) */
+    .o-system.is-engaged .o-sweep { opacity: 0.16; }
+
+    /* no-JS safety net: if the script never runs, still spin via CSS */
+    .no-js .o-turntable { animation: spin var(--orbit-dur) linear infinite; }
+    .no-js .o-counter   { animation: counter-spin var(--orbit-dur) linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ---------- Core ---------- */
+    .o-core {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: clamp(118px, 25%, 144px);
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background:
+        radial-gradient(circle at 32% 28%, rgba(255,255,255,0.95), rgba(255,255,255,0) 60%),
+        var(--card-bg-strong);
+      border: 1px solid var(--line-2);
+      box-shadow:
+        0 18px 48px -22px rgba(var(--persona-rgb) / 0.55),
+        0 2px 0 rgba(255,255,255,0.7) inset;
+      z-index: 5;
+      animation: core-breathe 6s ease-in-out infinite;
+    }
+    /* gentle continuous breathing of the whole core */
+    @keyframes core-breathe {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50%      { transform: translate(-50%, -50%) scale(1.025); }
+    }
+    /* two staggered halo rings radiating outward, forever */
+    .o-core::before,
+    .o-core::after {
+      content: '';
+      position: absolute;
+      inset: -9px;
+      border-radius: 50%;
+      border: 1px solid rgba(var(--persona-rgb) / 0.28);
+      animation: pulse 4.2s ease-in-out infinite;
+    }
+    .o-core::after { animation-delay: 2.1s; }
+    @keyframes pulse {
+      0%   { transform: scale(0.94); opacity: 0.55; }
+      70%  { opacity: 0; }
+      100% { transform: scale(1.22); opacity: 0; }
+    }
+    .o-core-dot {
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--persona);
+      box-shadow: 0 0 0 5px rgba(var(--persona-rgb) / 0.14);
+      margin-bottom: 9px;
+      animation: dot-glow 3.2s ease-in-out infinite;
+    }
+    @keyframes dot-glow {
+      0%, 100% { box-shadow: 0 0 0 5px rgba(var(--persona-rgb) / 0.14); }
+      50%      { box-shadow: 0 0 0 8px rgba(var(--persona-rgb) / 0.05); }
+    }
+    .o-core-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      line-height: 1.25;
+    }
+    .o-core-label strong {
+      display: block;
+      font-size: 0.96rem;
+      letter-spacing: -0.01em;
+      text-transform: none;
+      color: var(--text-strong);
+      margin-top: 2px;
+    }
+
+    /* ---------- Satellites ---------- */
+    .o-sat {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 0; height: 0;
+    }
+    /* angle places the arm; --r is orbit radius as a length (cqmin of system) */
+    .o-arm {
+      position: absolute;
+      top: 0; left: 0;
+      transform: rotate(var(--a)) translateY(calc(-1 * var(--r))) rotate(calc(-1 * var(--a)));
+      transform-origin: 0 0;
+    }
+    /* counter-rotation keeps the chip + label upright while turntable spins
+       (driven in JS alongside the turntable; CSS keyframe is the no-JS fallback) */
+    .o-counter {
+      transform-origin: center;
+      will-change: transform;
+    }
+    @keyframes counter-spin { to { transform: rotate(-360deg); } }
+
+    /* wrapper holding the chip + its always-on label */
+    .o-chip-wrap {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      display: grid;
+      justify-items: center;
+      gap: 9px;
+    }
+
+    .o-chip {
+      position: relative;
+      width: clamp(62px, 12.5vw, 80px);
+      aspect-ratio: 1 / 1;
+      border-radius: 22px;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 30% 24%, rgba(255,255,255,0.9), rgba(255,255,255,0) 62%),
+        var(--card-bg);
+      border: 1px solid var(--line-2);
+      box-shadow: 0 14px 34px -20px rgba(6, 24, 56, 0.55);
+      cursor: pointer;
+      transition: transform 0.5s var(--ease-out),
+                  box-shadow 0.5s var(--ease-out),
+                  border-color 0.45s ease, background 0.45s ease;
+      outline: none;
+      /* persistent soft halo that pulses gently at rest */
+      animation: sat-halo 4.6s ease-in-out infinite;
+    }
+    @keyframes sat-halo {
+      0%, 100% { box-shadow: 0 14px 34px -20px rgba(6, 24, 56, 0.55),
+                             0 0 0 0 rgba(var(--persona-rgb) / 0.12); }
+      50%      { box-shadow: 0 14px 34px -20px rgba(6, 24, 56, 0.55),
+                             0 0 0 7px rgba(var(--persona-rgb) / 0.0); }
+    }
+    /* stagger each satellite's halo so the system feels alive, not synced */
+    .o-sat:nth-child(2) .o-chip { animation-delay: 1.5s; }
+    .o-sat:nth-child(3) .o-chip { animation-delay: 3s; }
+
+    .o-chip svg {
+      width: 31px; height: 31px;
+      color: var(--persona);
+      transition: transform 0.5s var(--ease-out);
+    }
+    .o-chip:hover,
+    .o-chip:focus-visible,
+    .o-chip.is-active {
+      transform: scale(1.16);
+      border-color: rgba(var(--persona-rgb) / 0.5);
+      box-shadow:
+        0 22px 46px -18px rgba(var(--persona-rgb) / 0.6),
+        0 0 0 4px rgba(var(--persona-rgb) / 0.1);
+      background:
+        radial-gradient(circle at 30% 24%, rgba(255,255,255,0.95), rgba(255,255,255,0) 62%),
+        var(--card-bg-strong);
+      /* stop the resting halo so the strong hover glow above can take effect */
+      animation: none;
+    }
+    .o-chip.is-active svg { transform: scale(1.06); }
+
+    /* always-on label below each satellite (stays upright via .o-counter) */
+    .o-chip-tag {
+      white-space: nowrap;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      background: rgba(var(--persona-rgb) / 0.07);
+      border: 1px solid rgba(var(--persona-rgb) / 0.14);
+      padding: 3px 9px;
+      border-radius: 999px;
+      transition: color 0.4s ease, background 0.4s ease, border-color 0.4s ease, transform 0.4s ease;
+      pointer-events: none;
+    }
+    .o-chip-wrap.is-active .o-chip-tag {
+      color: var(--persona);
+      background: var(--persona-soft);
+      border-color: rgba(var(--persona-rgb) / 0.32);
+      transform: translateY(1px);
+    }
+
+    /* index badge that orbits with the chip */
+    .o-chip-num {
+      position: absolute;
+      top: -8px; right: -8px;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      display: grid; place-items: center;
+      font-size: 0.66rem; font-weight: 800;
+      color: var(--persona);
+      background: var(--bg-base);
+      border: 1px solid rgba(var(--persona-rgb) / 0.3);
+      z-index: 2;
+    }
+
+    /* ---------- Detail panel ---------- */
+    .o-panel {
+      position: relative;
+      min-height: 380px;
+      display: grid;
+    }
+
+    /* shared card surface (default + per-arg) */
+    .o-card {
+      grid-area: 1 / 1;
+      align-self: center;
+      background: var(--card-bg);
+      border: 1px solid var(--line-2);
+      border-radius: 20px;
+      padding: clamp(1.6rem, 3vw, 2.5rem);
+      box-shadow: 0 30px 70px -40px rgba(6, 24, 56, 0.45);
+    }
+
+    /* per-argument cards: animate in from the satellite (fade + scale up) */
+    .o-card--arg {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(-14px) scale(0.96);
+      transform-origin: left center;
+      transition: opacity 0.55s var(--ease-out),
+                  transform 0.55s var(--ease-out),
+                  visibility 0s linear 0.55s;
+      pointer-events: none;
+    }
+    .o-card--arg.is-shown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0) scale(1);
+      transition-delay: 0s;
+      pointer-events: auto;
+    }
+    .o-card::before {
+      content: '';
+      position: absolute;
+      top: clamp(1.6rem, 3vw, 2.5rem);
+      left: 0;
+      width: 3px;
+      height: 40px;
+      border-radius: 0 3px 3px 0;
+      background: var(--persona);
+    }
+    .o-card-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 1.15rem;
+    }
+    .o-card-icon {
+      flex: none;
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      display: grid; place-items: center;
+      background: var(--persona-soft);
+      color: var(--persona);
+    }
+    .o-card-icon svg { width: 26px; height: 26px; }
+    .o-card-tag {
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--persona);
+    }
+    .o-card-step {
+      font-size: 0.66rem;
+      font-weight: 600;
+      color: var(--text-2);
+      letter-spacing: 0.06em;
+    }
+    .o-card-title {
+      font-size: clamp(1.15rem, 1.9vw, 1.45rem);
+      font-weight: 700;
+      line-height: 1.22;
+      letter-spacing: -0.01em;
+      color: var(--text-strong);
+      margin: 0 0 0.85rem;
+    }
+    .o-card-body {
+      font-size: 0.98rem;
+      line-height: 1.72;
+      color: var(--text-1);
+      margin: 0;
+    }
+    .o-card-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 1.35rem;
+    }
+    .o-pill {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--text-1);
+      background: var(--persona-soft);
+      border: 1px solid rgba(var(--persona-rgb) / 0.18);
+      border-radius: 999px;
+      padding: 6px 13px;
+    }
+
+    /* ---------- Default (resting) panel ---------- */
+    /* Shown when nothing is hovered: an invite + an argument that cycles on its own */
+    .o-default {
+      grid-area: 1 / 1;
+      align-self: center;
+      transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
+    }
+    .o-default.is-hidden {
+      opacity: 0;
+      transform: scale(0.985);
+      pointer-events: none;
+    }
+    .o-default-invite {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--persona);
+      margin-bottom: 1.4rem;
+    }
+    .o-default-invite .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--persona);
+      animation: dot-glow 2.4s ease-in-out infinite;
+    }
+
+    /* the rotating "preview" of one argument inside the default panel */
+    .o-rotor {
+      position: relative;
+      min-height: 132px;
+    }
+    .o-rotor-item {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+      pointer-events: none;
+    }
+    .o-rotor-item.is-current {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .o-rotor-head {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      margin-bottom: 0.75rem;
+    }
+    .o-rotor-ico {
+      flex: none;
+      width: 38px; height: 38px;
+      border-radius: 11px;
+      display: grid; place-items: center;
+      background: var(--persona-soft);
+      color: var(--persona);
+    }
+    .o-rotor-ico svg { width: 21px; height: 21px; }
+    .o-rotor-tag {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--persona);
+    }
+    .o-rotor-title {
+      font-size: 1.08rem; font-weight: 700; color: var(--text-strong);
+      margin: 0; line-height: 1.25; letter-spacing: -0.01em;
+    }
+    .o-rotor-body {
+      font-size: 0.92rem; line-height: 1.68; color: var(--text-2); margin: 0;
+    }
+    /* progress dots for the rotor */
+    .o-rotor-dots {
+      display: flex; gap: 7px; margin-top: 1.35rem;
+    }
+    .o-rotor-dots button {
+      width: 22px; height: 4px; border-radius: 999px; border: 0; padding: 0;
+      background: rgba(var(--persona-rgb) / 0.18);
+      cursor: pointer;
+      transition: background 0.4s ease, width 0.4s ease;
+    }
+    .o-rotor-dots button.is-current {
+      background: var(--persona);
+      width: 30px;
+    }
+
+    /* ---------- Fallback list (reduced motion / no-JS / mobile) ---------- */
+    .o-fallback { display: none; }
+    .o-fallback-item {
+      display: flex;
+      gap: 16px;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--line-2);
+    }
+    .o-fallback-item:first-child { border-top: none; }
+    .o-fb-icon {
+      flex: none;
+      width: 46px; height: 46px;
+      border-radius: 13px;
+      display: grid; place-items: center;
+      background: var(--persona-soft);
+      color: var(--persona);
+    }
+    .o-fb-icon svg { width: 25px; height: 25px; }
+    .o-fb-tag {
+      font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--persona); margin-bottom: 4px;
+    }
+    .o-fb-title {
+      font-size: 1.08rem; font-weight: 700; color: var(--text-strong);
+      margin: 0 0 0.5rem; line-height: 1.25;
+    }
+    .o-fb-body { font-size: 0.94rem; line-height: 1.7; color: var(--text-1); margin: 0; }
+    .o-fb-pills { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 0.85rem; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 820px) {
+      /* system above, detail below */
+      .o-stage { grid-template-columns: 1fr; gap: 2.25rem; }
+      .o-panel { min-height: 0; }
+      .o-system { width: min(100%, 440px); }
+    }
+    @media (max-width: 560px) {
+      /* On very small screens the orbit becomes cramped — switch to readable list. */
+      .o-stage { display: none; }
+      .o-fallback { display: block; }
+    }
+
+    /* ---------- Reduced motion ---------- */
+    @media (prefers-reduced-motion: reduce) {
+      .o-stage { display: none; }
+      .o-fallback { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <section class="orbit-section">
+    <header class="o-head">
+      <p class="o-eyebrow">Pourquoi nous</p>
+      <h2 class="o-title">Tout gravite autour de <span>votre dossier</span></h2>
+      <p class="o-sub">Trois forces réunies autour d'un même point d'appui. Survolez un satellite — ou parcourez-les au clavier — pour ralentir l'orbite et déployer l'argument.</p>
+    </header>
+
+    <div class="o-stage">
+      <!-- Orbit system -->
+      <div class="o-system" id="system">
+        <div class="o-rings">
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <circle class="o-ring" cx="50" cy="50" r="42"></circle>
+            <circle class="o-ring o-ring--inner" cx="50" cy="50" r="29"></circle>
+            <circle class="o-sweep" cx="50" cy="50" r="42"></circle>
+          </svg>
+        </div>
+
+        <div class="o-core">
+          <span class="o-core-dot"></span>
+          <span class="o-core-label">Au centre<strong>Votre dossier</strong></span>
+        </div>
+
+        <div class="o-turntable" id="turntable">
+          <!-- ARG 1 -->
+          <div class="o-sat" style="--a: 0deg;">
+            <div class="o-arm" style="--r: 42cqmin;">
+              <div class="o-counter">
+                <div class="o-chip-wrap" data-wrap="0">
+                  <button class="o-chip" type="button" data-arg="0" aria-label="Argument 1 : Double casquette">
+                    <span class="o-chip-num">1</span>
+                    <svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#balance"/></svg>
+                  </button>
+                  <span class="o-chip-tag">Double casquette</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ARG 2 -->
+          <div class="o-sat" style="--a: 120deg;">
+            <div class="o-arm" style="--r: 42cqmin;">
+              <div class="o-counter">
+                <div class="o-chip-wrap" data-wrap="1">
+                  <button class="o-chip" type="button" data-arg="1" aria-label="Argument 2 : Opposable et adapté">
+                    <span class="o-chip-num">2</span>
+                    <svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#seal"/></svg>
+                  </button>
+                  <span class="o-chip-tag">Opposable &amp; adapté</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ARG 3 -->
+          <div class="o-sat" style="--a: 240deg;">
+            <div class="o-arm" style="--r: 42cqmin;">
+              <div class="o-counter">
+                <div class="o-chip-wrap" data-wrap="2">
+                  <button class="o-chip" type="button" data-arg="2" aria-label="Argument 3 : Défense orale">
+                    <span class="o-chip-num">3</span>
+                    <svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#conversation"/></svg>
+                  </button>
+                  <span class="o-chip-tag">Défense orale</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detail panel -->
+      <div class="o-panel">
+        <!-- Default resting panel: invite + self-cycling argument preview -->
+        <div class="o-card o-default" id="default">
+          <span class="o-default-invite"><span class="dot"></span>Survolez un satellite</span>
+          <div class="o-rotor" id="rotor">
+            <!-- rotor item 0 -->
+            <div class="o-rotor-item" data-rotor="0">
+              <div class="o-rotor-head">
+                <span class="o-rotor-ico"><svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#balance"/></svg></span>
+                <div>
+                  <div class="o-rotor-tag">Double casquette</div>
+                  <h3 class="o-rotor-title">Du théoricien au praticien</h3>
+                </div>
+              </div>
+              <p class="o-rotor-body">Évaluation et fusion-acquisition sous le même toit : la rigueur technique et la connaissance du terrain. Le pont entre le Guide de l'évaluation fiscale et la réalité du marché.</p>
+            </div>
+            <!-- rotor item 1 -->
+            <div class="o-rotor-item" data-rotor="1">
+              <div class="o-rotor-head">
+                <span class="o-rotor-ico"><svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#seal"/></svg></span>
+                <div>
+                  <div class="o-rotor-tag">Opposable &amp; adapté</div>
+                  <h3 class="o-rotor-title">Un rapport qui tient</h3>
+                </div>
+              </div>
+              <p class="o-rotor-body">Méthodes reconnues, doctrine fiscale, jurisprudence : opposable à l'administration et repris tel quel dans vos actes — calibré pour son destinataire.</p>
+            </div>
+            <!-- rotor item 2 -->
+            <div class="o-rotor-item" data-rotor="2">
+              <div class="o-rotor-head">
+                <span class="o-rotor-ico"><svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#conversation"/></svg></span>
+                <div>
+                  <div class="o-rotor-tag">Défense orale</div>
+                  <h3 class="o-rotor-title">Au-delà du document</h3>
+                </div>
+              </div>
+              <p class="o-rotor-body">Nous ne livrons pas qu'un rapport : nous défendons de vive voix la valeur retenue face à un tiers, pour rapprocher les parties.</p>
+            </div>
+          </div>
+          <div class="o-rotor-dots" id="rotorDots" role="tablist" aria-label="Aperçu des arguments">
+            <button type="button" data-dot="0" aria-label="Aperçu 1 : Double casquette"></button>
+            <button type="button" data-dot="1" aria-label="Aperçu 2 : Opposable et adapté"></button>
+            <button type="button" data-dot="2" aria-label="Aperçu 3 : Défense orale"></button>
+          </div>
+        </div>
+
+        <!-- ARG 1 card -->
+        <article class="o-card o-card--arg" data-card="0" aria-hidden="true">
+          <div class="o-card-head">
+            <span class="o-card-icon"><svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#balance"/></svg></span>
+            <div>
+              <div class="o-card-tag">Double casquette</div>
+              <div class="o-card-step">Satellite 1 / 3</div>
+            </div>
+          </div>
+          <h3 class="o-card-title">Du théoricien au praticien</h3>
+          <p class="o-card-body">Évaluation ET fusion-acquisition sous le même toit : la rigueur technique de l'évaluation, et la connaissance du terrain et de la négociation. C'est ce qui nous permet de faire le pont entre le Guide de l'évaluation fiscale et la réalité du marché.</p>
+        </article>
+
+        <!-- ARG 2 card -->
+        <article class="o-card o-card--arg" data-card="1" aria-hidden="true">
+          <div class="o-card-head">
+            <span class="o-card-icon"><svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#seal"/></svg></span>
+            <div>
+              <div class="o-card-tag">Opposable &amp; adapté</div>
+              <div class="o-card-step">Satellite 2 / 3</div>
+            </div>
+          </div>
+          <h3 class="o-card-title">Un rapport qui tient, calibré pour son destinataire</h3>
+          <p class="o-card-body">Méthodes reconnues, doctrine fiscale, jurisprudence : opposable à l'administration et repris tel quel dans vos actes. Nous adaptons l'argumentation selon l'interlocuteur visé.</p>
+          <div class="o-card-pills">
+            <span class="o-pill">Administration fiscale</span>
+            <span class="o-pill">Commissaire aux apports</span>
+            <span class="o-pill">Juge</span>
+          </div>
+        </article>
+
+        <!-- ARG 3 card -->
+        <article class="o-card o-card--arg" data-card="2" aria-hidden="true">
+          <div class="o-card-head">
+            <span class="o-card-icon"><svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#conversation"/></svg></span>
+            <div>
+              <div class="o-card-tag">Défense orale</div>
+              <div class="o-card-step">Satellite 3 / 3</div>
+            </div>
+          </div>
+          <h3 class="o-card-title">Au-delà du document</h3>
+          <p class="o-card-body">Nous ne livrons pas qu'un rapport : nous intervenons pour défendre de vive voix la valeur retenue face à un tiers. Notre pratique de la cession en fait un point d'appui pour rapprocher les parties.</p>
+        </article>
+      </div>
+    </div>
+
+    <!-- Static, readable fallback (reduced-motion / small screens) -->
+    <div class="o-fallback">
+      <div class="o-fallback-item">
+        <span class="o-fb-icon"><svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#balance"/></svg></span>
+        <div>
+          <div class="o-fb-tag">Double casquette</div>
+          <h3 class="o-fb-title">Du théoricien au praticien</h3>
+          <p class="o-fb-body">Évaluation ET fusion-acquisition sous le même toit : la rigueur technique de l'évaluation, et la connaissance du terrain et de la négociation. C'est ce qui nous permet de faire le pont entre le Guide de l'évaluation fiscale et la réalité du marché.</p>
+        </div>
+      </div>
+      <div class="o-fallback-item">
+        <span class="o-fb-icon"><svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#seal"/></svg></span>
+        <div>
+          <div class="o-fb-tag">Opposable &amp; adapté</div>
+          <h3 class="o-fb-title">Un rapport qui tient, calibré pour son destinataire</h3>
+          <p class="o-fb-body">Méthodes reconnues, doctrine fiscale, jurisprudence : opposable à l'administration et repris tel quel dans vos actes. Nous adaptons l'argumentation selon l'interlocuteur visé.</p>
+          <div class="o-fb-pills">
+            <span class="o-pill">Administration fiscale</span>
+            <span class="o-pill">Commissaire aux apports</span>
+            <span class="o-pill">Juge</span>
+          </div>
+        </div>
+      </div>
+      <div class="o-fallback-item">
+        <span class="o-fb-icon"><svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#conversation"/></svg></span>
+        <div>
+          <div class="o-fb-tag">Défense orale</div>
+          <h3 class="o-fb-title">Au-delà du document</h3>
+          <p class="o-fb-body">Nous ne livrons pas qu'un rapport : nous intervenons pour défendre de vive voix la valeur retenue face à un tiers. Notre pratique de la cession en fait un point d'appui pour rapprocher les parties.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      // JS is running: drop the no-JS CSS spin fallback, we drive rotation ourselves.
+      document.documentElement.classList.remove('no-js');
+
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (reduce.matches) return; // fallback list handles it; nothing to wire
+
+      const system  = document.getElementById('system');
+      const def      = document.getElementById('default');
+      const turntable = document.getElementById('turntable');
+      const counters  = Array.from(document.querySelectorAll('.o-counter'));
+      const chips    = Array.from(document.querySelectorAll('.o-chip'));
+      const wraps    = Array.from(document.querySelectorAll('.o-chip-wrap'));
+      const cards    = Array.from(document.querySelectorAll('.o-card--arg'));
+      const rotorItems = Array.from(document.querySelectorAll('.o-rotor-item'));
+      const rotorDots  = Array.from(document.querySelectorAll('.o-rotor-dots button'));
+
+      let activeIdx = null;
+      let stickyIdx = null;   // pinned via click/tap for touch + deliberate selection
+
+      /* ---------- Orbit driver (rAF) ----------
+         The turntable always turns; engaging a satellite eases the speed down
+         to a slow crawl (and back up on release) instead of snapping. */
+      const FULL_SPEED = 360 / 42000;   // deg per ms  (~42s / turn)  — matches --orbit-dur
+      const SLOW_SPEED = 360 / 150000;  // deg per ms  (~150s / turn) — matches --orbit-dur-slow
+      let angle = 0;            // current turntable rotation (deg)
+      let speed = FULL_SPEED;   // current eased speed
+      let targetSpeed = FULL_SPEED;
+      let last = performance.now();
+      let running = true;
+
+      function frame(now) {
+        if (!running) return;
+        const dt = Math.min(now - last, 64); // clamp after tab-switch / jank
+        last = now;
+        // exponential ease toward the target speed: smooth ramp, never abrupt
+        speed += (targetSpeed - speed) * (1 - Math.exp(-dt / 420));
+        angle = (angle + speed * dt) % 360;
+        turntable.style.transform = 'rotate(' + angle + 'deg)';
+        // counter-rotate the chips/labels so they stay upright
+        const counter = 'rotate(' + (-angle) + 'deg)';
+        for (let i = 0; i < counters.length; i++) counters[i].style.transform = counter;
+        requestAnimationFrame(frame);
+      }
+      function startOrbit() {
+        if (running) return;
+        running = true;
+        last = performance.now();
+        requestAnimationFrame(frame);
+      }
+      function stopOrbit() { running = false; }
+      requestAnimationFrame(frame);
+
+      /* ---------- Detail panel ---------- */
+      function showCard(idx) {
+        cards.forEach((c) => {
+          const on = Number(c.dataset.card) === idx;
+          c.classList.toggle('is-shown', on);
+          c.setAttribute('aria-hidden', on ? 'false' : 'true');
+        });
+        chips.forEach((ch) => ch.classList.toggle('is-active', Number(ch.dataset.arg) === idx));
+        wraps.forEach((w)  => w.classList.toggle('is-active', Number(w.dataset.wrap) === idx));
+        def.classList.add('is-hidden');
+        system.classList.add('is-engaged');
+        targetSpeed = SLOW_SPEED;   // ease the orbit down to a crawl
+        stopRotor();
+      }
+
+      function clearCard() {
+        cards.forEach((c) => {
+          c.classList.remove('is-shown');
+          c.setAttribute('aria-hidden', 'true');
+        });
+        chips.forEach((ch) => ch.classList.remove('is-active'));
+        wraps.forEach((w)  => w.classList.remove('is-active'));
+        def.classList.remove('is-hidden');
+        system.classList.remove('is-engaged');
+        targetSpeed = FULL_SPEED;   // ease the orbit back up to cruising speed
+        startRotor();
+      }
+
+      function engage(idx) { activeIdx = idx; showCard(idx); }
+      function release() {
+        if (stickyIdx !== null) return; // keep open if pinned
+        activeIdx = null;
+        clearCard();
+      }
+
+      chips.forEach((chip) => {
+        const idx = Number(chip.dataset.arg);
+        chip.addEventListener('mouseenter', () => engage(idx));
+        chip.addEventListener('mouseleave', release);
+        chip.addEventListener('focus',  () => engage(idx));
+        chip.addEventListener('blur',   release);
+        chip.addEventListener('click',  () => {
+          if (stickyIdx === idx) { stickyIdx = null; clearCard(); }
+          else { stickyIdx = idx; engage(idx); }
+        });
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && stickyIdx !== null) { stickyIdx = null; clearCard(); }
+      });
+
+      /* ---------- Resting rotor (auto-cycling argument preview) ---------- */
+      let rotorIdx = 0;
+      let rotorTimer = null;
+      const ROTOR_MS = 4200;
+
+      function paintRotor(i) {
+        rotorItems.forEach((el) => el.classList.toggle('is-current', Number(el.dataset.rotor) === i));
+        rotorDots.forEach((d)  => d.classList.toggle('is-current', Number(d.dataset.dot) === i));
+      }
+      function tickRotor() {
+        rotorIdx = (rotorIdx + 1) % rotorItems.length;
+        paintRotor(rotorIdx);
+      }
+      function startRotor() {
+        if (rotorTimer) return;
+        rotorTimer = setInterval(tickRotor, ROTOR_MS);
+      }
+      function stopRotor() {
+        clearInterval(rotorTimer);
+        rotorTimer = null;
+      }
+
+      rotorDots.forEach((dot) => {
+        dot.addEventListener('click', () => {
+          rotorIdx = Number(dot.dataset.dot);
+          paintRotor(rotorIdx);
+          // restart the timer so the manual pick gets its full dwell
+          stopRotor(); startRotor();
+        });
+      });
+
+      // Pause everything when the tab is hidden; resume when visible (perf + correctness)
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          stopRotor();
+          stopOrbit();
+        } else {
+          startOrbit();
+          if (activeIdx === null && stickyIdx === null) startRotor();
+        }
+      });
+
+      paintRotor(0);
+      startRotor();
+    })();
+  </script>
+</body>
+</html>

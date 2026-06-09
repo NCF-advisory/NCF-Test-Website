@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fil-Comète — Pourquoi nous · Avocats</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/global.css">
+  <style>
+    :root {
+      --persona: var(--p-avocat);
+      --persona-soft: var(--p-avocat-soft);
+      --persona-rgb: 79 70 229;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      background: var(--bg-base);
+      color: var(--text-1);
+      font-family: 'Inter', system-ui, sans-serif;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 clamp(1.25rem, 5vw, 4rem);
+    }
+
+    /* ── En-tête de section ── */
+    .fc-head {
+      padding-top: clamp(5rem, 12vh, 9rem);
+      padding-bottom: clamp(2.5rem, 6vh, 4.5rem);
+      max-width: 760px;
+    }
+    .fc-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--persona);
+      margin: 0 0 1.1rem;
+    }
+    .fc-eyebrow::before {
+      content: '';
+      width: 26px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--persona), transparent);
+      display: inline-block;
+    }
+    .fc-title {
+      font-size: clamp(1.9rem, 4.4vw, 3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--text-strong);
+      margin: 0;
+    }
+    .fc-title span { color: var(--persona); }
+    .fc-lede {
+      font-size: 1.02rem;
+      line-height: 1.7;
+      color: var(--text-2);
+      margin: 1.4rem 0 0;
+      max-width: 540px;
+    }
+
+    /* ── Scène motion ── */
+    .fc-stage {
+      position: relative;
+      padding-bottom: clamp(5rem, 14vh, 10rem);
+    }
+
+    /* Couche SVG du fil, en absolu derrière les cartes */
+    .fc-thread {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: visible;
+    }
+    .fc-thread svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      overflow: visible;
+    }
+
+    /* Rail discret (fil non encore tracé) */
+    .fc-rail {
+      fill: none;
+      stroke: var(--line-2);
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+    /* Fil tracé (progression) */
+    .fc-progress {
+      fill: none;
+      stroke: var(--persona);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      filter: drop-shadow(0 0 6px rgba(var(--persona-rgb) / 0.45));
+    }
+
+    /* Comète */
+    .fc-comet-glow {
+      fill: rgba(var(--persona-rgb) / 0.9);
+      filter: drop-shadow(0 0 10px rgba(var(--persona-rgb) / 0.85))
+              drop-shadow(0 0 22px rgba(var(--persona-rgb) / 0.55));
+    }
+    .fc-comet-core {
+      fill: #ffffff;
+    }
+    .fc-comet { opacity: 0; transition: opacity 0.4s ease; }
+    .fc-comet.is-live { opacity: 1; }
+
+    /* Nœuds */
+    .fc-node-ring {
+      fill: var(--bg-base);
+      stroke: var(--line-2);
+      stroke-width: 2;
+      transition: stroke 0.5s ease;
+    }
+    .fc-node-dot {
+      fill: var(--line-2);
+      transform-box: fill-box;
+      transform-origin: center;
+      transition: fill 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fc-node.is-lit .fc-node-ring {
+      stroke: var(--persona);
+      filter: drop-shadow(0 0 8px rgba(var(--persona-rgb) / 0.55));
+    }
+    .fc-node.is-lit .fc-node-dot {
+      fill: var(--persona);
+      transform: scale(1.25);
+    }
+
+    /* ── Cartes d'arguments ── */
+    .fc-track {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(7rem, 16vh, 12rem);
+      padding: clamp(3rem, 8vh, 6rem) 0;
+    }
+
+    .fc-step {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      column-gap: clamp(2.5rem, 7vw, 6rem);
+    }
+
+    /* Carte à droite (impaire) : libère la colonne de gauche pour le fil */
+    .fc-step[data-side="right"] .fc-card { grid-column: 2; }
+    .fc-step[data-side="right"] .fc-spacer { grid-column: 1; grid-row: 1; }
+    /* Carte à gauche (paire) */
+    .fc-step[data-side="left"] .fc-card { grid-column: 1; text-align: left; }
+    .fc-step[data-side="left"] .fc-spacer { grid-column: 2; grid-row: 1; }
+
+    .fc-card {
+      position: relative;
+      background: var(--card-bg);
+      border: 1px solid var(--line-2);
+      border-radius: 16px;
+      padding: clamp(1.6rem, 3vw, 2.4rem);
+      box-shadow: 0 1px 2px rgba(6, 24, 56, 0.04);
+      max-width: 480px;
+
+      /* état initial (avant révélation) */
+      opacity: 0;
+      transform: translateY(34px);
+      transition:
+        opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 0.7s ease,
+        box-shadow 0.7s ease;
+    }
+    .fc-step[data-side="left"] .fc-card { margin-left: auto; }
+
+    .fc-card.is-revealed {
+      opacity: 1;
+      transform: translateY(0);
+      border-color: rgba(var(--persona-rgb) / 0.22);
+      box-shadow:
+        0 18px 40px -22px rgba(var(--persona-rgb) / 0.4),
+        0 2px 6px rgba(6, 24, 56, 0.05);
+    }
+
+    /* Liseré persona qui se révèle sur le bord intérieur */
+    .fc-card::before {
+      content: '';
+      position: absolute;
+      top: 1.6rem;
+      bottom: 1.6rem;
+      width: 3px;
+      border-radius: 3px;
+      background: var(--persona);
+      opacity: 0;
+      transition: opacity 0.7s ease 0.1s;
+    }
+    .fc-step[data-side="right"] .fc-card::before { left: -1px; }
+    .fc-step[data-side="left"] .fc-card::before { right: -1px; }
+    .fc-card.is-revealed::before { opacity: 0.85; }
+
+    .fc-card-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 1.15rem;
+    }
+    .fc-icon {
+      flex: none;
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--persona-soft);
+      color: var(--persona);
+    }
+    .fc-icon svg {
+      width: 26px;
+      height: 26px;
+    }
+    .fc-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--persona);
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: rgba(var(--persona-rgb) / 0.08);
+      border: 1px solid rgba(var(--persona-rgb) / 0.18);
+    }
+    .fc-step-no {
+      margin-left: auto;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-2);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.05em;
+    }
+    .fc-step-no b { color: var(--persona); }
+
+    .fc-card h3 {
+      font-size: clamp(1.15rem, 2vw, 1.4rem);
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      color: var(--text-strong);
+      margin: 0 0 0.7rem;
+    }
+    .fc-card p {
+      font-size: 0.94rem;
+      line-height: 1.72;
+      color: var(--text-1);
+      margin: 0;
+    }
+
+    /* Puces interlocuteurs (arg 2) */
+    .fc-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 1.25rem;
+    }
+    .fc-chip {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-1);
+      padding: 6px 13px;
+      border-radius: 8px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--line-2);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .fc-chip::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--persona);
+      flex: none;
+    }
+
+    /* ── Responsive : pile, fil à gauche ── */
+    @media (max-width: 760px) {
+      .fc-step {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+      }
+      .fc-spacer { display: none; }
+      .fc-step[data-side="right"] .fc-card,
+      .fc-step[data-side="left"] .fc-card {
+        grid-column: 1;
+        text-align: left;
+        margin-left: 0;
+        margin-right: 0;
+        margin-left: 2.75rem; /* dégage le fil à gauche */
+        max-width: none;
+      }
+      .fc-step[data-side="left"] .fc-card::before,
+      .fc-step[data-side="right"] .fc-card::before { left: -1px; right: auto; }
+      .fc-track { gap: 4.5rem; }
+    }
+
+    /* ── Reduced motion : tout révélé, fil tracé, comète masquée ── */
+    @media (prefers-reduced-motion: reduce) {
+      .fc-card,
+      .fc-card::before {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+      .fc-card { border-color: rgba(var(--persona-rgb) / 0.22); }
+      .fc-card::before { opacity: 0.85 !important; }
+      .fc-node-ring { stroke: var(--persona) !important; }
+      .fc-node-dot { fill: var(--persona) !important; }
+      .fc-comet { display: none !important; }
+      .fc-progress { stroke-dashoffset: 0 !important; }
+      .fc-node-dot, .fc-node-ring, .fc-comet { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <section class="fc-section" aria-labelledby="fc-title">
+    <div class="wrap fc-head">
+      <p class="fc-eyebrow">Pourquoi nous</p>
+      <h2 class="fc-title" id="fc-title">Une évaluation qui ne se contente pas d'<span>exister sur le papier</span></h2>
+      <p class="fc-lede">Trois atouts qui font la différence quand la valeur d'une entreprise doit tenir face à un tiers — et que vous, avocat, êtes en première ligne.</p>
+    </div>
+
+    <div class="wrap fc-stage">
+      <!-- Fil-comète (SVG) -->
+      <div class="fc-thread" aria-hidden="true">
+        <svg id="fc-svg" preserveAspectRatio="none" viewBox="0 0 100 1000">
+          <path class="fc-rail" id="fc-rail-path" d=""/>
+          <path class="fc-progress" id="fc-progress-path" d=""/>
+
+          <g class="fc-node" data-node="0">
+            <circle class="fc-node-ring" r="9"/>
+            <circle class="fc-node-dot" r="4"/>
+          </g>
+          <g class="fc-node" data-node="1">
+            <circle class="fc-node-ring" r="9"/>
+            <circle class="fc-node-dot" r="4"/>
+          </g>
+          <g class="fc-node" data-node="2">
+            <circle class="fc-node-ring" r="9"/>
+            <circle class="fc-node-dot" r="4"/>
+          </g>
+
+          <g class="fc-comet" id="fc-comet">
+            <circle class="fc-comet-glow" r="6"/>
+            <circle class="fc-comet-core" r="2.4"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Cartes d'arguments -->
+      <div class="fc-track" id="fc-track">
+
+        <!-- ARG 1 — droite -->
+        <article class="fc-step" data-side="right" data-step="0">
+          <div class="fc-spacer" aria-hidden="true"></div>
+          <div class="fc-card">
+            <div class="fc-card-top">
+              <span class="fc-icon">
+                <svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#balance"/></svg>
+              </span>
+              <span class="fc-tag">Double casquette</span>
+              <span class="fc-step-no"><b>01</b> / 03</span>
+            </div>
+            <h3>Du théoricien au praticien</h3>
+            <p>Évaluation ET fusion-acquisition sous le même toit : la rigueur technique de l'évaluation, et la connaissance du terrain et de la négociation. C'est ce qui nous permet de faire le pont entre le Guide de l'évaluation fiscale et la réalité du marché.</p>
+          </div>
+        </article>
+
+        <!-- ARG 2 — gauche -->
+        <article class="fc-step" data-side="left" data-step="1">
+          <div class="fc-card">
+            <div class="fc-card-top">
+              <span class="fc-icon">
+                <svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#seal"/></svg>
+              </span>
+              <span class="fc-tag">Opposable &amp; adapté</span>
+              <span class="fc-step-no"><b>02</b> / 03</span>
+            </div>
+            <h3>Un rapport qui tient, calibré pour son destinataire</h3>
+            <p>Méthodes reconnues, doctrine fiscale, jurisprudence : opposable à l'administration et repris tel quel dans vos actes. Nous adaptons l'argumentation selon l'interlocuteur visé.</p>
+            <div class="fc-chips">
+              <span class="fc-chip">Administration fiscale</span>
+              <span class="fc-chip">Commissaire aux apports</span>
+              <span class="fc-chip">Juge</span>
+            </div>
+          </div>
+          <div class="fc-spacer" aria-hidden="true"></div>
+        </article>
+
+        <!-- ARG 3 — droite -->
+        <article class="fc-step" data-side="right" data-step="2">
+          <div class="fc-spacer" aria-hidden="true"></div>
+          <div class="fc-card">
+            <div class="fc-card-top">
+              <span class="fc-icon">
+                <svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#conversation"/></svg>
+              </span>
+              <span class="fc-tag">Défense orale</span>
+              <span class="fc-step-no"><b>03</b> / 03</span>
+            </div>
+            <h3>Au-delà du document</h3>
+            <p>Nous ne livrons pas qu'un rapport : nous intervenons pour défendre de vive voix la valeur retenue face à un tiers. Notre pratique de la cession en fait un point d'appui pour rapprocher les parties.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const svg = document.getElementById('fc-svg');
+      const railPath = document.getElementById('fc-rail-path');
+      const progPath = document.getElementById('fc-progress-path');
+      const comet = document.getElementById('fc-comet');
+      const stage = document.querySelector('.fc-stage');
+      const track = document.getElementById('fc-track');
+      const steps = Array.from(document.querySelectorAll('.fc-step'));
+      const cards = steps.map(s => s.querySelector('.fc-card'));
+      const nodeGroups = Array.from(document.querySelectorAll('.fc-node'));
+
+      // viewBox vertical fixe ; X organique (courbe en S douce)
+      const VBW = 100;   // largeur viewBox
+      const VBH = 1000;  // hauteur viewBox (recalée sur la hauteur réelle du SVG)
+
+      // Position horizontale du fil (en unités viewBox).
+      // Sur desktop il serpente entre la gauche et le centre-gauche ; jamais au-delà du milieu.
+      let pathLen = 0;
+      let nodePts = [];        // points {x,y} des 3 nœuds le long du fil (coord viewBox)
+      let stepProgress = [];   // progression de scroll (0..1) à laquelle chaque carte se révèle
+
+      // Construit un tracé en S vertical, organique, calé sur les positions verticales des cartes.
+      function buildPath() {
+        const stageRect = stage.getBoundingClientRect();
+        const H = stage.offsetHeight;
+        svg.setAttribute('viewBox', `0 0 ${VBW} ${H}`);
+
+        // X de base : selon la largeur, on serpente plus ou moins.
+        const narrow = window.matchMedia('(max-width: 760px)').matches;
+        const baseX = narrow ? 9 : 16;       // axe central du fil
+        const amp = narrow ? 4 : 11;         // amplitude de l'ondulation
+
+        // Centres verticaux des 3 nœuds = centre vertical de chaque carte, en coord viewBox.
+        const yCenters = cards.map(card => {
+          const r = card.getBoundingClientRect();
+          return (r.top - stageRect.top) + r.height / 2;
+        });
+
+        // Début / fin du fil : un peu avant la 1re carte, un peu après la dernière.
+        const yStart = Math.max(0, yCenters[0] - 90);
+        const yEnd = Math.min(H, yCenters[yCenters.length - 1] + 90);
+
+        // Anchors X : alternance douce gauche/droite pour le serpentin,
+        // alignée sur le côté de chaque carte (fil opposé à la carte).
+        // Carte à droite -> fil tire à gauche ; carte à gauche -> fil tire à droite.
+        const sideX = steps.map(s => {
+          return s.dataset.side === 'right' ? baseX - amp : baseX + amp;
+        });
+
+        // Construit un path lissé : start -> n0 -> n1 -> n2 -> end avec courbes de Bézier.
+        const pts = [];
+        pts.push({ x: baseX, y: yStart });
+        for (let i = 0; i < yCenters.length; i++) {
+          pts.push({ x: sideX[i], y: yCenters[i] });
+        }
+        pts.push({ x: baseX, y: yEnd });
+
+        const d = smoothPath(pts);
+        railPath.setAttribute('d', d);
+        progPath.setAttribute('d', d);
+
+        // Mesure de la longueur pour le dash.
+        pathLen = progPath.getTotalLength();
+        progPath.style.strokeDasharray = pathLen;
+        if (reduceMotion) {
+          progPath.style.strokeDashoffset = 0;
+        } else {
+          progPath.style.strokeDashoffset = pathLen;
+        }
+
+        // Place les nœuds aux points de carte sur le fil ;
+        // on retrouve le point exact sur la courbe à la longueur correspondant à chaque y.
+        nodePts = yCenters.map(y => pointAtY(progPath, y, H));
+        nodeGroups.forEach((g, i) => {
+          const p = nodePts[i];
+          g.querySelectorAll('circle').forEach(c => {
+            c.setAttribute('cx', p.x);
+            c.setAttribute('cy', p.y);
+          });
+        });
+
+        // Progression de scroll à laquelle révéler chaque carte.
+        // On mappe la position verticale de chaque nœud sur la longueur du fil (lenAtY)
+        // pour synchroniser comète et révélation.
+        stepProgress = yCenters.map(y => lenAtY(progPath, y, H) / pathLen);
+      }
+
+      // Lissage type Catmull-Rom -> Bézier cubique.
+      function smoothPath(pts) {
+        if (pts.length < 2) return '';
+        let d = `M ${pts[0].x.toFixed(2)} ${pts[0].y.toFixed(2)}`;
+        for (let i = 0; i < pts.length - 1; i++) {
+          const p0 = pts[i - 1] || pts[i];
+          const p1 = pts[i];
+          const p2 = pts[i + 1];
+          const p3 = pts[i + 2] || p2;
+          const t = 0.5; // tension
+          const c1x = p1.x + (p2.x - p0.x) / 6 * t * 2;
+          const c1y = p1.y + (p2.y - p0.y) / 6 * t * 2;
+          const c2x = p2.x - (p3.x - p1.x) / 6 * t * 2;
+          const c2y = p2.y - (p3.y - p1.y) / 6 * t * 2;
+          d += ` C ${c1x.toFixed(2)} ${c1y.toFixed(2)}, ${c2x.toFixed(2)} ${c2y.toFixed(2)}, ${p2.x.toFixed(2)} ${p2.y.toFixed(2)}`;
+        }
+        return d;
+      }
+
+      // Renvoie le point du path le plus proche d'une ordonnée y (recherche binaire sur la longueur).
+      function pointAtY(path, targetY, H) {
+        const len = lenAtY(path, targetY, H);
+        return path.getPointAtLength(len);
+      }
+      function lenAtY(path, targetY, H) {
+        const total = path.getTotalLength();
+        let lo = 0, hi = total;
+        for (let i = 0; i < 22; i++) {
+          const mid = (lo + hi) / 2;
+          const pt = path.getPointAtLength(mid);
+          if (pt.y < targetY) lo = mid; else hi = mid;
+        }
+        return (lo + hi) / 2;
+      }
+
+      // Progression de scroll de la scène : 0 quand le haut de la scène atteint ~80% du viewport,
+      // 1 quand le bas de la scène a quasi quitté l'écran par le haut.
+      function scrollProgress() {
+        const rect = stage.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const startTrigger = vh * 0.78;          // début quand le haut entre
+        const total = rect.height + startTrigger - vh * 0.28;
+        const scrolled = startTrigger - rect.top;
+        return clamp(scrolled / total, 0, 1);
+      }
+
+      function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+      function easeInOut(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+
+      let ticking = false;
+      let cometLive = false;
+
+      function render() {
+        ticking = false;
+        if (reduceMotion || pathLen === 0) return;
+
+        const p = scrollProgress();
+
+        // Tracé progressif du fil.
+        progPath.style.strokeDashoffset = pathLen * (1 - p);
+
+        // Comète le long du fil.
+        if (p > 0.001 && p < 0.999) {
+          if (!cometLive) { comet.classList.add('is-live'); cometLive = true; }
+          const pt = progPath.getPointAtLength(pathLen * p);
+          comet.setAttribute('transform', `translate(${pt.x} ${pt.y})`);
+        } else if (p >= 0.999) {
+          // Au bout du fil : la comète se pose puis s'efface en douceur.
+          if (cometLive) { comet.classList.remove('is-live'); cometLive = false; }
+        } else {
+          if (cometLive) { comet.classList.remove('is-live'); cometLive = false; }
+        }
+
+        // Allumage des nœuds + révélation des cartes quand la comète atteint leur niveau.
+        stepProgress.forEach((sp, i) => {
+          const reached = p >= sp - 0.005;
+          nodeGroups[i].classList.toggle('is-lit', reached);
+          cards[i].classList.toggle('is-revealed', reached);
+        });
+      }
+
+      function onScroll() {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(render);
+        }
+      }
+
+      // Recalcule le tracé après layout / resize / chargement des polices.
+      let resizeRaf;
+      function rebuild() {
+        cancelAnimationFrame(resizeRaf);
+        resizeRaf = requestAnimationFrame(() => {
+          buildPath();
+          render();
+        });
+      }
+
+      if (reduceMotion) {
+        // Fallback : fil tracé, cartes visibles, nœuds allumés (géré aussi en CSS).
+        buildPath();
+        steps.forEach((s, i) => {
+          cards[i].classList.add('is-revealed');
+          nodeGroups[i].classList.add('is-lit');
+        });
+      } else {
+        buildPath();
+        render();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', rebuild);
+        // Les polices peuvent décaler la hauteur des cartes -> reconstruire une fois prêtes.
+        if (document.fonts && document.fonts.ready) {
+          document.fonts.ready.then(rebuild);
+        }
+        // Filet de sécurité : reconstruire après le load complet.
+        window.addEventListener('load', rebuild);
+      }
+    })();
+  </script>
+</body>
+</html>

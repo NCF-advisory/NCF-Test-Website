@@ -101,8 +101,8 @@ Vercel applique `cleanUrls: true` (`/transmission` → `/transmission/index.html
 `ARCHITECTURE.md` décrit la structure des dossiers et la procédure d'ajout d'une page — **le lire avant tout ajout de page**. Compléments :
 
 - **Page = dossier + `index.html`** : l'URL publique vient du dossier. Ne jamais renommer un slug existant sans plan de redirection (SEO).
-- **Styles partagés** dans `assets/css/global.css` (tokens + chrome navbar/footer/band), **styles par page** dans `assets/css/pages/<page>.css`. Composants réutilisables dans `assets/css/components/` (ex. `thread.css`).
-- **JS** : `assets/js/site.js` (commun, chargé partout), `assets/js/pages/<page>.js` (spécifique), `assets/js/thread.js` (composant).
+- **Styles partagés** dans `assets/css/global.css` (tokens + chrome navbar/footer/band), **styles par page** dans `assets/css/pages/<page>.css`. Composants réutilisables dans `assets/css/components/` (ex. `autocycle.css`).
+- **JS** : `assets/js/site.js` (commun, chargé partout), `assets/js/pages/<page>.js` (spécifique), `assets/js/autocycle.js` (composant « Pourquoi nous » des pages cibles).
 - **`_work/`** est un bac à sable autorisé pour prototypes/maquettes avant intégration. Non déployé (`.vercelignore`), non indexé (`robots.txt` Disallow). Workflow : prototype dans `_work/` → validation utilisateur → intégration dans le site.
 - `_work/docs/` et `_work/prompts/` sont gitignored (briefs internes sensibles).
 
