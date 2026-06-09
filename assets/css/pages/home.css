@@ -1307,10 +1307,7 @@
 
     .rapport-demo {
       margin-top: 3.5rem;
-      display: grid; grid-template-columns: 1fr 1.05fr; gap: 3.5rem;
-      align-items: start;
     }
-    @media (max-width: 980px) { .rapport-demo { grid-template-columns: 1fr; gap: 2.5rem; } }
 
     /* Tabs (piliers cliquables) */
     .rapport-tabs { display: flex; flex-direction: column; gap: 0.7rem; }
@@ -2527,3 +2524,11 @@
     .hv-bento-brand-main strong { font-size: 1rem; }
     .hv-bento-brand-main span { font-size: 0.74rem; }
   }
+
+/* ═══ Aperçu du rapport — carrousel (iframe autonome) dans le bloc « Notre livrable » ═══ */
+.rapport-cf {
+  display: block; width: 100%; height: 580px;
+  border: 0; border-radius: 16px; background: #fff;
+}
+@media (max-width: 980px) { .rapport-cf { height: 560px; } }
+@media (max-width: 600px) { .rapport-cf { height: 470px; } }

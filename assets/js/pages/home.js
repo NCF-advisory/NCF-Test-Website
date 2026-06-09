@@ -58,46 +58,6 @@
   };
 
   ready(() => {
-    const rapportTabs = [...document.querySelectorAll('.rapport-tab')];
-    const rapportMockup = document.querySelector('.rapport-mockup');
-    let userInteractedRapport = false;
-
-    const setRapportState = (state, fromUser = false) => {
-      rapportTabs.forEach((tab) => {
-        const active = tab.dataset.state === state;
-        tab.classList.toggle('active', active);
-        tab.setAttribute('aria-selected', String(active));
-      });
-
-      if (rapportMockup) rapportMockup.dataset.state = state;
-      if (fromUser) userInteractedRapport = true;
-    };
-
-    rapportTabs.forEach((tab) => {
-      tab.addEventListener('click', () => setRapportState(tab.dataset.state, true));
-    });
-
-    const autoCycleRapport = () => {
-      if (userInteractedRapport || !rapportTabs.length || !rapportMockup) return;
-
-      const states = rapportTabs.map((tab) => tab.dataset.state);
-      const currentIdx = states.findIndex((state) => state === rapportMockup.dataset.state);
-      const nextIdx = (currentIdx + 1) % states.length;
-      setRapportState(states[nextIdx]);
-      window.setTimeout(autoCycleRapport, 3500);
-    };
-
-    const diffSection = document.querySelector('.diff-section');
-    if (diffSection && rapportMockup && 'IntersectionObserver' in window) {
-      const diffObserver = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          window.setTimeout(autoCycleRapport, 1800);
-          diffObserver.disconnect();
-        }
-      }, { threshold: 0.35 });
-      diffObserver.observe(diffSection);
-    }
-
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const heroEl = document.getElementById('hero');
     const heroMosaic = document.querySelector('.team-mosaic');
