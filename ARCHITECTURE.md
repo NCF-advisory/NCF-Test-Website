@@ -82,8 +82,8 @@ La classe `is-<persona>` mappe le token `--p-*` vers `--persona` (en tête de `p
 | `/tarifs/` | `pages/tarifs.css` | — |
 | `/equipe/` | `pages/equipe.css` | — |
 | `/partenaires/` | `pages/partenaires.css` | — |
-| `/ressources/` | `pages/ressources.css` | — |
-| `/ressources/<slug>/` (articles) | styles propres à l'article (inline) | — |
+| `/ressources/` | `pages/ressources.css` | `pages/ressources.js` (filtres) |
+| `/ressources/<slug>/` (articles) | `pages/article.css` (+ classe thème sur `<body>`) | — |
 | `/mentions-legales/` `/confidentialite/` | `pages/legal.css` | — |
 
 (`global.css` et `site.js` en plus, partout.)

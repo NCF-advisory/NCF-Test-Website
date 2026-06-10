@@ -28,6 +28,12 @@ _work/prompts/
 /*.jpg
 /*.jpeg
 
+# Captures d'itération dans _work (les prototypes HTML restent versionnés)
+_work/*.png
+
+# Originaux haute résolution des visuels d'articles (sources, non déployées)
+_work/sources-images/
+
 # Logs
 *.log
 npm-debug.log*

@@ -1,5 +1,7 @@
 .claude/
 _work/
+.playwright-mcp/
+ressources/Linkedin/
 
 *.pdf
 *.docx
