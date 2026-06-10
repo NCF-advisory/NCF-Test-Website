@@ -12,9 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
         b.setAttribute('aria-pressed', String(b === btn));
       });
       cards.forEach((card) => {
-        // Le reveal de site.js cesse d'observer les éléments déjà passés :
-        // on force l'état visible pour les cartes réaffichées par un filtre.
-        card.classList.add('in');
         card.hidden = filter !== 'all' && card.dataset.theme !== filter;
       });
     });
