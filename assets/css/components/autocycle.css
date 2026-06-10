@@ -75,7 +75,7 @@
     /* ── Barre d'onglets (libellés) ── */
     .tabs__nav {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(var(--tab-count, 3), minmax(0, 1fr));
       position: relative;
       border-bottom: 1px solid var(--line-2);
       background: rgba(var(--persona-rgb) / .025);
@@ -139,7 +139,7 @@
     .tabs__fill {
       position: absolute;
       top: 0; bottom: 0;
-      width: calc(100% / 3);
+      width: calc(100% / var(--tab-count, 3));
       background: linear-gradient(90deg,
         rgba(var(--persona-rgb) / .5),
         var(--persona));
@@ -447,6 +447,9 @@
       .tab__label { font-size: .82rem; }
       .tab { padding: .9rem .85rem; }
       .tab__idx { font-size: .68rem; }
+      /* notaires : 4 onglets → resserrer pour éviter le débordement sur petit écran */
+      .is-notaires .tab { padding: .85rem .5rem; }
+      .is-notaires .tab__label { font-size: .74rem; hyphens: auto; overflow-wrap: break-word; }
     }
 
     /* ── Reduced motion : tout révélé, pas d'autoplay ── */
