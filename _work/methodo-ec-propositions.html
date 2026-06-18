@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Méthodo experts-comptables — Proposition retenue</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/global.css" />
+  <link rel="stylesheet" href="/assets/css/pages/parcours.css" />
+
+  <style>
+    /* ─────────── Chrome du prototype (non déployé) ─────────── */
+    body { margin: 0; }
+    .proto-banner {
+      background: var(--persona); color: #fff; text-align: center;
+      padding: .85rem 1.5rem; font: 600 .85rem/1.45 Inter, sans-serif;
+    }
+
+    /* Roadmap à 6 colonnes (desktop) — l'animation/fil reste celle du site */
+    @media (min-width: 861px) { .ch-flow--6 { grid-template-columns: repeat(6, 1fr); } }
+
+    /* Nom de l'étape en bleu (remplace l'ancien sous-titre outil) */
+    .ch-flow .ch-title {
+      color: var(--persona);
+      margin-top: .85rem;
+      font-size: .95rem;
+      font-weight: 800;
+    }
+
+    /* Logo S&P Global (carré avec marges internes) : légèrement agrandi */
+    .ch-node img.sp { width: 46px; height: 46px; }
+  </style>
+</head>
+
+<body class="parcours-page is-experts-comptables">
+
+  <div class="proto-banner">
+    Prototype interne — bloc « Notre méthode » (experts-comptables), proposition 1 retenue. Non déployé.
+  </div>
+
+  <section class="section methodo-flow">
+    <div class="section-inner">
+      <div class="section-eyebrow">Notre méthode</div>
+      <h2 class="section-title">De l'analyse à la valeur.</h2>
+
+      <div class="ch-flow ch-flow--6">
+
+        <!-- 1 · Activité & marché (Xerfi) -->
+        <div class="ch-step">
+          <div class="ch-node"><img src="/assets/img/tools/xerfi.png" alt="Xerfi" /></div>
+          <div class="ch-title">Activité &amp; marché</div>
+          <p class="ch-desc">On cerne le métier, le positionnement et le marché de l'entreprise.</p>
+        </div>
+
+        <!-- 2 · Étude des risques (concept — icône matrice) -->
+        <div class="ch-step">
+          <div class="ch-node">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7.5" height="7.5" rx="1.4"/><rect x="13" y="3.5" width="7.5" height="7.5" rx="1.4"/><rect x="3.5" y="13" width="7.5" height="7.5" rx="1.4"/><rect x="13" y="13" width="7.5" height="7.5" rx="1.4"/></svg>
+          </div>
+          <div class="ch-title">Étude des risques</div>
+          <p class="ch-desc">Matrice des risques : homme clé, dépendance, risques propres à la structure, pour ajuster la valeur.</p>
+        </div>
+
+        <!-- 3 · Comptes & retraitements (Excel — logo réel) -->
+        <div class="ch-step">
+          <div class="ch-node"><img src="/assets/img/tools/excel.png" alt="Microsoft Excel" /></div>
+          <div class="ch-title">Comptes &amp; retraitements</div>
+          <p class="ch-desc">Lecture des comptes et retraitements pour une base économique fiable.</p>
+        </div>
+
+        <!-- 4 · Comparables (S&P Global) -->
+        <div class="ch-step">
+          <div class="ch-node"><img class="sp" src="/assets/img/tools/sp-global.jpg" alt="S&amp;P Global" /></div>
+          <div class="ch-title">Comparables</div>
+          <p class="ch-desc">Comparables sectoriels et transactions réelles, issus de bases de référence.</p>
+        </div>
+
+        <!-- 5 · Valorisation (concept — icône balance) -->
+        <div class="ch-step">
+          <div class="ch-node"><svg viewBox="0 0 24 24"><use href="/assets/ncf-icons/icons-sprite.svg#balance"/></svg></div>
+          <div class="ch-title">Valorisation</div>
+          <p class="ch-desc">Application des méthodes reconnues : rendement, comparables, actif net.</p>
+        </div>
+
+        <!-- 6 · Conclusion (concept — icône sceau) -->
+        <div class="ch-step">
+          <div class="ch-node"><svg viewBox="0 0 24 24"><use href="/assets/ncf-icons/icons-sprite.svg#seal"/></svg></div>
+          <div class="ch-title">Valeur retenue</div>
+          <p class="ch-desc">Une valeur centrale argumentée et une fourchette défendable.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

@@ -814,6 +814,12 @@ body.parcours-page.is-notaires           { --persona: var(--p-notaire);       --
     .ch-teams-sep { width:1px; height:24px; background:var(--line-2); }
     .ch-teams-tool { font-size:.7rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:var(--persona); }
     .ch-teams p { margin:.15rem 0 0; font-size:.92rem; color:var(--text-1); line-height:1.55; }
+
+    /* Variante 6 étapes (méthode experts-comptables) : nom d'étape en accent, sans sous-titre outil */
+    @media (min-width:861px) { .ch-flow--6 { grid-template-columns:repeat(6,1fr); } }
+    .ch-flow--6 .ch-title { color:var(--persona); margin-top:.85rem; font-size:.95rem; font-weight:800; }
+    .ch-node img.sp { width:46px; height:46px; }
+
     @media(max-width:680px){ .ch-data-chip{ flex:1 1 140px; padding:13px 18px; } .ch-data-chip img{ height:38px; } }
     @media(max-width:860px){
       .ch-flow { grid-template-columns:1fr; gap:0; max-width:460px; margin-inline:auto; }
