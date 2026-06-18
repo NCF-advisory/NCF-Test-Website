@@ -1,4 +1,74 @@
+# robots.txt — Novances Évaluation
+# Accès volontairement ouvert à tous les robots, y compris les crawlers des
+# moteurs génératifs (ChatGPT, Claude, Perplexity, Google AI Overviews, etc.),
+# afin de favoriser la citation du site. Seuls le bac à sable (_work) et les
+# sources d'import LinkedIn restent exclus.
+
 User-agent: *
+Allow: /
+Disallow: /_work/
+Disallow: /ressources/Linkedin/
+
+# --- Opt-in explicite des principaux agents IA ---------------------------
+# Les groupes nommés ne sont pas additifs avec le groupe « * » : on y répète
+# donc les mêmes règles pour garantir le même périmètre d'exclusion.
+
+User-agent: GPTBot
+Allow: /
+Disallow: /_work/
+Disallow: /ressources/Linkedin/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /_work/
+Disallow: /ressources/Linkedin/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /_work/
+Disallow: /ressources/Linkedin/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /_work/
+Disallow: /ressources/Linkedin/
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /_work/
+Disallow: /ressources/Linkedin/
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /_work/
+Disallow: /ressources/Linkedin/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /_work/
+Disallow: /ressources/Linkedin/
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /_work/
+Disallow: /ressources/Linkedin/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /_work/
+Disallow: /ressources/Linkedin/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /_work/
+Disallow: /ressources/Linkedin/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /_work/
+Disallow: /ressources/Linkedin/
+
+User-agent: CCBot
 Allow: /
 Disallow: /_work/
 Disallow: /ressources/Linkedin/

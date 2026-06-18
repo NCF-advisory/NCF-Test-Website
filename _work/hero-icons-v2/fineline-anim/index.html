@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novances Évaluation — Personas · Fineline animé</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #0A1E3F;
+    --ink-55: rgba(10,30,63,0.55);
+    --ink-25: rgba(10,30,63,0.25);
+    --ink-12: rgba(10,30,63,0.12);
+  }
+  *{ box-sizing: border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--ink);
+    background: radial-gradient(120% 80% at 50% -10%, #F4F8FE 0%, #EAF0F8 55%, #E2EAF5 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .page{ max-width: 980px; margin: 0 auto; padding: 96px 32px 128px; text-align: center; }
+  .eyebrow{ font-size: 11px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-55); margin: 0 0 24px; }
+  h1{ font-size: clamp(26px, 4vw, 36px); font-weight: 300; line-height: 1.18; letter-spacing: -0.01em; margin: 0 auto 20px; max-width: 20ch; }
+  h1 em{ font-style: normal; font-weight: 500; }
+  .caption{ font-size: 15px; font-weight: 400; line-height: 1.7; color: var(--ink-55); max-width: 54ch; margin: 0 auto; }
+  .rule{ width: 56px; height: 1px; background: var(--ink-25); margin: 56px auto 0; border: 0; }
+
+  .row{ display: flex; justify-content: center; align-items: flex-start; gap: clamp(28px, 7vw, 84px); margin: 64px auto 0; flex-wrap: wrap; }
+  .persona{ display: flex; flex-direction: column; align-items: center; gap: 20px; width: 120px; }
+  .icon{ width: 84px; height: 84px; color: var(--ink); }
+  .icon svg{ display: block; width: 100%; height: 100%; overflow: visible; }
+  .label{ font-size: 14px; font-weight: 500; letter-spacing: 0.01em; color: var(--ink); }
+
+  /* shared stroke conventions */
+  .s1{ fill: none; stroke: currentColor; stroke-width: 1.5; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
+  .s55{ stroke: var(--ink-55); }
+  .s25{ stroke: var(--ink-25); }
+  .f12{ fill: var(--ink-12); stroke: none; }
+  .dot{ fill: currentColor; stroke: none; }
+
+  .showcase{ margin: 104px auto 0; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+  .showcase .icon-lg{ width: 168px; height: 168px; color: var(--ink); }
+  .showcase .icon-lg svg{ display:block; width:100%; height:100%; overflow:visible; }
+  .showcase .cap{ font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-55); }
+
+  /* ============================================================
+     ANIMATIONS — chorégraphie d'origine, restylée monochrome fin.
+     ============================================================ */
+  @keyframes hp-spin   { to { transform: rotate(360deg); } }
+  @keyframes hp-breathe{ 0%,100%{ transform: scale(1); } 50%{ transform: scale(1.05); } }
+  @keyframes hp-bar    { 0%,8%{ transform: scaleX(0); opacity:.35 } 40%,66%{ transform: scaleX(1); opacity:1 } 94%,100%{ transform: scaleX(0); opacity:.35 } }
+  @keyframes hp-check  { 0%,56%{ stroke-dashoffset: var(--len); } 74%,92%{ stroke-dashoffset: 0; } 100%{ stroke-dashoffset: var(--len); } }
+  @keyframes hp-rock   { 0%,100%{ transform: rotate(0deg); } 22%{ transform: rotate(6deg); } 50%{ transform: rotate(-6deg); } 78%{ transform: rotate(3deg); } }
+  @keyframes hp-sign   { 0%,8%{ stroke-dashoffset: var(--len); } 56%,82%{ stroke-dashoffset: 0; } 98%,100%{ stroke-dashoffset: var(--len); } }
+
+  .an-orbit  { transform-box: view-box; transform-origin: 40px 40px; animation: hp-spin 20s linear infinite; }
+  .an-breathe{ transform-box: view-box; transform-origin: 40px 43px; animation: hp-breathe 5s ease-in-out infinite; }
+  .an-rock   { transform-box: view-box; transform-origin: 40px 22px; animation: hp-rock 7s ease-in-out infinite; }
+  .an-seal   { transform-box: view-box; transform-origin: 47px 52px; animation: hp-breathe 5s ease-in-out infinite; }
+  .an-bar    { transform-box: fill-box;  transform-origin: left center; animation: hp-bar 4s ease-in-out infinite; }
+  .an-bar.b2 { animation-delay: .28s; }
+  .an-bar.b3 { animation-delay: .56s; }
+  .an-check  { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: hp-check 4s ease-in-out infinite; }
+  .an-sign   { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: hp-sign 5s ease-in-out infinite; }
+
+  @media (prefers-reduced-motion: reduce){
+    .an-orbit,.an-breathe,.an-rock,.an-seal,.an-bar,.an-check,.an-sign{
+      animation: none !important; transform: none !important; opacity: 1 !important;
+      stroke-dashoffset: 0 !important;
+    }
+  }
+  @media (max-width: 560px){ .row{ gap: 36px 28px; } .page{ padding: 72px 24px 96px; } }
+</style>
+</head>
+<body>
+  <main class="page">
+    <p class="eyebrow">Novances Évaluation</p>
+    <h1>Fineline raffiné, <em>avec les animations d'origine</em></h1>
+    <p class="caption">
+      Même iconographie monochrome au trait fin — mais le mouvement reprend la chorégraphie
+      d'avant : l'orbite tourne, les lignes se remplissent, la balance oscille, la signature s'écrit, le sceau respire.
+    </p>
+    <hr class="rule">
+
+    <div class="row">
+
+      <!-- 1. ENTREPRENEUR — édifice (respire) + 3 parties prenantes en orbite -->
+      <div class="persona">
+        <div class="icon">
+          <svg viewBox="0 0 80 80" role="img" aria-label="Entrepreneurs">
+            <circle class="s1 s25" cx="40" cy="40" r="27" fill="none"/>
+            <g class="an-orbit">
+              <circle class="dot" cx="40" cy="13" r="2.4"/>
+              <circle class="dot" cx="63.4" cy="53.5" r="2.4"/>
+              <circle class="dot" cx="16.6" cy="53.5" r="2.4"/>
+            </g>
+            <g class="an-breathe">
+              <path class="s1" d="M30 35 L40 28 L50 35"/>
+              <rect class="s1" x="32" y="35" width="16" height="17"/>
+              <line class="s1 s55" x1="37" y1="39" x2="37" y2="48"/>
+              <line class="s1 s55" x1="40.5" y1="39" x2="40.5" y2="48"/>
+              <line class="s1 s55" x1="44" y1="39" x2="44" y2="48"/>
+              <line class="s1" x1="32" y1="52" x2="48" y2="52"/>
+            </g>
+          </svg>
+        </div>
+        <span class="label">Entrepreneurs</span>
+      </div>
+
+      <!-- 2. EXPERT-COMPTABLE — document, lignes qui se remplissent + validation qui se trace -->
+      <div class="persona">
+        <div class="icon">
+          <svg viewBox="0 0 80 80" role="img" aria-label="Experts-comptables">
+            <rect class="f12" x="27" y="19" width="30" height="40" rx="2"/>
+            <rect class="s1" x="23" y="22" width="30" height="40" rx="2"/>
+            <line class="s1 s55 an-bar b1" x1="29" y1="31" x2="47" y2="31"/>
+            <line class="s1 s55 an-bar b2" x1="29" y1="37" x2="47" y2="37"/>
+            <line class="s1 s55 an-bar b3" x1="29" y1="43" x2="42" y2="43"/>
+            <path class="s1 an-check" style="--len:20" d="M31 52 L36 56 L46 47"/>
+          </svg>
+        </div>
+        <span class="label">Experts-comptables</span>
+      </div>
+
+      <!-- 3. AVOCAT — balance qui oscille -->
+      <div class="persona">
+        <div class="icon">
+          <svg viewBox="0 0 80 80" role="img" aria-label="Avocats">
+            <line class="s1" x1="40" y1="22" x2="40" y2="58"/>
+            <line class="s1 s55" x1="31" y1="62" x2="49" y2="62"/>
+            <line class="s1" x1="40" y1="58" x2="40" y2="62"/>
+            <g class="an-rock">
+              <line class="s1" x1="22" y1="24" x2="58" y2="24"/>
+              <circle class="dot" cx="40" cy="22" r="1.6"/>
+              <line class="s1 s55" x1="22" y1="24" x2="16" y2="36"/>
+              <line class="s1 s55" x1="22" y1="24" x2="28" y2="36"/>
+              <path class="s1" d="M14 36 A8 8 0 0 0 30 36"/>
+              <line class="s1 s55" x1="58" y1="24" x2="52" y2="36"/>
+              <line class="s1 s55" x1="58" y1="24" x2="64" y2="36"/>
+              <path class="s1" d="M50 36 A8 8 0 0 0 66 36"/>
+            </g>
+          </svg>
+        </div>
+        <span class="label">Avocats</span>
+      </div>
+
+      <!-- 4. NOTAIRE — acte, signature qui s'écrit + sceau qui respire -->
+      <div class="persona">
+        <div class="icon">
+          <svg viewBox="0 0 80 80" role="img" aria-label="Notaires">
+            <rect class="s1" x="22" y="17" width="30" height="42" rx="2"/>
+            <line class="s1 s55" x1="28" y1="25" x2="46" y2="25"/>
+            <line class="s1 s55" x1="28" y1="31" x2="46" y2="31"/>
+            <path class="s1 an-sign" style="--len:26" d="M27 40 q 4 -7 7 -1 q 2 5 5 0 q 2 -5 6 1" fill="none"/>
+            <g class="an-seal">
+              <circle class="s1" cx="47" cy="52" r="8"/>
+              <circle class="s1 s55" cx="47" cy="52" r="4.6"/>
+              <circle class="dot" cx="47" cy="52" r="1.4"/>
+            </g>
+          </svg>
+        </div>
+        <span class="label">Notaires</span>
+      </div>
+
+    </div>
+
+    <!-- ENLARGED -->
+    <div class="showcase">
+      <div class="icon-lg">
+        <svg viewBox="0 0 80 80" role="img" aria-label="Entrepreneurs — détail">
+          <circle class="s1 s25" cx="40" cy="40" r="27" fill="none"/>
+          <g class="an-orbit">
+            <circle class="dot" cx="40" cy="13" r="2.4"/>
+            <circle class="dot" cx="63.4" cy="53.5" r="2.4"/>
+            <circle class="dot" cx="16.6" cy="53.5" r="2.4"/>
+          </g>
+          <g class="an-breathe">
+            <path class="s1" d="M30 35 L40 28 L50 35"/>
+            <rect class="s1" x="32" y="35" width="16" height="17"/>
+            <line class="s1 s55" x1="37" y1="39" x2="37" y2="48"/>
+            <line class="s1 s55" x1="40.5" y1="39" x2="40.5" y2="48"/>
+            <line class="s1 s55" x1="44" y1="39" x2="44" y2="48"/>
+            <line class="s1" x1="32" y1="52" x2="48" y2="52"/>
+          </g>
+        </svg>
+      </div>
+      <span class="cap">Trait fin · encre unique · animations d'origine</span>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registre 3 — Gravure éditoriale · Novances Évaluation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #0A1E3F;            /* unique encre navy */
+    --ink-mid: rgba(10,30,63,.55);
+    --ink-faint: rgba(10,30,63,.25);
+    --ink-hair: rgba(10,30,63,.14);
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{ margin:0; }
+
+  body{
+    font-family:"Inter", system-ui, -apple-system, sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(120% 80% at 50% -10%, #F4F8FE 0%, #EAF0F8 55%, #E2EAF5 100%);
+    background-attachment:fixed;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    padding:96px 24px 120px;
+  }
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    text-align:center;
+  }
+
+  /* ---- En-tête éditorial ---- */
+  .eyebrow{
+    font-size:11.5px;
+    font-weight:500;
+    letter-spacing:.34em;
+    text-transform:uppercase;
+    color:var(--ink-mid);
+    margin:0 0 26px;
+  }
+  .eyebrow .sep{
+    display:inline-block;
+    width:30px;
+    height:1px;
+    background:var(--ink-faint);
+    vertical-align:middle;
+    margin:0 14px 3px;
+  }
+
+  h1{
+    font-weight:300;
+    font-size:clamp(30px, 4.4vw, 46px);
+    line-height:1.12;
+    letter-spacing:-.012em;
+    margin:0 auto 20px;
+    max-width:18ch;
+  }
+  h1 em{
+    font-style:italic;
+    font-weight:400;
+  }
+
+  .caption{
+    font-weight:400;
+    font-size:16px;
+    line-height:1.66;
+    color:var(--ink-mid);
+    max-width:52ch;
+    margin:0 auto;
+  }
+
+  /* ---- Filet de séparation gravé ---- */
+  .rule{
+    width:64px;
+    height:1px;
+    margin:46px auto 0;
+    background:linear-gradient(90deg, transparent, var(--ink-faint) 22%, var(--ink-faint) 78%, transparent);
+    position:relative;
+  }
+  .rule::after{
+    content:"";
+    position:absolute;
+    top:-2px; left:50%;
+    width:5px; height:5px;
+    transform:translateX(-50%) rotate(45deg);
+    border:1px solid var(--ink-faint);
+  }
+
+  /* ---- Rangée des 4 personas ---- */
+  .row{
+    margin:78px auto 0;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:clamp(28px, 6vw, 76px);
+    max-width:920px;
+  }
+  .persona{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:22px;
+    width:120px;
+  }
+  .ico{
+    width:84px; height:84px;
+    color:var(--ink);
+    display:block;
+  }
+  .ico svg{ display:block; width:100%; height:100%; overflow:visible; }
+
+  .label{
+    font-size:14px;
+    font-weight:500;
+    letter-spacing:.005em;
+    color:var(--ink);
+  }
+
+  /* ---- Pièce agrandie pour juger la finesse ---- */
+  .focus{
+    margin:104px auto 0;
+    padding-top:70px;
+    border-top:1px solid var(--ink-hair);
+    max-width:520px;
+  }
+  .focus .kicker{
+    font-size:11px;
+    font-weight:500;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin:0 0 40px;
+  }
+  .ico-lg{
+    width:180px; height:180px;
+    margin:0 auto;
+    color:var(--ink);
+  }
+  .ico-lg svg{ display:block; width:100%; height:100%; overflow:visible; }
+  .focus .label{
+    margin-top:34px;
+    color:var(--ink-mid);
+    font-weight:400;
+    font-size:13.5px;
+    letter-spacing:.02em;
+  }
+
+  /* ====== STROKES — encre unique, finesse ====== */
+  .gv{ fill:none; stroke:currentColor; stroke-linecap:round; stroke-linejoin:round; }
+  .s-contour{ stroke-width:1.5; vector-effect:non-scaling-stroke; }
+  .s-line{    stroke-width:1.3; vector-effect:non-scaling-stroke; }
+  .s-hair{    stroke-width:1.0; vector-effect:non-scaling-stroke; opacity:.55; }
+  .s-fine{    stroke-width:.8;  vector-effect:non-scaling-stroke; opacity:.25; }  /* couche guilloché */
+  .dot{ fill:currentColor; stroke:none; }
+  .dot-mid{ fill:currentColor; stroke:none; opacity:.55; }
+  .equerre{ stroke-width:1.0; vector-effect:non-scaling-stroke; opacity:.4; }
+
+  /* ====== MOTION — frémissement très lent sur la couche fine ====== */
+  /* Une seule chose bouge vraiment : l'opacité de la trame guilloché.
+     Amplitude minuscule (0.18 ↔ 0.30), période longue, phases décalées. */
+  @keyframes shimmer{
+    0%,100%{ opacity:.18; }
+    50%    { opacity:.30; }
+  }
+  /* dérive infime du motif concentrique — ≤1px, sinusoïdal */
+  @keyframes driftA{
+    0%,100%{ transform:translateY(0); }
+    50%    { transform:translateY(-1px); }
+  }
+  @keyframes driftB{
+    0%,100%{ transform:translateY(0); }
+    50%    { transform:translateY(1px); }
+  }
+
+  .guilloche{ animation:shimmer 19s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
+  .drift-a{ animation:driftA 22s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
+  .drift-b{ animation:driftB 24s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
+
+  /* décalage des phases entre personas : ne jamais pulser à l'unisson */
+  .p1 .guilloche{ animation-delay:0s; }
+  .p2 .guilloche{ animation-delay:-5s; }
+  .p3 .guilloche{ animation-delay:-11s; }
+  .p4 .guilloche{ animation-delay:-16s; }
+  .p1 .drift-a{ animation-delay:-3s; }
+  .p2 .drift-a{ animation-delay:-9s; }
+  .p3 .drift-a{ animation-delay:-14s; }
+  .p4 .drift-a{ animation-delay:-7s; }
+
+  @media (prefers-reduced-motion: reduce){
+    .guilloche, .drift-a, .drift-b{ animation:none !important; }
+    .guilloche{ opacity:.25 !important; }
+  }
+</style>
+</head>
+<body>
+  <main class="wrap">
+
+    <p class="eyebrow"><span class="sep"></span>Registre 3<span class="sep"></span></p>
+
+    <h1>Gravure <em>éditoriale</em></h1>
+
+    <p class="caption">
+      Quatre figures dessinées au trait fin, dans l'esprit d'un titre de société ou
+      d'une planche gravée — trame guilloché, contours déliés, une seule encre navy
+      déclinée en valeurs. Une animation à peine perceptible anime la trame la plus fine.
+    </p>
+
+    <div class="rule"></div>
+
+    <!-- ============ RANGÉE DES 4 PERSONAS ============ -->
+    <div class="row">
+
+      <!-- ============ 1 · ENTREPRENEURS ============ -->
+      <!-- Médaillon gravé : buste de profil tourné vers l'avenir, trame guilloché -->
+      <div class="persona p1">
+        <div class="ico">
+          <svg viewBox="0 0 80 80" role="img" aria-label="Entrepreneurs">
+            <!-- équerres signature -->
+            <path class="gv equerre" d="M5 12 L5 5 L12 5"/>
+            <path class="gv equerre" d="M68 75 L75 75 L75 68"/>
+
+            <!-- cadre médaillon -->
+            <circle class="gv s-contour" cx="40" cy="40" r="30"/>
+            <circle class="gv s-hair"    cx="40" cy="40" r="26"/>
+
+            <!-- trame guilloché concentrique (couche fine, animée) -->
+            <g class="guilloche">
+              <circle class="gv s-fine drift-a" cx="40" cy="40" r="22.5"/>
+              <circle class="gv s-fine" cx="40" cy="40" r="19"/>
+              <circle class="gv s-fine drift-b" cx="40" cy="40" r="15.5"/>
+            </g>
+
+            <!-- buste de profil -->
+            <path class="gv s-line" d="M30 56
+              C30 47 33 43 40 42
+              C46 41 49 36 49 31
+              C49 24 45 21 40 21
+              C35 21 31 25 31 31
+              C31 35 33 38 36 40"/>
+            <!-- épaule / col -->
+            <path class="gv s-line" d="M28 58 C30 50 35 47 41 47 C47 47 51 51 52 58"/>
+            <!-- hachures d'ombrage sous le buste (gravure) -->
+            <path class="gv s-hair" d="M33 53 L31 58"/>
+            <path class="gv s-hair" d="M38 51 L36 58"/>
+            <path class="gv s-hair" d="M44 51 L46 58"/>
+          </svg>
+        </div>
+        <span class="label">Entrepreneurs</span>
+      </div>
+
+      <!-- ============ 2 · EXPERTS-COMPTABLES ============ -->
+      <!-- Plume + colonnes de chiffres, dans un médaillon -->
+      <div class="persona p2">
+        <div class="ico">
+          <svg viewBox="0 0 80 80" role="img" aria-label="Experts-comptables">
+            <path class="gv equerre" d="M5 12 L5 5 L12 5"/>
+            <path class="gv equerre" d="M68 75 L75 75 L75 68"/>
+
+            <circle class="gv s-contour" cx="40" cy="40" r="30"/>
+            <circle class="gv s-hair"    cx="40" cy="40" r="26"/>
+
+            <!-- trame guilloché en arcs -->
+            <g class="guilloche">
+              <path class="gv s-fine drift-a" d="M19 40 A21 21 0 0 1 61 40"/>
+              <path class="gv s-fine"          d="M22 40 A18 18 0 0 0 58 40"/>
+              <path class="gv s-fine drift-b" d="M24 40 A16 16 0 0 1 56 40"/>
+            </g>
+
+            <!-- registre / grand livre -->
+            <path class="gv s-line" d="M27 26 L53 26 L53 56 L27 56 Z"/>
+            <!-- pli central du registre -->
+            <line class="gv s-hair" x1="40" y1="26" x2="40" y2="56"/>
+            <!-- colonnes de lignes comptables -->
+            <line class="gv s-hair" x1="31" y1="33" x2="37" y2="33"/>
+            <line class="gv s-hair" x1="31" y1="38" x2="37" y2="38"/>
+            <line class="gv s-hair" x1="31" y1="43" x2="37" y2="43"/>
+            <line class="gv s-hair" x1="43" y1="33" x2="49" y2="33"/>
+            <line class="gv s-hair" x1="43" y1="38" x2="49" y2="38"/>
+            <line class="gv s-hair" x1="43" y1="43" x2="49" y2="43"/>
+            <!-- trait de total -->
+            <line class="gv s-line" x1="43" y1="49" x2="49" y2="49"/>
+
+            <!-- plume gravée en diagonale -->
+            <path class="gv s-line" d="M52 22 L36 47"/>
+            <path class="gv s-line" d="M36 47 L33 50 L37 49 Z"/>
+            <line class="gv s-hair" x1="47" y1="29" x2="49" y2="30"/>
+          </svg>
+        </div>
+        <span class="label">Experts-comptables</span>
+      </div>
+
+      <!-- ============ 3 · AVOCATS ============ -->
+      <!-- Balance de la justice gravée, fléau et plateaux finement suspendus -->
+      <div class="persona p3">
+        <div class="ico">
+          <svg viewBox="0 0 80 80" role="img" aria-label="Avocats">
+            <path class="gv equerre" d="M5 12 L5 5 L12 5"/>
+            <path class="gv equerre" d="M68 75 L75 75 L75 68"/>
+
+            <circle class="gv s-contour" cx="40" cy="40" r="30"/>
+            <circle class="gv s-hair"    cx="40" cy="40" r="26"/>
+
+            <g class="guilloche">
+              <circle class="gv s-fine drift-a" cx="40" cy="40" r="22.5"/>
+              <circle class="gv s-fine" cx="40" cy="40" r="18.5"/>
+            </g>
+
+            <!-- mât -->
+            <line class="gv s-line" x1="40" y1="24" x2="40" y2="56"/>
+            <!-- socle -->
+            <path class="gv s-line" d="M33 56 L47 56"/>
+            <path class="gv s-hair" d="M36 53 L44 53"/>
+            <!-- pommeau -->
+            <circle class="gv s-line" cx="40" cy="24" r="1.6"/>
+            <!-- fléau -->
+            <line class="gv s-line" x1="26" y1="29" x2="54" y2="29"/>
+            <!-- suspentes + plateaux gauche -->
+            <path class="gv s-hair" d="M26 29 L22 39"/>
+            <path class="gv s-hair" d="M26 29 L30 39"/>
+            <path class="gv s-line" d="M20 39 A6 6 0 0 0 32 39 Z"/>
+            <!-- plateaux droite -->
+            <path class="gv s-hair" d="M54 29 L50 39"/>
+            <path class="gv s-hair" d="M54 29 L58 39"/>
+            <path class="gv s-line" d="M48 39 A6 6 0 0 0 60 39 Z"/>
+          </svg>
+        </div>
+        <span class="label">Avocats</span>
+      </div>
+
+      <!-- ============ 4 · NOTAIRES ============ -->
+      <!-- Acte scellé : sceau de cire gravé + ruban, médaillon guilloché -->
+      <div class="persona p4">
+        <div class="ico">
+          <svg viewBox="0 0 80 80" role="img" aria-label="Notaires">
+            <path class="gv equerre" d="M5 12 L5 5 L12 5"/>
+            <path class="gv equerre" d="M68 75 L75 75 L75 68"/>
+
+            <circle class="gv s-contour" cx="40" cy="40" r="30"/>
+            <circle class="gv s-hair"    cx="40" cy="40" r="26"/>
+
+            <!-- acte / parchemin -->
+            <path class="gv s-line" d="M30 22 L50 22 L50 50 L30 50 Z"/>
+            <line class="gv s-hair" x1="34" y1="28" x2="46" y2="28"/>
+            <line class="gv s-hair" x1="34" y1="32" x2="46" y2="32"/>
+            <line class="gv s-hair" x1="34" y1="36" x2="44" y2="36"/>
+
+            <!-- sceau de cire : double cercle dentelé + guilloché -->
+            <circle class="gv s-line" cx="40" cy="54" r="9"/>
+            <g class="guilloche">
+              <circle class="gv s-fine drift-a" cx="40" cy="54" r="6.5"/>
+              <circle class="gv s-fine" cx="40" cy="54" r="4"/>
+            </g>
+            <!-- étoile / paraphe au centre du sceau -->
+            <path class="gv s-hair" d="M40 50.5 L40 57.5 M36.8 52.2 L43.2 55.8 M43.2 52.2 L36.8 55.8"/>
+            <!-- rubans pendants -->
+            <path class="gv s-hair" d="M36 62 L34 70 L37 67 L39 71"/>
+            <path class="gv s-hair" d="M44 62 L46 70 L43 67 L41 71"/>
+          </svg>
+        </div>
+        <span class="label">Notaires</span>
+      </div>
+
+    </div>
+
+    <!-- ============ PIÈCE AGRANDIE ============ -->
+    <section class="focus">
+      <p class="kicker">Détail à 180 px — finesse du trait</p>
+      <div class="ico-lg p1">
+        <svg viewBox="0 0 80 80" role="img" aria-label="Entrepreneurs, détail">
+          <path class="gv equerre" d="M5 12 L5 5 L12 5"/>
+          <path class="gv equerre" d="M68 75 L75 75 L75 68"/>
+
+          <circle class="gv s-contour" cx="40" cy="40" r="30"/>
+          <circle class="gv s-hair"    cx="40" cy="40" r="26"/>
+
+          <g class="guilloche">
+            <circle class="gv s-fine drift-a" cx="40" cy="40" r="22.5"/>
+            <circle class="gv s-fine" cx="40" cy="40" r="19"/>
+            <circle class="gv s-fine drift-b" cx="40" cy="40" r="15.5"/>
+          </g>
+
+          <path class="gv s-line" d="M30 56
+            C30 47 33 43 40 42
+            C46 41 49 36 49 31
+            C49 24 45 21 40 21
+            C35 21 31 25 31 31
+            C31 35 33 38 36 40"/>
+          <path class="gv s-line" d="M28 58 C30 50 35 47 41 47 C47 47 51 51 52 58"/>
+          <path class="gv s-hair" d="M33 53 L31 58"/>
+          <path class="gv s-hair" d="M38 51 L36 58"/>
+          <path class="gv s-hair" d="M44 51 L46 58"/>
+        </svg>
+      </div>
+      <p class="label">Entrepreneurs</p>
+    </section>
+
+  </main>
+</body>
+</html>

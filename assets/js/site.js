@@ -71,18 +71,26 @@
     if (!reducedMotion && window.matchMedia('(hover: hover) and (min-width: 981px)').matches) {
       document.querySelectorAll('.btn-magnetic').forEach((btn) => {
         const content = btn.querySelector('.btn-content') || btn;
+        let rect = null;
+
+        // Position mesurée au repos, pour éviter que le déplacement du bouton
+        // ne réalimente le calcul (sinon : oscillation).
+        btn.addEventListener('pointerenter', () => {
+          rect = btn.getBoundingClientRect();
+        });
 
         btn.addEventListener('pointermove', (event) => {
-          const rect = btn.getBoundingClientRect();
+          if (!rect) rect = btn.getBoundingClientRect();
           const x = event.clientX - rect.left - rect.width / 2;
           const y = event.clientY - rect.top - rect.height / 2;
-          btn.style.transform = `translate(${(x * 0.25).toFixed(1)}px, ${(y * 0.4).toFixed(1)}px)`;
+          btn.style.transform = `translate(${(x * 0.075).toFixed(1)}px, ${(y * 0.06).toFixed(1)}px)`;
           if (content !== btn) {
-            content.style.transform = `translate(${(x * 0.12).toFixed(1)}px, ${(y * 0.18).toFixed(1)}px)`;
+            content.style.transform = `translate(${(x * 0.03).toFixed(1)}px, ${(y * 0.025).toFixed(1)}px)`;
           }
         });
 
         btn.addEventListener('pointerleave', () => {
+          rect = null;
           btn.style.transform = '';
           if (content !== btn) content.style.transform = '';
         });

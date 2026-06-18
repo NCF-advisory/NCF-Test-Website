@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novances Évaluation — Personas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #0A1E3F;
+    --ink-55: rgba(10,30,63,0.55);
+    --ink-25: rgba(10,30,63,0.25);
+    --ink-12: rgba(10,30,63,0.12);
+  }
+  *{ box-sizing: border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--ink);
+    background: radial-gradient(120% 80% at 50% -10%, #F4F8FE 0%, #EAF0F8 55%, #E2EAF5 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .page{
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 104px 32px 128px;
+    text-align: center;
+  }
+
+  .eyebrow{
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-55);
+    margin: 0 0 28px;
+  }
+
+  h1{
+    font-size: clamp(26px, 4vw, 38px);
+    font-weight: 300;
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    margin: 0 auto 22px;
+    max-width: 18ch;
+  }
+  h1 em{
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  .caption{
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.7;
+    color: var(--ink-55);
+    max-width: 52ch;
+    margin: 0 auto;
+  }
+
+  /* hairline separator */
+  .rule{
+    width: 56px;
+    height: 1px;
+    background: var(--ink-25);
+    margin: 64px auto 0;
+    border: 0;
+  }
+
+  /* row of personas */
+  .row{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: clamp(28px, 7vw, 84px);
+    margin: 72px auto 0;
+    flex-wrap: wrap;
+  }
+
+  .persona{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    width: 120px;
+  }
+
+  .icon{
+    width: 84px;
+    height: 84px;
+    color: var(--ink);
+  }
+  .icon svg{
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  /* shared stroke conventions */
+  .stroke-1{
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    vector-effect: non-scaling-stroke;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .stroke-55{ stroke: var(--ink-55); }
+  .stroke-25{ stroke: var(--ink-25); }
+  .fill-12{ fill: var(--ink-12); stroke: none; }
+  .fill-25{ fill: var(--ink-25); stroke: none; }
+  .dot{ fill: currentColor; stroke: none; }
+
+  .label{
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+  }
+
+  /* enlarged showcase */
+  .showcase{
+    margin: 112px auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 34px;
+  }
+  .showcase .icon-lg{
+    width: 180px;
+    height: 180px;
+    color: var(--ink);
+  }
+  .showcase .icon-lg svg{
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .showcase .label-lg{
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-55);
+  }
+
+  /* ============================================================
+     MOTION — continuous, extremely slow, tiny, dignified.
+     Sine-like ease-in-out. Staggered phases. Amplitude <=2px / <=1.5deg.
+     ============================================================ */
+
+  .anim-drift{
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: drift 20s ease-in-out infinite;
+    will-change: transform;
+  }
+  @keyframes drift{
+    0%,100%{ transform: translateY(0); }
+    50%    { transform: translateY(-1.6px); }
+  }
+
+  .anim-tilt{
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: tilt 22s ease-in-out infinite;
+    will-change: transform;
+  }
+  @keyframes tilt{
+    0%,100%{ transform: rotate(-0.9deg); }
+    50%    { transform: rotate(0.9deg); }
+  }
+
+  .anim-breathe{
+    animation: breathe 18s ease-in-out infinite;
+    will-change: opacity;
+  }
+  @keyframes breathe{
+    0%,100%{ opacity: 0.82; }
+    50%    { opacity: 1; }
+  }
+
+  .anim-rise{
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: rise 24s ease-in-out infinite;
+    will-change: transform;
+  }
+  @keyframes rise{
+    0%,100%{ transform: translateY(0); }
+    50%    { transform: translateY(-1.4px); }
+  }
+
+  /* staggered phases so the four never pulse in unison */
+  .phase-1{ animation-delay: 0s; }
+  .phase-2{ animation-delay: -5s; }
+  .phase-3{ animation-delay: -11s; }
+  .phase-4{ animation-delay: -16s; }
+
+  @media (prefers-reduced-motion: reduce){
+    .anim-drift, .anim-tilt, .anim-breathe, .anim-rise{
+      animation: none !important;
+      transform: none !important;
+      opacity: 1 !important;
+    }
+  }
+
+  @media (max-width: 560px){
+    .row{ gap: 36px 28px; }
+    .page{ padding: 72px 24px 96px; }
+  }
+</style>
+</head>
+<body>
+  <main class="page">
+
+    <p class="eyebrow">Novances Évaluation</p>
+    <h1>Le registre d'une <em>banque privée</em>,<br>au service de l'évaluation financière.</h1>
+    <p class="caption">
+      Une iconographie monochrome, dessinée au trait fin. Une seule encre, des nuances,
+      du blanc. Quatre interlocuteurs, un même soin du détail.
+    </p>
+
+    <hr class="rule">
+
+    <!-- ROW OF FOUR -->
+    <div class="row">
+
+      <!-- 1. Entrepreneurs — refined edifice -->
+      <div class="persona">
+        <div class="icon">
+          <svg viewBox="0 0 80 80" role="img" aria-label="Entrepreneurs">
+            <g class="anim-rise phase-1">
+              <!-- ground line -->
+              <line class="stroke-1 stroke-25" x1="14" y1="64" x2="66" y2="64"/>
+              <!-- main facade -->
+              <rect class="stroke-1" x="26" y="26" width="28" height="38"/>
+              <!-- pediment -->
+              <path class="stroke-1" d="M23 26 L40 16 L57 26"/>
+              <!-- vertical rhythm of windows -->
+              <line class="stroke-1 stroke-55" x1="34" y1="33" x2="34" y2="58"/>
+              <line class="stroke-1 stroke-55" x1="40" y1="33" x2="40" y2="58"/>
+              <line class="stroke-1 stroke-55" x1="46" y1="33" x2="46" y2="58"/>
+              <!-- entablature -->
+              <line class="stroke-1" x1="26" y1="33" x2="54" y2="33"/>
+              <!-- doorway -->
+              <path class="stroke-1 stroke-55" d="M37 64 L37 56 L43 56 L43 64"/>
+            </g>
+          </svg>
+        </div>
+        <span class="label">Entrepreneurs</span>
+      </div>
+
+      <!-- 2. Experts-comptables — document with discreet validation mark -->
+      <div class="persona">
+        <div class="icon">
+          <svg viewBox="0 0 80 80" role="img" aria-label="Experts-comptables">
+            <g class="anim-drift phase-2">
+              <!-- back sheet (tonal depth) -->
+              <rect class="fill-12" x="27" y="19" width="30" height="40" rx="2"/>
+              <!-- front sheet -->
+              <rect class="stroke-1" x="23" y="22" width="30" height="40" rx="2"/>
+              <!-- text lines -->
+              <line class="stroke-1 stroke-55" x1="29" y1="31" x2="47" y2="31"/>
+              <line class="stroke-1 stroke-55" x1="29" y1="37" x2="47" y2="37"/>
+              <line class="stroke-1 stroke-55" x1="29" y1="43" x2="42" y2="43"/>
+              <!-- discreet validation mark -->
+              <path class="stroke-1" d="M31 52 L36 56 L46 47"/>
+            </g>
+          </svg>
+        </div>
+        <span class="label">Experts-comptables</span>
+      </div>
+
+      <!-- 3. Avocats — balanced scales -->
+      <div class="persona">
+        <div class="icon">
+          <svg viewBox="0 0 80 80" role="img" aria-label="Avocats">
+            <!-- the beam tilts almost imperceptibly -->
+            <g class="anim-tilt phase-3" style="transform-origin: 40px 22px;">
+              <!-- central column -->
+              <line class="stroke-1" x1="40" y1="20" x2="40" y2="58"/>
+              <!-- base -->
+              <line class="stroke-1 stroke-55" x1="31" y1="62" x2="49" y2="62"/>
+              <line class="stroke-1" x1="40" y1="58" x2="40" y2="62"/>
+              <!-- beam -->
+              <line class="stroke-1" x1="22" y1="24" x2="58" y2="24"/>
+              <circle class="dot" cx="40" cy="22" r="1.6"/>
+              <!-- left pan -->
+              <line class="stroke-1 stroke-55" x1="22" y1="24" x2="16" y2="36"/>
+              <line class="stroke-1 stroke-55" x1="22" y1="24" x2="28" y2="36"/>
+              <path class="stroke-1" d="M14 36 A8 8 0 0 0 30 36"/>
+              <!-- right pan -->
+              <line class="stroke-1 stroke-55" x1="58" y1="24" x2="52" y2="36"/>
+              <line class="stroke-1 stroke-55" x1="58" y1="24" x2="64" y2="36"/>
+              <path class="stroke-1" d="M50 36 A8 8 0 0 0 66 36"/>
+            </g>
+          </svg>
+        </div>
+        <span class="label">Avocats</span>
+      </div>
+
+      <!-- 4. Notaires — act with a seal -->
+      <div class="persona">
+        <div class="icon">
+          <svg viewBox="0 0 80 80" role="img" aria-label="Notaires">
+            <g class="anim-drift phase-4">
+              <!-- the act -->
+              <rect class="stroke-1" x="24" y="18" width="30" height="40" rx="2"/>
+              <line class="stroke-1 stroke-55" x1="30" y1="26" x2="48" y2="26"/>
+              <line class="stroke-1 stroke-55" x1="30" y1="32" x2="48" y2="32"/>
+              <line class="stroke-1 stroke-55" x1="30" y1="38" x2="44" y2="38"/>
+              <!-- the seal: concentric impression, breathing opacity -->
+              <g class="anim-breathe phase-4" style="transform-origin:47px 52px;">
+                <circle class="stroke-1" cx="47" cy="52" r="8"/>
+                <circle class="stroke-1 stroke-55" cx="47" cy="52" r="5"/>
+                <circle class="dot" cx="47" cy="52" r="1.4"/>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <span class="label">Notaires</span>
+      </div>
+
+    </div>
+
+    <!-- ENLARGED SHOWCASE -->
+    <div class="showcase">
+      <div class="icon-lg">
+        <svg viewBox="0 0 80 80" role="img" aria-label="Avocats — détail">
+          <g class="anim-tilt phase-3" style="transform-origin: 40px 22px;">
+            <line class="stroke-1" x1="40" y1="20" x2="40" y2="58"/>
+            <line class="stroke-1 stroke-55" x1="31" y1="62" x2="49" y2="62"/>
+            <line class="stroke-1" x1="40" y1="58" x2="40" y2="62"/>
+            <line class="stroke-1" x1="22" y1="24" x2="58" y2="24"/>
+            <circle class="dot" cx="40" cy="22" r="1.6"/>
+            <line class="stroke-1 stroke-55" x1="22" y1="24" x2="16" y2="36"/>
+            <line class="stroke-1 stroke-55" x1="22" y1="24" x2="28" y2="36"/>
+            <path class="stroke-1" d="M14 36 A8 8 0 0 0 30 36"/>
+            <line class="stroke-1 stroke-55" x1="58" y1="24" x2="52" y2="36"/>
+            <line class="stroke-1 stroke-55" x1="58" y1="24" x2="64" y2="36"/>
+            <path class="stroke-1" d="M50 36 A8 8 0 0 0 66 36"/>
+          </g>
+        </svg>
+      </div>
+      <span class="label-lg">Trait fin · encre unique · nuances tonales</span>
+    </div>
+
+  </main>
+</body>
+</html>

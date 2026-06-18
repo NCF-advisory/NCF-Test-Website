@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rive — démonstration sur le site Novances</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --ink:#0A1E3F; --ink-55:rgba(10,30,63,.55); --ink-25:rgba(10,30,63,.2); --accent:#0EA5E9; }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; font-family:"Inter",system-ui,sans-serif; color:var(--ink);
+    background:radial-gradient(120% 80% at 50% -10%, #F4F8FE 0%, #EAF0F8 55%, #E2EAF5 100%);
+    min-height:100vh; -webkit-font-smoothing:antialiased; line-height:1.6;
+  }
+  .page{ max-width:760px; margin:0 auto; padding:72px 28px 120px; }
+  h1{ font-weight:700; letter-spacing:-.02em; font-size:30px; margin:0 0 8px; }
+  .sub{ color:var(--ink-55); margin:0 0 8px; font-size:15px; }
+  h2{ font-size:15px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-55); font-weight:600; margin:48px 0 16px; }
+  .card{ background:rgba(255,255,255,.5); border:1px solid var(--ink-25); border-radius:16px; padding:28px; text-align:center; }
+  canvas{ width:100%; max-width:420px; height:300px; display:block; margin:0 auto; }
+  #mine{ height:180px; max-width:180px; }
+  .note{ font-size:13px; color:var(--ink-55); margin:14px 0 0; }
+  .pill{ display:inline-block; font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); border:1px solid color-mix(in srgb,var(--accent) 35%,transparent); border-radius:999px; padding:3px 10px; margin-bottom:14px; }
+  code{ background:rgba(10,30,63,.06); padding:2px 6px; border-radius:5px; font-size:.88em; }
+  .err{ color:#B91C1C; font-size:13px; }
+  ol{ text-align:left; max-width:560px; margin:18px auto 0; padding-left:22px; }
+  ol li{ margin:8px 0; }
+</style>
+</head>
+<body>
+  <main class="page">
+    <span class="pill">Bac à sable — non déployé</span>
+    <h1>Rive sur le site Novances</h1>
+    <p class="sub">Démonstration du pipeline d'animation. Rien ici n'est en production.</p>
+
+    <h2>1 · Rive tourne bien sur ton site</h2>
+    <div class="card">
+      <canvas id="demo" width="840" height="600"></canvas>
+      <p class="note" id="demo-note">Exemple officiel Rive (chargé depuis le CDN Rive) — juste pour prouver que le runtime fonctionne ici. Tu peux interagir avec.</p>
+    </div>
+
+    <h2>2 · L'emplacement de TON icône</h2>
+    <div class="card">
+      <canvas id="mine" width="360" height="360"></canvas>
+      <p class="note" id="mine-note">En attente de <code>_work/rive-demo/icons/entrepreneur.riv</code>. Dès que tu y déposes ton export Rive, il s'anime ici. (En cas d'absence/erreur, on bascule sur l'icône actuelle — c'est le mécanisme de repli qu'on garde en prod.)</p>
+    </div>
+
+    <h2>3 · Comment tu produis tes icônes</h2>
+    <div class="card">
+      <ol>
+        <li>Crée un compte sur <strong>rive.app</strong> → « New File ».</li>
+        <li>Dessine l'icône (ou importe ton SVG actuel : <em>File → Import</em>), <strong>une seule encre navy</strong>, trait fin.</li>
+        <li>Onglet <strong>Animate</strong> : crée tes animations (l'orbite qui tourne, la balance qui oscille…).</li>
+        <li>Ajoute une <strong>State Machine</strong> avec un input <code>hover</code> (Boolean) pour le survol.</li>
+        <li><strong>Export → Runtime (.riv)</strong>. Dépose le fichier dans <code>_work/rive-demo/icons/</code>.</li>
+        <li>Dis-moi le nom de l'<em>artboard</em> et de la <em>state machine</em> : je règle l'intégration.</li>
+      </ol>
+    </div>
+  </main>
+
+  <!-- Runtime Rive (canvas, léger). En prod on le chargera en différé, après le LCP. -->
+  <script src="https://unpkg.com/@rive-app/canvas@2"></script>
+  <script>
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // 1 · Démo officielle (prouve que le runtime marche ici)
+    try {
+      var demo = new rive.Rive({
+        src: 'https://cdn.rive.app/animations/vehicles.riv',
+        canvas: document.getElementById('demo'),
+        autoplay: !reduce,
+        onLoad: function(){ demo.resizeDrawingSurfaceToCanvas(); },
+        onLoadError: function(){
+          document.getElementById('demo-note').innerHTML =
+            '<span class="err">Le CDN d\'exemple n\'a pas répondu — mais le runtime est bien chargé. On utilisera tes propres fichiers .riv.</span>';
+        }
+      });
+    } catch (e) {
+      document.getElementById('demo-note').innerHTML =
+        '<span class="err">Runtime Rive non chargé (réseau ?). Réessaie en ligne.</span>';
+    }
+
+    // 2 · Ton emplacement — tente de charger ton .riv, sinon repli
+    try {
+      var mine = new rive.Rive({
+        src: './icons/entrepreneur.riv',
+        canvas: document.getElementById('mine'),
+        autoplay: !reduce,
+        onLoad: function(){ mine.resizeDrawingSurfaceToCanvas(); document.getElementById('mine-note').textContent = '✓ entrepreneur.riv chargé et animé.'; },
+        onLoadError: function(){
+          document.getElementById('mine').style.display = 'none';
+          document.getElementById('mine-note').innerHTML =
+            'Aucun <code>entrepreneur.riv</code> pour l\'instant → c\'est ici que le <strong>repli</strong> vers l\'icône SVG actuelle s\'afficherait en prod.';
+        }
+      });
+    } catch (e) {}
+  </script>
+</body>
+</html>

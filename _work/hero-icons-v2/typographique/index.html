@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Novances Évaluation — Marqueurs typographiques</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #0A1E3F;
+    --ink-55: rgba(10, 30, 63, 0.55);
+    --ink-25: rgba(10, 30, 63, 0.25);
+    --ink-12: rgba(10, 30, 63, 0.12);
+    --serif: 'EB Garamond', 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{ margin: 0; }
+
+  body{
+    font-family: var(--sans);
+    color: var(--ink);
+    background:
+      radial-gradient(120% 80% at 50% -10%, #F4F8FE 0%, #EAF0F8 55%, #E2EAF5 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    padding: clamp(48px, 9vh, 120px) 24px clamp(64px, 12vh, 140px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ---------- Header ---------- */
+  .eyebrow{
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--ink-55);
+    margin: 0 0 26px;
+  }
+
+  .title{
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(30px, 4.6vw, 46px);
+    line-height: 1.12;
+    letter-spacing: 0.005em;
+    text-align: center;
+    margin: 0 0 22px;
+    max-width: 18ch;
+  }
+
+  .caption{
+    font-weight: 300;
+    font-size: clamp(14px, 1.5vw, 16px);
+    line-height: 1.7;
+    color: var(--ink-55);
+    text-align: center;
+    max-width: 52ch;
+    margin: 0 0 clamp(56px, 9vh, 96px);
+  }
+
+  /* hairline divider under the caption */
+  .rule-lead{
+    width: 64px;
+    height: 1px;
+    background: var(--ink-25);
+    margin: 0 0 clamp(60px, 9vh, 100px);
+  }
+
+  /* ---------- The row of 4 markers ---------- */
+  .row{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: clamp(36px, 6vw, 88px);
+    margin: 0 0 clamp(72px, 13vh, 150px);
+  }
+
+  .marker{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+  }
+
+  .glyph{
+    width: 84px;
+    height: 84px;
+    display: block;
+    overflow: visible;
+  }
+
+  .label{
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    text-align: center;
+  }
+
+  /* ---------- Enlarged specimen ---------- */
+  .specimen-wrap{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .specimen-tag{
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-25);
+  }
+
+  .specimen{
+    width: 180px;
+    height: 180px;
+    display: block;
+    overflow: visible;
+  }
+
+  /* ---------- SVG ink scale (single hue, tonal only) ---------- */
+  .ink     { fill: var(--ink); }
+  .stroke  { stroke: var(--ink); fill: none; vector-effect: non-scaling-stroke; }
+  .stroke-55{ stroke: var(--ink-55); fill: none; vector-effect: non-scaling-stroke; }
+  .stroke-25{ stroke: var(--ink-25); fill: none; vector-effect: non-scaling-stroke; }
+  .fill-55 { fill: var(--ink-55); }
+  .fill-25 { fill: var(--ink-25); }
+
+  /* Serif numerals rendered as SVG <text> so they scale with the icon */
+  .num{
+    font-family: var(--serif);
+    font-weight: 400;
+    fill: var(--ink);
+  }
+  .num-25{ fill: var(--ink-25); }
+
+  /* =========================================================
+     MOTION — extremely slow, tiny, dignified.
+     Each persona gets a distinct phase (animation-delay) so
+     the four never pulse in unison. Amplitudes: <=2px drift,
+     <=1.5deg rotation, or fine-detail opacity 0.8<->1.
+     ========================================================= */
+
+  /* a) numeral breathes: barely-there opacity on the heavy tone */
+  @keyframes numeralBreath{
+    0%, 100% { opacity: 0.86; }
+    50%      { opacity: 1; }
+  }
+  /* b) vertical filet drifts down a hair */
+  @keyframes filetDrift{
+    0%, 100% { transform: translateY(-1.4px); }
+    50%      { transform: translateY(1.4px); }
+  }
+  /* c) accent stroke fades its faint tone */
+  @keyframes accentFade{
+    0%, 100% { opacity: 0.78; }
+    50%      { opacity: 1; }
+  }
+  /* d) whole mark drifts horizontally <=2px */
+  @keyframes markDrift{
+    0%, 100% { transform: translateX(-1.6px); }
+    50%      { transform: translateX(1.6px); }
+  }
+  /* e) the tick/serif accent rotates <=1.5deg about its base */
+  @keyframes tiltSlow{
+    0%, 100% { transform: rotate(-1.2deg); }
+    50%      { transform: rotate(1.2deg); }
+  }
+
+  .anim-num   { animation: numeralBreath 20s ease-in-out infinite; }
+  .anim-filet { animation: filetDrift 22s ease-in-out infinite; }
+  .anim-accent{ animation: accentFade 18s ease-in-out infinite; }
+  .anim-drift { animation: markDrift 24s ease-in-out infinite; }
+  .anim-tilt  { transform-box: fill-box; transform-origin: 50% 100%; animation: tiltSlow 21s ease-in-out infinite; }
+
+  /* phase stagger across the four personas */
+  .p1 .anim-num    { animation-delay: 0s; }
+  .p1 .anim-filet  { animation-delay: -3s; }
+  .p1 .anim-accent { animation-delay: -7s; }
+
+  .p2 .anim-num    { animation-delay: -5s; }
+  .p2 .anim-filet  { animation-delay: -9s; }
+  .p2 .anim-accent { animation-delay: -2s; }
+
+  .p3 .anim-num    { animation-delay: -11s; }
+  .p3 .anim-filet  { animation-delay: -15s; }
+  .p3 .anim-accent { animation-delay: -13s; }
+
+  .p4 .anim-num    { animation-delay: -8s; }
+  .p4 .anim-filet  { animation-delay: -17s; }
+  .p4 .anim-accent { animation-delay: -4s; }
+
+  @media (prefers-reduced-motion: reduce){
+    .anim-num, .anim-filet, .anim-accent, .anim-drift, .anim-tilt{
+      animation: none !important;
+      transform: none !important;
+      opacity: 1 !important;
+    }
+  }
+
+  @media (max-width: 560px){
+    .row{ gap: 30px 40px; }
+  }
+</style>
+</head>
+<body>
+
+  <p class="eyebrow">Novances Évaluation</p>
+  <h1 class="title">À qui s'adresse une évaluation d'entreprise</h1>
+  <p class="caption">
+    Registre éditorial inspiré de la banque privée et des cabinets de droit des affaires :
+    sobriété, gravité, intemporalité. Quatre marqueurs typographiques — une seule encre,
+    des filets fins, rien de superflu.
+  </p>
+  <div class="rule-lead"></div>
+
+  <!-- ============ ROW OF FOUR ~84px MARKERS ============ -->
+  <div class="row">
+
+    <!-- 01 — Entrepreneurs -->
+    <div class="marker p1">
+      <svg class="glyph" viewBox="0 0 80 80" role="img" aria-label="Entrepreneurs">
+        <g class="anim-drift">
+          <!-- top hairline filet -->
+          <line class="stroke-25" x1="14" y1="14" x2="66" y2="14" stroke-width="1.3"/>
+          <!-- large serif numeral -->
+          <text class="num anim-num" x="40" y="55" text-anchor="middle"
+                font-size="46" style="letter-spacing:-0.02em">01</text>
+          <!-- vertical filet, the persona's monoline accent -->
+          <line class="stroke-55 anim-filet" x1="40" y1="62" x2="40" y2="72" stroke-width="1.4"/>
+          <!-- faint ascending accent stroke (entrepreneur = trajectoire) -->
+          <polyline class="stroke-25 anim-accent" points="20,71 32,66 48,68 60,60"
+                    stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+      </svg>
+      <span class="label">Entrepreneurs</span>
+    </div>
+
+    <!-- 02 — Experts-comptables -->
+    <div class="marker p2">
+      <svg class="glyph" viewBox="0 0 80 80" role="img" aria-label="Experts-comptables">
+        <g class="anim-drift">
+          <line class="stroke-25" x1="14" y1="14" x2="66" y2="14" stroke-width="1.3"/>
+          <text class="num anim-num" x="40" y="55" text-anchor="middle"
+                font-size="46" style="letter-spacing:-0.02em">02</text>
+          <line class="stroke-55 anim-filet" x1="40" y1="62" x2="40" y2="72" stroke-width="1.4"/>
+          <!-- ledger rules: aligned figures (expert-comptable = comptes) -->
+          <g class="anim-accent">
+            <line class="stroke-25" x1="24" y1="64" x2="48" y2="64" stroke-width="1.3"/>
+            <line class="stroke-25" x1="24" y1="69" x2="56" y2="69" stroke-width="1.3"/>
+          </g>
+        </g>
+      </svg>
+      <span class="label">Experts-comptables</span>
+    </div>
+
+    <!-- 03 — Avocats -->
+    <div class="marker p3">
+      <svg class="glyph" viewBox="0 0 80 80" role="img" aria-label="Avocats">
+        <g class="anim-drift">
+          <line class="stroke-25" x1="14" y1="14" x2="66" y2="14" stroke-width="1.3"/>
+          <text class="num anim-num" x="40" y="55" text-anchor="middle"
+                font-size="46" style="letter-spacing:-0.02em">03</text>
+          <line class="stroke-55 anim-filet" x1="40" y1="62" x2="40" y2="72" stroke-width="1.4"/>
+          <!-- balance beam: equilibrium (avocat = droit / équité) -->
+          <g class="anim-accent">
+            <line class="stroke-25" x1="22" y1="67" x2="58" y2="67" stroke-width="1.3"/>
+            <line class="stroke-25" x1="26" y1="67" x2="26" y2="71" stroke-width="1.3"/>
+            <line class="stroke-25" x1="54" y1="67" x2="54" y2="71" stroke-width="1.3"/>
+          </g>
+        </g>
+      </svg>
+      <span class="label">Avocats</span>
+    </div>
+
+    <!-- 04 — Notaires -->
+    <div class="marker p4">
+      <svg class="glyph" viewBox="0 0 80 80" role="img" aria-label="Notaires">
+        <g class="anim-drift">
+          <line class="stroke-25" x1="14" y1="14" x2="66" y2="14" stroke-width="1.3"/>
+          <text class="num anim-num" x="40" y="55" text-anchor="middle"
+                font-size="46" style="letter-spacing:-0.02em">04</text>
+          <line class="stroke-55 anim-filet" x1="40" y1="62" x2="40" y2="72" stroke-width="1.4"/>
+          <!-- seal ring: a fine open circle (notaire = acte authentique) -->
+          <g class="anim-accent">
+            <circle class="stroke-25" cx="40" cy="67" r="6" stroke-width="1.3"/>
+            <line class="stroke-25" x1="40" y1="63.5" x2="40" y2="70.5" stroke-width="1.2"/>
+          </g>
+        </g>
+      </svg>
+      <span class="label">Notaires</span>
+    </div>
+
+  </div>
+
+  <!-- ============ ENLARGED SPECIMEN (~180px) ============ -->
+  <div class="specimen-wrap p1">
+    <span class="specimen-tag">Specimen — finesse du tracé</span>
+    <svg class="specimen" viewBox="0 0 80 80" role="img" aria-label="Entrepreneurs — agrandi">
+      <g class="anim-drift">
+        <line class="stroke-25" x1="14" y1="14" x2="66" y2="14" stroke-width="1.3"/>
+        <text class="num anim-num" x="40" y="55" text-anchor="middle"
+              font-size="46" style="letter-spacing:-0.02em">01</text>
+        <line class="stroke-55 anim-filet" x1="40" y1="62" x2="40" y2="72" stroke-width="1.4"/>
+        <polyline class="stroke-25 anim-accent" points="20,71 32,66 48,68 60,60"
+                  stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </svg>
+    <span class="label">Entrepreneurs</span>
+  </div>
+
+</body>
+</html>

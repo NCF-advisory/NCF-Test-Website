@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Novances Évaluation — Marques abstraites</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0A1E3F;
+    --ink-55:rgba(10,30,63,.55);
+    --ink-25:rgba(10,30,63,.25);
+    --ink-12:rgba(10,30,63,.12);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    color:var(--ink);
+    background:radial-gradient(120% 80% at 50% -10%, #F4F8FE 0%, #EAF0F8 55%, #E2EAF5 100%);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  .wrap{
+    max-width:980px;
+    margin:0 auto;
+    padding:96px 32px 120px;
+    text-align:center;
+  }
+  .eyebrow{
+    font-weight:500;
+    font-size:11.5px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-55);
+    margin:0 0 26px;
+  }
+  h1{
+    font-weight:300;
+    font-size:clamp(28px,4vw,42px);
+    line-height:1.18;
+    letter-spacing:-.01em;
+    margin:0 auto;
+    max-width:18ch;
+  }
+  h1 em{font-style:normal;font-weight:500;}
+  .caption{
+    font-weight:300;
+    font-size:16px;
+    line-height:1.65;
+    color:var(--ink-55);
+    max-width:54ch;
+    margin:24px auto 0;
+  }
+  .rule{
+    width:34px;height:1px;
+    background:var(--ink-25);
+    margin:64px auto 0;
+  }
+
+  /* ---- Row of 4 marks ---- */
+  .row{
+    margin:72px auto 0;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    gap:clamp(28px,7vw,84px);
+    flex-wrap:wrap;
+  }
+  .mark{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:22px;
+  }
+  .mark .glyph{
+    width:84px;height:84px;
+    display:block;
+  }
+  .mark .label{
+    font-weight:500;
+    font-size:14px;
+    letter-spacing:.005em;
+    color:var(--ink);
+  }
+
+  /* ---- Enlarged feature mark ---- */
+  .feature{
+    margin:104px auto 0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:26px;
+  }
+  .feature .glyph{width:180px;height:180px;display:block;}
+  .feature .ftag{
+    font-weight:400;
+    font-size:12px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-55);
+  }
+
+  /* ---- SVG shared ---- */
+  svg{overflow:visible;}
+  .s{
+    fill:none;
+    stroke:var(--ink);
+    stroke-width:1.4;
+    vector-effect:non-scaling-stroke;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  .s-55{stroke:var(--ink-55);}
+  .s-25{stroke:var(--ink-25);}
+  .dot{fill:var(--ink);stroke:none;}
+  .dot-55{fill:var(--ink-55);stroke:none;}
+
+  /* ===========================================================
+     MOTION — continuous, very slow, minuscule, staggered.
+     Each animation: sine-like ease-in-out, period 18–24s,
+     amplitude <=2px / <=1.5deg / opacity 0.8<->1.
+     transform-box:fill-box keeps rotations centred on the shape.
+     =========================================================== */
+  .anim{transform-box:fill-box;transform-origin:center;}
+
+  /* Entrepreneurs — value ascends one notch then settles */
+  @keyframes ent-rise{
+    0%,100%{transform:translateY(.9px);}
+    50%{transform:translateY(-1.1px);}
+  }
+  @keyframes ent-fade{
+    0%,100%{opacity:.78;}
+    50%{opacity:1;}
+  }
+  .ent-stack{animation:ent-rise 21s ease-in-out infinite;}
+  .ent-cap{animation:ent-fade 21s ease-in-out infinite;animation-delay:-3s;}
+
+  /* Experts-comptables — ledger column breathes in weight */
+  @keyframes acc-shift{
+    0%,100%{transform:translateX(-.7px);}
+    50%{transform:translateX(.7px);}
+  }
+  @keyframes acc-fade{
+    0%,100%{opacity:.8;}
+    50%{opacity:1;}
+  }
+  .acc-bars{animation:acc-shift 23s ease-in-out infinite;}
+  .acc-key{animation:acc-fade 23s ease-in-out infinite;animation-delay:-7s;}
+
+  /* Avocats — beam finds equilibrium (tiny tilt) */
+  @keyframes law-tilt{
+    0%,100%{transform:rotate(1.1deg);}
+    50%{transform:rotate(-1.1deg);}
+  }
+  .law-beam{animation:law-tilt 19s ease-in-out infinite;animation-delay:-5s;}
+
+  /* Notaires — seal ring turns imperceptibly */
+  @keyframes not-turn{
+    0%,100%{transform:rotate(-1.4deg);}
+    50%{transform:rotate(1.4deg);}
+  }
+  @keyframes not-fade{
+    0%,100%{opacity:.75;}
+    50%{opacity:1;}
+  }
+  .not-ring{animation:not-turn 24s ease-in-out infinite;animation-delay:-11s;}
+  .not-core{animation:not-fade 24s ease-in-out infinite;animation-delay:-2s;}
+
+  @media (prefers-reduced-motion: reduce){
+    .ent-stack,.ent-cap,.acc-bars,.acc-key,
+    .law-beam,.not-ring,.not-core{
+      animation:none !important;
+      transform:none !important;
+      opacity:1 !important;
+    }
+  }
+
+  @media (max-width:560px){
+    .row{gap:36px;}
+  }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <p class="eyebrow">Novances Évaluation</p>
+    <h1>Un système de marques pensé dans le registre des <em>banques d'affaires</em> et des cabinets de droit.</h1>
+    <p class="caption">Quatre symboles abstraits, tracés sur une grille géométrique. Une seule encre — bleu marine profond — et la profondeur naît du seul jeu des opacités. Sobriété, permanence, rien de superflu.</p>
+
+    <div class="rule"></div>
+
+    <!-- ===================== ROW OF FOUR ===================== -->
+    <div class="row">
+
+      <!-- 1 · ENTREPRENEURS — valeur / accroissement -->
+      <div class="mark">
+        <svg class="glyph" viewBox="0 0 80 80" role="img" aria-label="Entrepreneurs">
+          <!-- baseline -->
+          <line class="s s-25" x1="18" y1="60" x2="62" y2="60"/>
+          <!-- nested ascending squares (accretion of value) -->
+          <g class="ent-stack anim">
+            <rect class="s s-25" x="20" y="42" width="16" height="16"/>
+            <rect class="s s-55" x="32" y="32" width="16" height="16"/>
+            <rect class="s" x="44" y="22" width="16" height="16"/>
+          </g>
+          <!-- rising axis -->
+          <line class="s s-55" x1="20" y1="60" x2="60" y2="20"/>
+          <circle class="dot ent-cap anim" cx="60" cy="20" r="2.1"/>
+        </svg>
+        <span class="label">Entrepreneurs</span>
+      </div>
+
+      <!-- 2 · EXPERTS-COMPTABLES — rigueur / grand-livre -->
+      <div class="mark">
+        <svg class="glyph" viewBox="0 0 80 80" role="img" aria-label="Experts-comptables">
+          <!-- ruled frame -->
+          <rect class="s s-25" x="20" y="18" width="40" height="44"/>
+          <!-- vertical column divide (double-entry) -->
+          <line class="s s-55" x1="44" y1="18" x2="44" y2="62"/>
+          <!-- ledger rules -->
+          <g class="acc-bars anim">
+            <line class="s s-55" x1="26" y1="28" x2="40" y2="28"/>
+            <line class="s s-55" x1="26" y1="36" x2="40" y2="36"/>
+            <line class="s s-55" x1="26" y1="44" x2="40" y2="44"/>
+            <line class="s s-55" x1="26" y1="52" x2="40" y2="52"/>
+          </g>
+          <!-- balanced totals in right column -->
+          <line class="s acc-key anim" x1="48" y1="28" x2="56" y2="28"/>
+          <line class="s acc-key anim" x1="48" y1="52" x2="56" y2="52"/>
+          <line class="s s-25" x1="48" y1="56" x2="56" y2="56"/>
+        </svg>
+        <span class="label">Experts-comptables</span>
+      </div>
+
+      <!-- 3 · AVOCATS — équilibre / justice -->
+      <div class="mark">
+        <svg class="glyph" viewBox="0 0 80 80" role="img" aria-label="Avocats">
+          <!-- fulcrum axis -->
+          <line class="s s-25" x1="40" y1="20" x2="40" y2="62"/>
+          <line class="s s-25" x1="30" y1="62" x2="50" y2="62"/>
+          <g class="law-beam anim">
+            <!-- beam -->
+            <line class="s" x1="22" y1="28" x2="58" y2="28"/>
+            <circle class="dot-55" cx="40" cy="28" r="1.7"/>
+            <!-- left pan -->
+            <line class="s s-55" x1="22" y1="28" x2="22" y2="34"/>
+            <path class="s s-55" d="M15 34 A 7 7 0 0 0 29 34"/>
+            <!-- right pan -->
+            <line class="s s-55" x1="58" y1="28" x2="58" y2="34"/>
+            <path class="s s-55" d="M51 34 A 7 7 0 0 0 65 34"/>
+          </g>
+        </svg>
+        <span class="label">Avocats</span>
+      </div>
+
+      <!-- 4 · NOTAIRES — authentification / permanence -->
+      <div class="mark">
+        <svg class="glyph" viewBox="0 0 80 80" role="img" aria-label="Notaires">
+          <g class="not-ring anim">
+            <circle class="s s-55" cx="40" cy="40" r="22"/>
+            <circle class="s s-25" cx="40" cy="40" r="22" transform="rotate(45 40 40)" stroke-dasharray="2 6"/>
+          </g>
+          <circle class="s" cx="40" cy="40" r="12"/>
+          <!-- inscribed cross-axis (the act, sealed) -->
+          <g class="not-core anim">
+            <line class="s s-55" x1="40" y1="30" x2="40" y2="50"/>
+            <line class="s s-55" x1="30" y1="40" x2="50" y2="40"/>
+            <circle class="dot" cx="40" cy="40" r="1.9"/>
+          </g>
+        </svg>
+        <span class="label">Notaires</span>
+      </div>
+
+    </div>
+
+    <div class="rule"></div>
+
+    <!-- ===================== ENLARGED FEATURE ===================== -->
+    <div class="feature">
+      <svg class="glyph" viewBox="0 0 80 80" role="img" aria-label="Notaires — marque agrandie">
+        <g class="not-ring anim">
+          <circle class="s s-55" cx="40" cy="40" r="22"/>
+          <circle class="s s-25" cx="40" cy="40" r="22" transform="rotate(45 40 40)" stroke-dasharray="2 6"/>
+        </g>
+        <circle class="s" cx="40" cy="40" r="12"/>
+        <g class="not-core anim">
+          <line class="s s-55" x1="40" y1="30" x2="40" y2="50"/>
+          <line class="s s-55" x1="30" y1="40" x2="50" y2="40"/>
+          <circle class="dot" cx="40" cy="40" r="1.9"/>
+        </g>
+      </svg>
+      <span class="ftag">Notaires — finesse du tracé</span>
+    </div>
+
+  </main>
+</body>
+</html>

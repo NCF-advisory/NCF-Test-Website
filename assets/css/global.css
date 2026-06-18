@@ -175,6 +175,12 @@ body > * { position: relative; z-index: 1; }
   gap: 3px; text-decoration: none; line-height: 1;
 }
 .nav-logo-mark { height: 32px; width: auto; display: block; filter: var(--logo-filter, none); }
+.nav-logo-affil {
+  display: inline-block;
+  font-size: 0.6rem; font-weight: 700;
+  color: var(--text-2); letter-spacing: 0.08em; text-transform: uppercase;
+  white-space: nowrap;
+}
 
 .nav-links { display: flex; align-items: center; gap: 1.5rem; }
 .nav-link {
@@ -236,10 +242,19 @@ body > * { position: relative; z-index: 1; }
 #mob-menu.open { display: flex; }
 #mob-menu a { font-size: 1.05rem; font-weight: 500; color: var(--text-1); text-decoration: none; }
 #mob-menu a:hover { color: var(--accent-bright); }
+.mob-affil {
+  text-align: center;
+  padding-bottom: 14px; margin-bottom: 6px;
+  border-bottom: 1px solid var(--line-1);
+  font-size: 0.7rem; font-weight: 700; color: var(--text-2);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  width: min(280px, 90%);
+}
 
 @media (max-width: 980px) {
   #hbg { display: flex; }
   .nav-links, .nav-cta-wrap { display: none !important; }
+  .nav-logo-affil { display: none; }
 }
 
 /* Compense la hauteur navbar pour les ancres */
@@ -363,15 +378,21 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
   font-size: 0.85rem; line-height: 1.7; color: var(--text-2);
   max-width: 320px;
 }
-/* Affiliation Moore Global (sous le séparateur porté par le bas de .footer-brand-tag). */
+/* Affiliations (Groupe Novances + Moore Global) : côte à côte pour limiter la hauteur du footer.
+   Séparateur unique porté par le bas de .footer-brand-tag. */
 .footer-brand-tag { padding-bottom: 1.25rem; border-bottom: 1px solid var(--line-2); }
 .footer-novances {
   margin-top: 1.25rem;
   display: inline-flex; flex-direction: column; align-items: flex-start;
-  width: 100%; gap: 8px;
+  vertical-align: top; width: 46%; gap: 8px;
   font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase;
   color: var(--text-3);
+  text-decoration: none;
 }
+.footer-novances + .footer-novances { margin-left: 6%; }
+a.footer-novances { transition: color 0.2s ease, opacity 0.2s ease; }
+a.footer-novances:hover { color: var(--text-2); }
+a.footer-novances:hover img { opacity: 1; }
 .footer-novances strong { color: var(--text-strong); font-weight: 600; }
 .footer-novances img {
   height: 22px; width: auto; display: block;

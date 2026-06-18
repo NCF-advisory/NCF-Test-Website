@@ -31,13 +31,16 @@
   "@type": "Article",
   "headline": "Dette publique incontrôlée, déficit budgétaire en hausse, les contrôles fiscaux auprès des Dirigeants pourraient augmenter. Comment s’y préparer ?",
   "description": "Dette publique et déficits en hausse : les contrôles fiscaux visant les dirigeants pourraient se multiplier. Les bons réflexes pour s'y préparer sereinement.",
-  "author": {
-    "@type": "Person",
-    "name": "Frédéric Lemonnier",
-    "url": "https://www.linkedin.com/in/flemonniernovances/"
-  },
+    "author": {
+      "@type": "Person",
+      "name": "Frédéric Lemonnier",
+      "url": "https://www.linkedin.com/in/flemonniernovances/",
+      "jobTitle": "Président, expert en évaluation d'entreprise",
+      "worksFor": { "@id": "https://novances-evaluation.fr/#organization" }
+    },
   "publisher": {
     "@type": "Organization",
+    "@id": "https://novances-evaluation.fr/#organization",
     "name": "Novances Évaluation",
     "logo": {
       "@type": "ImageObject",
@@ -56,13 +59,24 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/css/global.css" />
   <link rel="stylesheet" href="/assets/css/pages/article.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://novances-evaluation.fr/" },
+      { "@type": "ListItem", "position": 2, "name": "Publications", "item": "https://novances-evaluation.fr/ressources/" },
+      { "@type": "ListItem", "position": 3, "name": "Fiscalité" }
+    ]
+  }
+  </script>
 </head>
 <body class="article-page theme-fiscalite">
 
 <nav id="navbar">
   <div class="nav-inner">
-    <a href="/" class="nav-logo" aria-label="Novances Évaluation, accueil">
-      <img class="nav-logo-mark" src="/assets/img/brand/logo-novances-evaluation.png" alt="Novances Évaluation" />
+    <a href="/" class="nav-logo" aria-label="NCF, accueil">
+      <img class="nav-logo-mark" src="/assets/img/brand/logo-ncf-bl-marine.png" alt="NCF" /><span class="nav-logo-affil">Membre du Groupe Novances</span>
     </a>
     <div class="nav-links">
       <a href="/entrepreneurs/" class="nav-link">Entrepreneurs</a>
@@ -84,6 +98,7 @@
   </div>
 </nav>
 <div id="mob-menu">
+  <div class="mob-affil">Membre du Groupe Novances</div>
   <a href="/entrepreneurs/">Entrepreneurs</a>
   <a href="/experts-comptables/">Experts-comptables</a>
   <a href="/avocats/">Avocats</a>
@@ -153,9 +168,9 @@
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-brand">
-        <img src="/assets/img/brand/logo-novances-evaluation.png" alt="Novances Évaluation" />
+        <img src="/assets/img/brand/logo-ncf-bl-marine.png" alt="NCF" loading="lazy" />
         <p class="footer-brand-tag">Cabinet d'évaluation d'entreprise pour les dirigeants de PME en préparation de transmission.</p>
-        <div class="footer-novances"><img src="/assets/img/brand/Moore_Global.svg.png" alt="Moore Global" /><span>Réseau international <strong>Moore Global</strong></span></div>
+        <a class="footer-novances" href="https://novances.fr/" target="_blank" rel="noopener noreferrer" aria-label="Site du Groupe Novances (nouvel onglet)"><img src="/assets/img/brand/logo-novances.avif" alt="Groupe Novances" loading="lazy" /><span>Membre du <strong>Groupe Novances</strong></span></a><div class="footer-novances"><img src="/assets/img/brand/Moore_Global.svg.png" alt="Moore Global" /><span>Réseau international <strong>Moore Global</strong></span></div>
       </div>
       <div><div class="footer-col-title">Pour qui ?</div><div class="footer-links"><a href="/entrepreneurs/" class="footer-link">Entrepreneurs</a><a href="/experts-comptables/" class="footer-link">Experts-comptables</a><a href="/avocats/" class="footer-link">Avocats</a><a href="/notaires/" class="footer-link">Notaires</a></div></div>
       <div><div class="footer-col-title">Cabinet</div><div class="footer-links"><a href="/equipe/" class="footer-link">L'équipe</a><a href="/equipe/#novances" class="footer-link">Groupe Novances</a><a href="/partenaires/" class="footer-link">Partenaires</a>

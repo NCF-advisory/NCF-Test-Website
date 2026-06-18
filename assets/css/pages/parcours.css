@@ -802,10 +802,9 @@ body.parcours-page.is-notaires           { --persona: var(--p-notaire);       --
     .ch-data-txt { flex:1; min-width:240px; }
     .ch-data-tool { font-size:.7rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:var(--persona); }
     .ch-data-txt p { margin:.15rem 0 0; font-size:.92rem; color:var(--text-1); line-height:1.55; }
-    .ch-data-logos { display:flex; gap:.6rem; flex-shrink:0; }
-    .ch-data-chip { display:flex; align-items:center; gap:9px; background:#fff; border:1px solid var(--line-2); border-radius:11px; padding:8px 13px; }
-    .ch-data-chip img { width:26px; height:26px; object-fit:contain; }
-    .ch-data-chip b { font-size:.8rem; font-weight:700; color:var(--text-strong); white-space:nowrap; }
+    .ch-data-logos { flex-basis:100%; width:100%; display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; padding-top:1.2rem; border-top:1px solid var(--line-2); }
+    .ch-data-chip { flex:0 1 auto; display:flex; align-items:center; justify-content:center; background:#fff; border:1px solid var(--line-2); border-radius:12px; padding:16px 30px; }
+    .ch-data-chip img { height:44px; width:auto; max-width:100%; object-fit:contain; display:block; }
     .ch-teams { margin-top:2.5rem; display:flex; gap:1.1rem; align-items:center;
       background:rgba(var(--persona-rgb)/.06); border:1px solid rgba(var(--persona-rgb)/.18); border-left:3px solid var(--persona);
       border-radius:14px; padding:1.1rem 1.4rem; }
@@ -815,7 +814,7 @@ body.parcours-page.is-notaires           { --persona: var(--p-notaire);       --
     .ch-teams-sep { width:1px; height:24px; background:var(--line-2); }
     .ch-teams-tool { font-size:.7rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:var(--persona); }
     .ch-teams p { margin:.15rem 0 0; font-size:.92rem; color:var(--text-1); line-height:1.55; }
-    @media(max-width:680px){ .ch-data-logos{ width:100%; } .ch-data-chip{ flex:1; justify-content:center; } }
+    @media(max-width:680px){ .ch-data-chip{ flex:1 1 140px; padding:13px 18px; } .ch-data-chip img{ height:38px; } }
     @media(max-width:860px){
       .ch-flow { grid-template-columns:1fr; gap:0; max-width:460px; margin-inline:auto; }
       .ch-flow::before { top:0; bottom:0; left:36px; right:auto; width:3px; height:auto; background:linear-gradient(180deg, rgba(var(--persona-rgb)/.2), var(--persona), rgba(var(--persona-rgb)/.2)); }
@@ -848,6 +847,7 @@ body.parcours-page.is-notaires           { --persona: var(--p-notaire);       --
     .itw-q { position: relative; margin: 0 0 0.55rem; padding-left: 1.1rem; font-size: 1.05rem; font-weight: 700; color: var(--text-strong); line-height: 1.4; }
     .itw-q::before { content: ''; position: absolute; left: 0; top: 0.18em; bottom: 0.18em; width: 3px; border-radius: 2px; background: var(--persona); }
     .itw-a { margin: 0; font-size: 0.96rem; color: var(--text-2); line-height: 1.7; }
+    .itw-grid + .itw-grid { margin-top: 2.75rem; padding-top: 2.75rem; border-top: 1px solid var(--line-2); }
     @media (max-width: 820px) {
       .itw-grid { grid-template-columns: 1fr; gap: 1.75rem; }
       .itw-person { position: static; }
