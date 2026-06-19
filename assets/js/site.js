@@ -1,4 +1,27 @@
 (() => {
+  // Vercel Web Analytics — site.js étant chargé sur toutes les pages publiques,
+  // ce point d'injection unique couvre l'ensemble du site (pages actuelles et futures).
+  // Mesure sans cookie, agrégée et anonyme : relève de l'exemption de consentement
+  // CNIL pour la mesure d'audience (divulguée dans /confidentialite/, avec droit
+  // d'opposition) — donc pas de bandeau.
+  // La route /_vercel/insights/* est servie par Vercel quand « Web Analytics » est
+  // activé dans le dashboard du projet. En local (node serve.mjs), on n'injecte rien
+  // pour éviter le 404 bruyant dans la console.
+  (() => {
+    const host = location.hostname;
+    const isLocal =
+      host === 'localhost' || host === '127.0.0.1' || host === '' || host.endsWith('.local');
+    if (isLocal) return;
+
+    window.va = window.va || function () {
+      (window.vaq = window.vaq || []).push(arguments);
+    };
+    const script = document.createElement('script');
+    script.defer = true;
+    script.src = '/_vercel/insights/script.js';
+    (document.head || document.documentElement).appendChild(script);
+  })();
+
   const ready = (callback) => {
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', callback, { once: true });
