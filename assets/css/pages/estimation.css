@@ -299,6 +299,103 @@
 .est-cta-btn svg { transition: transform 0.2s; }
 .est-cta-btn:hover svg { transform: translateX(3px); }
 
+/* ────── BOUTON DÉCLENCHEUR ────── */
+.est-go-wrap { margin-top: 2.1rem; }
+.est-go {
+  width: 100%;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 16px 24px; border: none; border-radius: 12px;
+  font-family: inherit; font-size: 0.95rem; font-weight: 800; letter-spacing: 0.02em;
+  color: var(--text-on-accent); background: var(--accent-deeper);
+  box-shadow: 0 0 0 1px var(--accent-bright), 0 12px 30px -10px var(--accent-a-35);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s, opacity 0.2s, color 0.2s;
+}
+.est-go-content { display: inline-flex; align-items: center; gap: 10px; }
+.est-go:not(:disabled):hover {
+  background: var(--accent-ink); transform: translateY(-1px);
+  box-shadow: 0 0 0 1px var(--accent-bright), 0 16px 40px -10px var(--accent-a-35);
+}
+.est-go:not(:disabled):active { transform: translateY(0); }
+.est-go:disabled {
+  cursor: not-allowed; background: var(--surface-strong); color: var(--text-3);
+  box-shadow: 0 0 0 1px var(--line-3);
+}
+.est-go-spark { transition: transform 0.4s cubic-bezier(.2,.8,.2,1); }
+.est-go:not(:disabled):hover .est-go-spark { transform: rotate(90deg) scale(1.08); }
+.est-go.is-ready { animation: est-ready-pulse 2.6s ease-in-out infinite; }
+.est-go.is-ready:hover { animation: none; }
+@keyframes est-ready-pulse {
+  0%, 100% { box-shadow: 0 0 0 1px var(--accent-bright), 0 12px 30px -10px var(--accent-a-35), 0 0 0 0 var(--accent-a-15); }
+  50%      { box-shadow: 0 0 0 1px var(--accent-bright), 0 12px 30px -10px var(--accent-a-35), 0 0 0 7px var(--accent-a-04); }
+}
+.est-go-hint {
+  font-size: 0.78rem; color: var(--text-3); text-align: center;
+  margin-top: 0.75rem; line-height: 1.45;
+}
+
+/* ────── ÉTAT « CALCUL EN COURS » (suspense) ────── */
+.est-compute { display: flex; flex-direction: column; align-items: flex-start; gap: 1.3rem; width: 100%; }
+.est-spinner-ring {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.16);
+  border-top-color: var(--accent-bright);
+  animation: est-spin 0.8s linear infinite;
+}
+.est-compute-msg {
+  font-size: 1rem; font-weight: 600; color: #fff; line-height: 1.4;
+  min-height: 2.8em;
+}
+.est-compute-bar {
+  width: 100%; height: 4px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14); overflow: hidden;
+}
+.est-compute-bar > span {
+  display: block; height: 100%; width: 0; border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+  /* doit rester synchronisé avec STEPS.length × STEP_MS dans estimation.js */
+  animation: est-fill 2200ms ease-out forwards;
+}
+@keyframes est-spin { to { transform: rotate(360deg); } }
+@keyframes est-fill { from { width: 0; } to { width: 100%; } }
+
+/* ────── FOURCHETTE RÉVÉLÉE ────── */
+.est-range-display {
+  display: flex; align-items: baseline; flex-wrap: wrap;
+  gap: 0.2rem 0.55rem; margin-top: 0.15rem;
+}
+.est-val {
+  font-size: clamp(1.55rem, 3.3vw, 2.2rem);
+  font-weight: 900; letter-spacing: -0.03em; line-height: 1.05;
+  color: #fff; white-space: nowrap; font-variant-numeric: tabular-nums;
+}
+.est-range-dash { font-size: 1.5rem; font-weight: 700; color: var(--accent-bright); }
+
+.est-result.is-revealed { overflow: hidden; }
+.est-result.is-revealed::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  animation: est-flash 0.9s ease-out;
+}
+@keyframes est-flash {
+  0%   { box-shadow: inset 0 0 70px 4px rgba(56, 189, 248, 0.32); }
+  100% { box-shadow: inset 0 0 70px 4px rgba(56, 189, 248, 0); }
+}
+.est-result.is-revealed > * { animation: est-rise 0.5s ease both; }
+.est-result.is-revealed > .est-range-display { animation-delay: 0.06s; }
+.est-result.is-revealed > .est-result-unit { animation-delay: 0.12s; }
+.est-result.is-revealed > .est-result-method { animation-delay: 0.18s; }
+.est-result.is-revealed > .est-result-cta { animation-delay: 0.24s; }
+@keyframes est-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .est-go.is-ready { animation: none; }
+  .est-go-spark { transition: none; }
+  .est-spinner-ring { animation: none; border-top-color: rgba(255, 255, 255, 0.16); }
+  .est-compute-bar > span { animation: none; width: 100%; }
+  .est-result.is-revealed::after { animation: none; }
+  .est-result.is-revealed > * { animation: none; }
+}
+
 /* ────── RESPONSIVE ────── */
 @media (max-width: 860px) {
   .est-card { grid-template-columns: 1fr; }
