@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estimer la valeur de votre entreprise · Novances Évaluation</title>
+  <meta name="description" content="Estimez en une minute une première valeur indicative de votre entreprise, par capitalisation du résultat net. Outil gratuit pour dirigeants de PME — sans engagement." />
+  <link rel="canonical" href="https://novances-evaluation.fr/estimation/" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Novances Évaluation" />
+  <meta property="og:title" content="Estimer la valeur de votre entreprise · Novances Évaluation" />
+  <meta property="og:description" content="Une première estimation indicative de la valeur de vos titres, par capitalisation du résultat net. Gratuit, sans engagement." />
+  <meta property="og:url" content="https://novances-evaluation.fr/estimation/" />
+  <meta property="og:image" content="https://novances-evaluation.fr/assets/img/brand/logo-novances-evaluation.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Estimer la valeur de votre entreprise · Novances Évaluation" />
+  <meta name="twitter:description" content="Estimation indicative par capitalisation du résultat net, pour dirigeants de PME." />
+  <meta name="theme-color" content="#1A2E6B" />
+  <link rel="icon" href="/favicon.ico" sizes="48x48" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/assets/img/brand/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/global.css" />
+  <link rel="stylesheet" href="/assets/css/pages/estimation.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Estimateur de valeur d'entreprise",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "url": "https://novances-evaluation.fr/estimation/",
+        "description": "Outil d'estimation indicative de la valeur des titres d'une entreprise, par capitalisation du résultat net, selon le secteur et la taille.",
+        "provider": { "@id": "https://novances-evaluation.fr/#organization" },
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://novances-evaluation.fr/" },
+          { "@type": "ListItem", "position": 2, "name": "Estimation", "item": "https://novances-evaluation.fr/estimation/" }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="estimation-page">
+
+<!-- ═══════════════════ NAVBAR ═══════════════════ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="NCF, accueil">
+      <img class="nav-logo-mark" src="/assets/img/brand/logo-ncf-bl-marine.png" alt="NCF" /><span class="nav-logo-affil">Membre du Groupe Novances</span>
+    </a>
+    <div class="nav-links">
+      <a href="/entrepreneurs/" class="nav-link">Entrepreneurs</a>
+      <a href="/experts-comptables/" class="nav-link">Experts-comptables</a>
+      <a href="/avocats/" class="nav-link">Avocats</a>
+      <a href="/notaires/" class="nav-link">Notaires</a>
+      <a href="/ressources/" class="nav-link">Publications</a>
+      <a href="/tarifs/" class="nav-link">Tarifs</a>
+    </div>
+    <div class="nav-cta-wrap">
+      <a href="/#contact" class="nav-cta">
+        Parler à un expert
+        <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <button id="hbg" aria-label="Menu" aria-expanded="false">
+      <span id="b1"></span><span id="b2"></span><span id="b3"></span>
+    </button>
+  </div>
+</nav>
+<div id="mob-menu">
+  <div class="mob-affil">Membre du Groupe Novances</div>
+  <a href="/entrepreneurs/">Entrepreneurs</a>
+  <a href="/experts-comptables/">Experts-comptables</a>
+  <a href="/avocats/">Avocats</a>
+  <a href="/notaires/">Notaires</a>
+  <a href="/ressources/">Publications</a>
+  <a href="/tarifs/">Tarifs</a>
+  <a href="/#contact" class="nav-cta">Parler à un expert</a>
+</div>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section id="hero-est">
+  <div class="hero-est-inner">
+    <div class="hero-est-eyebrow">Estimation gratuite</div>
+    <h1 class="hero-est-h1">Quelle est la valeur de <span class="accent">votre entreprise&nbsp;?</span></h1>
+    <p class="hero-est-sub">En une minute, obtenez une première estimation indicative de la valeur de vos titres, par capitalisation de votre résultat net. Trois informations suffisent — sans engagement, sans création de compte.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ ESTIMATEUR ═══════════════════ -->
+<section class="est-section">
+  <div class="est-inner">
+    <div class="est-card rv">
+
+      <!-- ── Colonne saisie ── -->
+      <form class="est-form" autocomplete="off" novalidate>
+        <p class="est-step-intro">Renseignez les trois critères ci-dessous. Le résultat s'actualise en temps réel.</p>
+
+        <!-- 1 · Secteur -->
+        <div class="est-field">
+          <label class="est-label" for="est-secteur"><span class="est-num">1</span> Secteur d'activité</label>
+          <div class="est-select-wrap">
+            <select id="est-secteur" class="est-select" required>
+              <option value="" disabled selected>Choisir un secteur…</option>
+              <option value="services">Services aux entreprises</option>
+              <option value="commerce">Commerce / négoce</option>
+              <option value="industrie">Industrie / production</option>
+              <option value="btp">Bâtiment &amp; travaux publics</option>
+              <option value="tech">Technologies / logiciel</option>
+              <option value="sante">Santé / médico-social</option>
+              <option value="hotellerie">Hôtellerie / restauration</option>
+              <option value="transport">Transport &amp; logistique</option>
+              <option value="agro">Agroalimentaire</option>
+              <option value="conseil">Conseil / professions libérales</option>
+              <option value="autre">Autre secteur</option>
+            </select>
+            <svg class="est-select-chevron" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+        </div>
+
+        <!-- 2 · Taille -->
+        <fieldset class="est-field est-sizes">
+          <legend class="est-label"><span class="est-num">2</span> Taille de la société</legend>
+          <div class="est-seg" role="radiogroup" aria-label="Taille de la société">
+            <label class="est-seg-opt">
+              <input type="radio" name="taille" value="tpe" />
+              <span class="est-seg-box">
+                <span class="est-seg-name">TPE</span>
+                <span class="est-seg-crit">1 à 10 salariés</span>
+              </span>
+            </label>
+            <label class="est-seg-opt">
+              <input type="radio" name="taille" value="pme" />
+              <span class="est-seg-box">
+                <span class="est-seg-name">PME</span>
+                <span class="est-seg-crit">10 à 100 salariés</span>
+              </span>
+            </label>
+            <label class="est-seg-opt">
+              <input type="radio" name="taille" value="grande" />
+              <span class="est-seg-box">
+                <span class="est-seg-name">Grande</span>
+                <span class="est-seg-crit">Plus de 100 salariés</span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- 3 · Résultat net -->
+        <div class="est-field">
+          <div class="est-rn-head">
+            <label class="est-label" for="est-rn-number"><span class="est-num">3</span> Résultat net annuel</label>
+            <div class="est-rn-value">
+              <input id="est-rn-number" class="est-rn-input" type="text" inputmode="numeric" autocomplete="off" aria-label="Résultat net annuel en euros" value="200 000" />
+              <span class="est-rn-cur">€</span>
+            </div>
+          </div>
+          <input id="est-rn-range" class="est-range" type="range" min="0" max="5000000" step="25000" value="200000" aria-label="Curseur du résultat net annuel" />
+          <div class="est-range-scale"><span>0 €</span><span>5 M€ et +</span></div>
+          <p class="est-rn-hint">Bénéfice net après impôt d'une année représentative (récurrent, hors éléments exceptionnels).</p>
+        </div>
+      </form>
+
+      <!-- ── Colonne résultat ── -->
+      <aside class="est-result" id="est-result" aria-live="polite">
+        <!-- contenu injecté par estimation.js -->
+      </aside>
+
+    </div>
+
+    <!-- ── Note méthodologique ── -->
+    <div class="est-method rv">
+      <div class="est-method-grid">
+        <div class="est-method-col">
+          <h2 class="est-method-h">Comment lire ce chiffre&nbsp;?</h2>
+          <p>L'estimation repose sur la <strong>capitalisation du résultat net</strong> : on rapporte votre bénéfice annuel au rendement attendu par un investisseur. Diviser le bénéfice par ce taux revient à calculer le capital qu'il faudrait placer aujourd'hui, à ce rendement, pour percevoir chaque année un revenu équivalent — en supposant ce bénéfice <strong>constant et récurrent</strong>.</p>
+          <p>Comme le résultat net revient aux seuls actionnaires, le chiffre obtenu correspond directement à la <strong>valeur des capitaux propres</strong> (la valeur de vos titres), et non à une valeur d'entreprise dont il faudrait retrancher la dette.</p>
+        </div>
+        <div class="est-method-col">
+          <h2 class="est-method-h">Les limites à garder en tête</h2>
+          <p>Cette estimation est <strong>indicative</strong>. Elle ne tient pas compte de la croissance, de la qualité des actifs, de la structure financière, des éléments exceptionnels ni des spécificités de votre marché.</p>
+          <p>Une évaluation opposable croise plusieurs méthodes et analyse votre situation réelle. C'est le travail que nous menons sur chaque dossier.</p>
+        </div>
+      </div>
+      <div class="est-method-cta">
+        <div class="est-method-cta-text"><strong>Envie d'une valeur fiable et défendable&nbsp;?</strong><br>Premier échange confidentiel et gratuit pour cadrer votre besoin.</div>
+        <a href="/#contact" class="est-cta-btn">Parler à un expert <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="/assets/img/brand/logo-ncf-bl-marine.png" alt="NCF" loading="lazy" />
+        <p class="footer-brand-tag">Cabinet d'évaluation d'entreprise pour les dirigeants de PME.</p>
+        <a class="footer-novances" href="https://novances.fr/" target="_blank" rel="noopener noreferrer" aria-label="Site du Groupe Novances (nouvel onglet)"><img src="/assets/img/brand/logo-novances.avif" alt="Groupe Novances" loading="lazy" /><span>Membre du <strong>Groupe Novances</strong></span></a><div class="footer-novances"><img src="/assets/img/brand/Moore_Global.svg.png" alt="Moore Global" /><span>Réseau international <strong>Moore Global</strong></span></div>
+      </div>
+      <div>
+        <div class="footer-col-title">Pour qui ?</div><div class="footer-links"><a href="/entrepreneurs/" class="footer-link">Entrepreneurs</a><a href="/experts-comptables/" class="footer-link">Experts-comptables</a><a href="/avocats/" class="footer-link">Avocats</a><a href="/notaires/" class="footer-link">Notaires</a></div>
+      </div>
+      <div>
+        <div class="footer-col-title">Cabinet</div>
+        <div class="footer-links">
+          <a href="/equipe/" class="footer-link">L'équipe</a>
+          <a href="/equipe/#novances" class="footer-link">Groupe Novances</a>
+          <a href="/partenaires/" class="footer-link">Partenaires</a>
+          <a href="/tarifs/" class="footer-link">Tarifs</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Publications</div>
+        <div class="footer-links">
+          <a href="/ressources/" class="footer-link">Publications</a>
+          <a href="/#contact" class="footer-link">Contact</a>
+          <a href="/#contact" class="footer-link">Formulaire de contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Novances Évaluation, Tous droits réservés.</div>
+      <div class="footer-legal">
+        <a href="/mentions-legales/">Mentions légales</a>
+        <a href="/confidentialite/">Confidentialité</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/site.js" defer></script>
+<script src="/assets/js/pages/estimation.js" defer></script>
+</body>
+</html>
