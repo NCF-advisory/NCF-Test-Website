@@ -114,10 +114,7 @@
     const taux = base + tilt / 10000;
     const low = state.rn / (taux + BAND);
     const high = state.rn / (taux - BAND);
-    const central = state.rn / taux;                      // valeur au taux pivot
-    // Position de la valeur centrale dans la fourchette (1/x convexe → ~42-47 %).
-    const pct = clamp(((central - low) / (high - low)) * 100, 0, 100);
-    return { low, high, central, pct };
+    return { low, high };
   }
 
   const ARROW = '<svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
@@ -198,7 +195,6 @@
     const apply = (e) => {
       els.low.textContent = compactEur(range.low * e);
       els.high.textContent = compactEur(range.high * e);
-      els.mid.textContent = compactEur(range.central * e);
       els.fill.style.width = (e * 100).toFixed(1) + '%';
     };
     const frame = (now) => {
@@ -214,7 +210,6 @@
   // ── Contenus de la modale ────────────────────────────────────
   function revealRange(myRun, range) {
     if (myRun !== runId) return;
-    const pos = range.pct.toFixed(1) + '%';
     openModal(`
       <h2 id="est-modal-label" class="est-modal-label">Fourchette de valeur estimée</h2>
       <div class="est-gauge">
@@ -232,11 +227,6 @@
           <div class="est-gauge-fill"></div>
           <span class="est-gauge-dot" style="left:0%"></span>
           <span class="est-gauge-dot" style="left:100%"></span>
-          <span class="est-gauge-mark" style="left:${pos}"></span>
-        </div>
-        <div class="est-gauge-mid" style="left:${pos}">
-          <span class="est-gauge-cap">Valeur centrale</span>
-          <span class="est-val-mid">—</span>
         </div>
       </div>
       <p class="est-modal-unit">Valeur indicative de vos titres (capitaux propres), hors croissance et spécificités de votre dossier.</p>
@@ -246,13 +236,11 @@
     const els = {
       low: modalBody.querySelector('.est-val-low'),
       high: modalBody.querySelector('.est-val-high'),
-      mid: modalBody.querySelector('.est-val-mid'),
       fill: modalBody.querySelector('.est-gauge-fill'),
     };
     if (reducedMotion) {
       els.low.textContent = compactEur(range.low);
       els.high.textContent = compactEur(range.high);
-      els.mid.textContent = compactEur(range.central);
       els.fill.style.width = '100%';
     } else {
       animateReveal(myRun, range, els);
