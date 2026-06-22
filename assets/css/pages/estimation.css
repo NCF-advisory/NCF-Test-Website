@@ -324,52 +324,41 @@
 @keyframes est-spin { to { transform: rotate(360deg); } }
 @keyframes est-fill { from { width: 0; } to { width: 100%; } }
 
-/* ────── FOURCHETTE — jauge visuelle (modale) ────── */
-.est-val {
-  font-size: clamp(1.45rem, 6.2vw, 1.95rem);
-  font-weight: 900; letter-spacing: -0.02em; line-height: 1.05;
+/* ────── FOURCHETTE — encadré « valeur centrale » (modale) ────── */
+.est-gauge { margin: 0.4rem 0 0.2rem; }
+.est-gauge-frame {
+  border: 2px solid var(--accent-bright);
+  background: rgba(56, 189, 248, 0.10);
+  border-radius: 16px;
+  padding: 1.15rem 1.3rem 1.25rem;
+}
+.est-gauge-cap {
+  font-size: 0.64rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255, 255, 255, 0.55);
+}
+.est-gauge-central {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  text-align: center; margin-bottom: 1.1rem;
+}
+.est-val-mid {
+  font-size: clamp(1.9rem, 8vw, 2.5rem);
+  font-weight: 900; letter-spacing: -0.03em; line-height: 1.02;
   color: #fff; white-space: nowrap; font-variant-numeric: tabular-nums;
 }
-.est-gauge { position: relative; margin: 0.3rem 0 0.4rem; padding-bottom: 2.9rem; }
-.est-gauge-ends {
-  display: flex; justify-content: space-between; align-items: flex-end;
-  gap: 1rem; margin-bottom: 0.95rem;
+.est-gauge-range { display: flex; align-items: center; gap: 0.85rem; }
+.est-gauge-end { display: flex; flex-direction: column; gap: 2px; flex: none; align-items: flex-start; }
+.est-gauge-end-hi { align-items: flex-end; text-align: right; }
+.est-val-end {
+  font-size: 1.02rem; font-weight: 800; letter-spacing: -0.01em;
+  color: #fff; white-space: nowrap; font-variant-numeric: tabular-nums;
 }
-.est-gauge-end { display: flex; flex-direction: column; gap: 3px; }
-.est-gauge-end-hi { text-align: right; align-items: flex-end; }
-.est-gauge-cap {
-  font-size: 0.66rem; font-weight: 600; letter-spacing: 0.08em;
-  text-transform: uppercase; color: rgba(255, 255, 255, 0.5);
-}
-.est-val-high { color: var(--accent-bright); }
-.est-gauge-track {
-  position: relative; height: 10px; border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
+.est-gauge-line {
+  position: relative; flex: 1 1 auto; height: 4px;
+  border-radius: 999px; background: rgba(255, 255, 255, 0.22); overflow: hidden;
 }
 .est-gauge-fill {
   position: absolute; left: 0; top: 0; bottom: 0; width: 0;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--accent-deep), var(--accent-bright));
-  box-shadow: 0 0 18px -2px var(--accent-a-40);
-}
-.est-gauge-dot {
-  position: absolute; top: 50%; width: 13px; height: 13px;
-  transform: translate(-50%, -50%); border-radius: 50%;
-  background: #fff; box-shadow: 0 0 0 3px rgba(6, 24, 56, 0.55);
-}
-.est-gauge-mark {
-  position: absolute; top: -5px; bottom: -5px; width: 2px;
-  transform: translateX(-50%); border-radius: 2px;
-  background: rgba(255, 255, 255, 0.85);
-}
-.est-gauge-mid {
-  position: absolute; bottom: 0; transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: 1px;
-  text-align: center; white-space: nowrap;
-}
-.est-gauge-mid .est-val-mid {
-  font-size: 0.98rem; font-weight: 800; letter-spacing: -0.01em;
-  color: #fff; font-variant-numeric: tabular-nums;
+  border-radius: 999px; background: #fff;
 }
 
 /* ────── MODALE « NOTIFICATION CENTRALE » ────── */
