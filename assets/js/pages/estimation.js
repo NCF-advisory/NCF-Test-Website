@@ -115,7 +115,9 @@
     const low = state.rn / (taux + BAND);
     const high = state.rn / (taux - BAND);
     const central = state.rn / taux;                      // valeur au taux pivot
-    return { low, high, central };
+    // Position de la valeur centrale dans la fourchette (1/x convexe → ~42-47 %).
+    const pct = clamp(((central - low) / (high - low)) * 100, 0, 100);
+    return { low, high, central, pct };
   }
 
   const ARROW = '<svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
@@ -196,7 +198,7 @@
     const apply = (e) => {
       els.low.textContent = compactEur(range.low * e);
       els.high.textContent = compactEur(range.high * e);
-      els.mid.textContent = '≈ ' + compactEur(range.central * e);
+      els.mid.textContent = compactEur(range.central * e);
       els.fill.style.width = (e * 100).toFixed(1) + '%';
     };
     const frame = (now) => {
@@ -212,25 +214,29 @@
   // ── Contenus de la modale ────────────────────────────────────
   function revealRange(myRun, range) {
     if (myRun !== runId) return;
+    const pos = range.pct.toFixed(1) + '%';
     openModal(`
       <h2 id="est-modal-label" class="est-modal-label">Fourchette de valeur estimée</h2>
       <div class="est-gauge">
-        <div class="est-gauge-frame">
-          <div class="est-gauge-central">
-            <span class="est-gauge-cap">Valeur centrale</span>
-            <span class="est-val-mid">—</span>
+        <div class="est-gauge-ends">
+          <div class="est-gauge-end">
+            <span class="est-gauge-cap">Basse</span>
+            <span class="est-val est-val-low">—</span>
           </div>
-          <div class="est-gauge-range">
-            <div class="est-gauge-end">
-              <span class="est-val-end est-val-low">—</span>
-              <span class="est-gauge-cap">Basse</span>
-            </div>
-            <div class="est-gauge-line" aria-hidden="true"><span class="est-gauge-fill"></span></div>
-            <div class="est-gauge-end est-gauge-end-hi">
-              <span class="est-val-end est-val-high">—</span>
-              <span class="est-gauge-cap">Haute</span>
-            </div>
+          <div class="est-gauge-end est-gauge-end-hi">
+            <span class="est-gauge-cap">Haute</span>
+            <span class="est-val est-val-high">—</span>
           </div>
+        </div>
+        <div class="est-gauge-track" aria-hidden="true">
+          <div class="est-gauge-fill"></div>
+          <span class="est-gauge-dot" style="left:0%"></span>
+          <span class="est-gauge-dot" style="left:100%"></span>
+          <span class="est-gauge-mark" style="left:${pos}"></span>
+        </div>
+        <div class="est-gauge-mid" style="left:${pos}">
+          <span class="est-gauge-cap">Valeur centrale</span>
+          <span class="est-val-mid">—</span>
         </div>
       </div>
       <p class="est-modal-unit">Valeur indicative de vos titres (capitaux propres), hors croissance et spécificités de votre dossier.</p>
@@ -246,7 +252,7 @@
     if (reducedMotion) {
       els.low.textContent = compactEur(range.low);
       els.high.textContent = compactEur(range.high);
-      els.mid.textContent = '≈ ' + compactEur(range.central);
+      els.mid.textContent = compactEur(range.central);
       els.fill.style.width = '100%';
     } else {
       animateReveal(myRun, range, els);
