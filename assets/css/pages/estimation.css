@@ -324,17 +324,53 @@
 @keyframes est-spin { to { transform: rotate(360deg); } }
 @keyframes est-fill { from { width: 0; } to { width: 100%; } }
 
-/* ────── FOURCHETTE — montants (réutilisé dans la modale) ────── */
-.est-range-display {
-  display: flex; align-items: baseline; flex-wrap: wrap;
-  gap: 0.2rem 0.55rem;
-}
+/* ────── FOURCHETTE — jauge visuelle (modale) ────── */
 .est-val {
-  font-size: clamp(1.7rem, 6.4vw, 2.25rem);
-  font-weight: 900; letter-spacing: -0.03em; line-height: 1.05;
+  font-size: clamp(1.45rem, 6.2vw, 1.95rem);
+  font-weight: 900; letter-spacing: -0.02em; line-height: 1.05;
   color: #fff; white-space: nowrap; font-variant-numeric: tabular-nums;
 }
-.est-range-dash { font-size: 1.5rem; font-weight: 700; color: var(--accent-bright); }
+.est-gauge { position: relative; margin: 0.3rem 0 0.4rem; padding-bottom: 2.9rem; }
+.est-gauge-ends {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  gap: 1rem; margin-bottom: 0.95rem;
+}
+.est-gauge-end { display: flex; flex-direction: column; gap: 3px; }
+.est-gauge-end-hi { text-align: right; align-items: flex-end; }
+.est-gauge-cap {
+  font-size: 0.66rem; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: rgba(255, 255, 255, 0.5);
+}
+.est-val-high { color: var(--accent-bright); }
+.est-gauge-track {
+  position: relative; height: 10px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+}
+.est-gauge-fill {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent-deep), var(--accent-bright));
+  box-shadow: 0 0 18px -2px var(--accent-a-40);
+}
+.est-gauge-dot {
+  position: absolute; top: 50%; width: 13px; height: 13px;
+  transform: translate(-50%, -50%); border-radius: 50%;
+  background: #fff; box-shadow: 0 0 0 3px rgba(6, 24, 56, 0.55);
+}
+.est-gauge-mark {
+  position: absolute; top: -5px; bottom: -5px; width: 2px;
+  transform: translateX(-50%); border-radius: 2px;
+  background: rgba(255, 255, 255, 0.85);
+}
+.est-gauge-mid {
+  position: absolute; bottom: 0; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 1px;
+  text-align: center; white-space: nowrap;
+}
+.est-gauge-mid .est-val-mid {
+  font-size: 0.98rem; font-weight: 800; letter-spacing: -0.01em;
+  color: #fff; font-variant-numeric: tabular-nums;
+}
 
 /* ────── MODALE « NOTIFICATION CENTRALE » ────── */
 .est-modal {
@@ -383,7 +419,6 @@
   content: ''; width: 20px; height: 2px; flex: none;
   background: linear-gradient(90deg, var(--accent-bright), transparent);
 }
-.est-modal-card .est-range-display { margin-bottom: 1rem; }
 .est-modal-unit { font-size: 0.86rem; color: rgba(255, 255, 255, 0.72); line-height: 1.6; margin-bottom: 0.5rem; }
 .est-modal-unit-lg { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 0.7rem; }
 .est-modal-cta {

@@ -71,10 +71,18 @@
   const modalCard = modal.querySelector('.est-modal-card');
   const closeBtn = document.getElementById('est-modal-close');
 
-  const eur = new Intl.NumberFormat('fr-FR', {
-    style: 'currency', currency: 'EUR', maximumFractionDigits: 0,
-  });
   const groupFr = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 });
+
+  // Format compact : « 923 k€ », « 1,86 M€ » — lisible, sans fausse précision.
+  function compactEur(n) {
+    n = Math.max(0, n);
+    const k = Math.round(n / 1000);
+    if (k < 1000) return groupFr.format(k) + ' k€';
+    const m = n / 1_000_000;
+    const dec = m < 10 ? 2 : 1;
+    const f = Math.pow(10, dec);
+    return (Math.round(m * f) / f).toLocaleString('fr-FR', { maximumFractionDigits: dec }) + ' M€';
+  }
 
   const state = { secteur: '', taille: '', rn: 200_000 };
 
@@ -86,7 +94,6 @@
   let modalTimer = null;   // timer de masquage de la modale — distinct de `timers` (que cancelRun vide)
 
   const clamp = (n, min, max) => Math.min(Math.max(n, min), max);
-  const round10k = (n) => Math.round(n / 10_000) * 10_000;
   const parseDigits = (str) => {
     const digits = String(str).replace(/[^\d]/g, '');
     return digits ? parseInt(digits, 10) : 0;
@@ -105,10 +112,12 @@
     if (base == null || tilt == null || state.rn <= 0) return null;
     // Taux effectif = WACC de base (taille) ± cote/décote sectorielle.
     const taux = base + tilt / 10000;
-    return {
-      low: round10k(state.rn / (taux + BAND)),
-      high: round10k(state.rn / (taux - BAND)),
-    };
+    const low = state.rn / (taux + BAND);
+    const high = state.rn / (taux - BAND);
+    const central = state.rn / taux;                      // valeur au taux pivot
+    // Position de la valeur centrale dans la fourchette (1/x convexe → ~42-47 %).
+    const pct = clamp(((central - low) / (high - low)) * 100, 0, 100);
+    return { low, high, central, pct };
   }
 
   const ARROW = '<svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
@@ -182,21 +191,22 @@
     else if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
 
-  // ── Comptage des montants (slot-machine) ─────────────────────
-  function countUp(myRun, targets) {
+  // ── Révélation animée : compteurs + remplissage de la jauge ──
+  function animateReveal(myRun, range, els) {
     const start = performance.now();
     const ease = (t) => 1 - Math.pow(1 - t, 3);
+    const apply = (e) => {
+      els.low.textContent = compactEur(range.low * e);
+      els.high.textContent = compactEur(range.high * e);
+      els.mid.textContent = compactEur(range.central * e);
+      els.fill.style.width = (e * 100).toFixed(1) + '%';
+    };
     const frame = (now) => {
       if (myRun !== runId) return;
       const t = Math.min((now - start) / COUNT_MS, 1);
-      const e = ease(t);
-      targets.forEach(({ el, to }) => { el.textContent = eur.format(round10k(to * e)); });
-      if (t < 1) {
-        rafId = requestAnimationFrame(frame);
-      } else {
-        targets.forEach(({ el, to }) => { el.textContent = eur.format(to); });
-        rafId = null;
-      }
+      apply(ease(t));
+      if (t < 1) rafId = requestAnimationFrame(frame);
+      else { apply(1); rafId = null; }
     };
     rafId = requestAnimationFrame(frame);
   }
@@ -204,24 +214,48 @@
   // ── Contenus de la modale ────────────────────────────────────
   function revealRange(myRun, range) {
     if (myRun !== runId) return;
+    const pos = range.pct.toFixed(1) + '%';
     openModal(`
       <h2 id="est-modal-label" class="est-modal-label">Fourchette de valeur estimée</h2>
-      <div class="est-range-display">
-        <span class="est-val est-val-low">—</span>
-        <span class="est-range-dash" aria-hidden="true">–</span>
-        <span class="est-val est-val-high">—</span>
+      <div class="est-gauge">
+        <div class="est-gauge-ends">
+          <div class="est-gauge-end">
+            <span class="est-gauge-cap">Basse</span>
+            <span class="est-val est-val-low">—</span>
+          </div>
+          <div class="est-gauge-end est-gauge-end-hi">
+            <span class="est-gauge-cap">Haute</span>
+            <span class="est-val est-val-high">—</span>
+          </div>
+        </div>
+        <div class="est-gauge-track" aria-hidden="true">
+          <div class="est-gauge-fill"></div>
+          <span class="est-gauge-dot" style="left:0%"></span>
+          <span class="est-gauge-dot" style="left:100%"></span>
+          <span class="est-gauge-mark" style="left:${pos}"></span>
+        </div>
+        <div class="est-gauge-mid" style="left:${pos}">
+          <span class="est-gauge-cap">Valeur centrale</span>
+          <span class="est-val-mid">—</span>
+        </div>
       </div>
       <p class="est-modal-unit">Valeur indicative de vos titres (capitaux propres), hors croissance et spécificités de votre dossier.</p>
       <a class="est-modal-cta" href="/#contact">Parler à un expert ${ARROW}</a>
       <p class="est-modal-fine">Une estimation n'est pas une évaluation : un échange permet d'obtenir une valeur fiable et défendable.</p>`);
 
-    const lowEl = modalBody.querySelector('.est-val-low');
-    const highEl = modalBody.querySelector('.est-val-high');
+    const els = {
+      low: modalBody.querySelector('.est-val-low'),
+      high: modalBody.querySelector('.est-val-high'),
+      mid: modalBody.querySelector('.est-val-mid'),
+      fill: modalBody.querySelector('.est-gauge-fill'),
+    };
     if (reducedMotion) {
-      lowEl.textContent = eur.format(range.low);
-      highEl.textContent = eur.format(range.high);
+      els.low.textContent = compactEur(range.low);
+      els.high.textContent = compactEur(range.high);
+      els.mid.textContent = compactEur(range.central);
+      els.fill.style.width = '100%';
     } else {
-      countUp(myRun, [{ el: lowEl, to: range.low }, { el: highEl, to: range.high }]);
+      animateReveal(myRun, range, els);
     }
     // Le panneau repasse en invitation derrière la modale.
     showPlaceholder();
