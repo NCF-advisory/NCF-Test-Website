@@ -22,8 +22,29 @@
    fermeture). Seule la notification est cliquable.
    ═══════════════════════════════════════════════════════════ */
 (() => {
-  // Taux de capitalisation par segment — non affiché publiquement.
+  // Taux de capitalisation de base par segment de taille — non affiché publiquement.
   const TAUX = { tpe: 0.14, pme: 0.12, grande: 0.10 };
+
+  // Prime / (décote) de WACC par secteur, en points de base (bps), appliquée au taux de base.
+  // Source : Rapport Fusac France (Dealsuite) S2-2025 — WACC implicite dérivé du multiple
+  // VE/EBITDA moyen sectoriel (Gordon g=0, k=50 %). Écart vs multiple moyen marché (5,25x).
+  // Multiple élevé → WACC plus faible → décote (négatif) ; multiple faible → prime (positif).
+  const ECART_BPS = {
+    'logiciels': -303,
+    'sante-pharma': -294,
+    'services-info': -248,
+    'services-entreprises': -26,
+    'agroalimentaire': 9,
+    'industrie': 68,
+    'ecommerce': 112,
+    'medias': 112,
+    'distribution': 184,
+    'hotellerie-tourisme': 211,
+    'transport-logistique': 238,
+    'commerce-gros': 298,
+    'construction': 330,
+  };
+
   const BAND = 0.01;             // demi-amplitude de la fourchette (± autour du taux)
 
   const RANGE_MAX = 5_000_000;   // borne haute du curseur
@@ -78,8 +99,11 @@
   }
 
   function computeRange() {
-    const taux = TAUX[state.taille];
-    if (!taux || state.rn <= 0) return null;
+    const base = TAUX[state.taille];
+    const tilt = ECART_BPS[state.secteur];
+    if (base == null || tilt == null || state.rn <= 0) return null;
+    // Taux effectif = WACC de base (taille) ± cote/décote sectorielle.
+    const taux = base + tilt / 10000;
     return {
       low: round10k(state.rn / (taux + BAND)),
       high: round10k(state.rn / (taux - BAND)),
