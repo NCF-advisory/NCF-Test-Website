@@ -83,6 +83,7 @@
   let timers = [];
   let rafId = null;
   let lastFocus = null;
+  let modalTimer = null;   // timer de masquage de la modale — distinct de `timers` (que cancelRun vide)
 
   const clamp = (n, min, max) => Math.min(Math.max(n, min), max);
   const round10k = (n) => Math.round(n / 10_000) * 10_000;
@@ -152,6 +153,7 @@
   }
 
   function openModal(html) {
+    if (modalTimer) { clearTimeout(modalTimer); modalTimer = null; }
     modalBody.innerHTML = html;
     modal.hidden = false;
     // reflow pour déclencher la transition d'entrée
@@ -167,9 +169,14 @@
     modal.classList.remove('is-open');
     document.removeEventListener('keydown', onKeydown);
     document.body.style.overflow = '';
-    const finish = () => { modal.hidden = true; };
-    if (reducedMotion) finish();
-    else timers.push(setTimeout(finish, MODAL_OUT_MS));
+    // Masquage différé pour laisser jouer la transition de sortie — timer dédié,
+    // que resetPanel()/cancelRun() ne doit PAS effacer (sinon l'overlay reste et bloque les clics).
+    if (modalTimer) clearTimeout(modalTimer);
+    if (reducedMotion) {
+      modal.hidden = true;
+    } else {
+      modalTimer = setTimeout(() => { modal.hidden = true; modalTimer = null; }, MODAL_OUT_MS);
+    }
     resetPanel();
     if (goEl && !goEl.disabled) goEl.focus();
     else if (lastFocus && lastFocus.focus) lastFocus.focus();
