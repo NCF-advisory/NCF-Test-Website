@@ -4,12 +4,12 @@
    Méthode : capitalisation du résultat net.
      Valeur des titres (capitaux propres) = Résultat net / taux
 
-   On affiche une FOURCHETTE (et non un prix figé) : le taux de
-   capitalisation porte une incertitude, modélisée par une bande
-   ± BAND autour du taux. Un taux plus haut donne une valeur plus
-   basse, d'où :
-     borne basse = RN / (taux + BAND)
-     borne haute = RN / (taux − BAND)
+   On affiche une FOURCHETTE (et non un prix figé) : une amplitude
+   FIXE de ± SPREAD/2 autour de la valeur centrale (RN / taux), soit
+   20 % de large quel que soit le secteur ou la taille.
+     valeur centrale = RN / taux
+     borne basse = centrale × (1 − SPREAD/2)
+     borne haute = centrale × (1 + SPREAD/2)
 
    Le taux est calibré sur la taille et N'EST PAS exposé dans
    l'UI. On capitalise un flux qui revient aux seuls actionnaires :
@@ -45,7 +45,7 @@
     'construction': 330,
   };
 
-  const BAND = 0.01;             // demi-amplitude de la fourchette (± autour du taux)
+  const SPREAD = 0.20;           // amplitude fixe de la fourchette (± SPREAD/2 autour de la valeur centrale)
 
   const RANGE_MAX = 1_000_000;   // borne haute du curseur (échelle resserrée pour les PME)
   const INPUT_MAX = 50_000_000;  // saisie libre tolérée au-delà du curseur
@@ -112,9 +112,11 @@
     if (base == null || tilt == null || state.rn <= 0) return null;
     // Taux effectif = WACC de base (taille) ± cote/décote sectorielle.
     const taux = base + tilt / 10000;
-    const low = state.rn / (taux + BAND);
-    const high = state.rn / (taux - BAND);
-    return { low, high };
+    const central = state.rn / taux;
+    return {
+      low: central * (1 - SPREAD / 2),
+      high: central * (1 + SPREAD / 2),
+    };
   }
 
   const ARROW = '<svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
