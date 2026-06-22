@@ -13,12 +13,13 @@
 
    Le taux est calibré sur la taille et N'EST PAS exposé dans
    l'UI. On capitalise un flux qui revient aux seuls actionnaires :
-   le résultat est directement une equity value, sans retrancher
-   de dette.
+   le résultat est directement une equity value, sans dette retranchée.
 
-   UX : l'estimation n'est pas instantanée. Un clic déclenche un
-   effet d'attente (messages + barre + spinner), puis la fourchette
-   se révèle en s'incrémentant — pour créer de l'engagement.
+   UX : un clic déclenche un effet d'attente (spinner + barre +
+   messages) DANS le panneau, puis le résultat se révèle au CENTRE
+   de l'écran sous forme de notification modale (fourchette qui
+   s'incrémente + gros bouton « Parler à un expert » + croix de
+   fermeture). Seule la notification est cliquable.
    ═══════════════════════════════════════════════════════════ */
 (() => {
   // Taux de capitalisation par segment — non affiché publiquement.
@@ -29,13 +30,15 @@
   const INPUT_MAX = 50_000_000;  // saisie libre tolérée au-delà du curseur
   const STEP_MS = 550;           // durée d'affichage d'un message de suspense
   const COUNT_MS = 1000;         // durée du comptage final
+  const MODAL_OUT_MS = 300;      // doit couvrir la transition de sortie CSS de la modale
   // NB : la barre .est-compute-bar (CSS) dure STEPS.length × STEP_MS = 2200ms.
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const form = document.querySelector('.est-form');
   const result = document.getElementById('est-result');
-  if (!form || !result) return;
+  const modal = document.getElementById('est-modal');
+  if (!form || !result || !modal) return;
 
   const secteurEl = document.getElementById('est-secteur');
   const rangeEl = document.getElementById('est-rn-range');
@@ -43,6 +46,9 @@
   const tailleEls = form.querySelectorAll('input[name="taille"]');
   const goEl = document.getElementById('est-go');
   const hintEl = document.getElementById('est-go-hint');
+  const modalBody = document.getElementById('est-modal-body');
+  const modalCard = modal.querySelector('.est-modal-card');
+  const closeBtn = document.getElementById('est-modal-close');
 
   const eur = new Intl.NumberFormat('fr-FR', {
     style: 'currency', currency: 'EUR', maximumFractionDigits: 0,
@@ -55,6 +61,7 @@
   let runId = 0;
   let timers = [];
   let rafId = null;
+  let lastFocus = null;
 
   const clamp = (n, min, max) => Math.min(Math.max(n, min), max);
   const round10k = (n) => Math.round(n / 10_000) * 10_000;
@@ -79,9 +86,9 @@
     };
   }
 
-  const ARROW = '<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+  const ARROW = '<svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
 
-  // ── États du panneau résultat ────────────────────────────────
+  // ── Panneau (placeholder / suspense uniquement) ──────────────
   function showPlaceholder() {
     const ready = state.secteur && state.taille;
     const msg = ready
@@ -98,16 +105,53 @@
       </div>`;
   }
 
-  function showError() {
-    result.className = 'est-result is-error';
-    result.removeAttribute('aria-busy');
-    result.innerHTML = `
-      <div class="est-result-label">Estimation</div>
-      <div class="est-result-value">La capitalisation suppose un bénéfice positif et récurrent.</div>
-      <p class="est-result-method">Pour une société déficitaire ou à résultat exceptionnel, d'autres méthodes (actifs, comparables, flux futurs) s'imposent. Parlons-en.</p>
-      <a class="est-result-cta" href="/#contact">Échanger avec un expert ${ARROW}</a>`;
+  function resetPanel() {
+    cancelRun();
+    showPlaceholder();
   }
 
+  // ── Modale « notification centrale » ─────────────────────────
+  function focusables() {
+    return Array.from(modal.querySelectorAll('button, a[href]'))
+      .filter((el) => !el.disabled);
+  }
+
+  function onKeydown(e) {
+    if (e.key === 'Escape') { e.preventDefault(); closeModal(); return; }
+    if (e.key !== 'Tab') return;
+    const f = focusables();
+    if (!f.length) return;
+    const first = f[0];
+    const last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+
+  function openModal(html) {
+    modalBody.innerHTML = html;
+    modal.hidden = false;
+    // reflow pour déclencher la transition d'entrée
+    void modalCard.offsetWidth;
+    modal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    lastFocus = document.activeElement;
+    closeBtn.focus();
+    document.addEventListener('keydown', onKeydown);
+  }
+
+  function closeModal() {
+    modal.classList.remove('is-open');
+    document.removeEventListener('keydown', onKeydown);
+    document.body.style.overflow = '';
+    const finish = () => { modal.hidden = true; };
+    if (reducedMotion) finish();
+    else timers.push(setTimeout(finish, MODAL_OUT_MS));
+    resetPanel();
+    if (goEl && !goEl.disabled) goEl.focus();
+    else if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  // ── Comptage des montants (slot-machine) ─────────────────────
   function countUp(myRun, targets) {
     const start = performance.now();
     const ease = (t) => 1 - Math.pow(1 - t, 3);
@@ -126,29 +170,39 @@
     rafId = requestAnimationFrame(frame);
   }
 
-  function reveal(myRun, range) {
+  // ── Contenus de la modale ────────────────────────────────────
+  function revealRange(myRun, range) {
     if (myRun !== runId) return;
-    result.className = 'est-result is-revealed';
-    result.removeAttribute('aria-busy');
-    result.innerHTML = `
-      <div class="est-result-label">Fourchette de valeur estimée</div>
+    openModal(`
+      <h2 id="est-modal-label" class="est-modal-label">Fourchette de valeur estimée</h2>
       <div class="est-range-display">
         <span class="est-val est-val-low">—</span>
         <span class="est-range-dash" aria-hidden="true">–</span>
         <span class="est-val est-val-high">—</span>
       </div>
-      <div class="est-result-unit">Valeur des capitaux propres (vos titres) · estimation indicative</div>
-      <p class="est-result-method">Fourchette issue de la capitalisation de votre résultat net, calibrée sur votre taille. L'amplitude reflète l'incertitude sur le rendement attendu ; elle n'intègre ni la croissance ni les spécificités de votre dossier.</p>
-      <a class="est-result-cta" href="/#contact">Affiner avec un expert ${ARROW}</a>`;
+      <p class="est-modal-unit">Valeur indicative de vos titres (capitaux propres), hors croissance et spécificités de votre dossier.</p>
+      <a class="est-modal-cta" href="/#contact">Parler à un expert ${ARROW}</a>
+      <p class="est-modal-fine">Une estimation n'est pas une évaluation : un échange permet d'obtenir une valeur fiable et défendable.</p>`);
 
-    const lowEl = result.querySelector('.est-val-low');
-    const highEl = result.querySelector('.est-val-high');
+    const lowEl = modalBody.querySelector('.est-val-low');
+    const highEl = modalBody.querySelector('.est-val-high');
     if (reducedMotion) {
       lowEl.textContent = eur.format(range.low);
       highEl.textContent = eur.format(range.high);
     } else {
       countUp(myRun, [{ el: lowEl, to: range.low }, { el: highEl, to: range.high }]);
     }
+    // Le panneau repasse en invitation derrière la modale.
+    showPlaceholder();
+  }
+
+  function revealError() {
+    openModal(`
+      <h2 id="est-modal-label" class="est-modal-label">Estimation</h2>
+      <p class="est-modal-unit-lg">La capitalisation suppose un bénéfice positif et récurrent.</p>
+      <p class="est-modal-unit">Pour une société déficitaire ou à résultat exceptionnel, d'autres méthodes (actifs, comparables, flux futurs) s'imposent.</p>
+      <a class="est-modal-cta" href="/#contact">Parler à un expert ${ARROW}</a>`);
+    showPlaceholder();
   }
 
   const STEPS = [
@@ -158,16 +212,16 @@
     'Constitution de votre fourchette de valeur…',
   ];
 
-  // ── Déclenchement : suspense puis révélation ─────────────────
+  // ── Déclenchement : suspense (panneau) puis révélation (modale)
   function runEstimation() {
     if (!state.secteur || !state.taille) return;
     cancelRun();
     const myRun = runId;
 
-    if (state.rn <= 0) { showError(); return; }
+    if (state.rn <= 0) { revealError(); return; }
     const range = computeRange();
 
-    if (reducedMotion) { reveal(myRun, range); return; }
+    if (reducedMotion) { revealRange(myRun, range); return; }
 
     result.className = 'est-result is-computing';
     result.setAttribute('aria-busy', 'true');
@@ -187,15 +241,10 @@
         i++;
         timers.push(setTimeout(tick, STEP_MS));
       } else {
-        reveal(myRun, range);
+        revealRange(myRun, range);
       }
     };
     timers.push(setTimeout(tick, STEP_MS));
-  }
-
-  function resetPanel() {
-    cancelRun();
-    showPlaceholder();
   }
 
   function updateGo() {
@@ -236,6 +285,7 @@
   numberEl.addEventListener('focus', () => { numberEl.select(); });
 
   goEl.addEventListener('click', runEstimation);
+  closeBtn.addEventListener('click', closeModal);
 
   // ── Init ─────────────────────────────────────────────────────
   numberEl.value = groupFr.format(state.rn);
