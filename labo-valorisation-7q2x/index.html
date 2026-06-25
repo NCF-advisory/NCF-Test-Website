@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Comparateur — présentations de la valorisation (interne)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --text-strong:#061838; --text-1:#182747; --text-2:#3A4A6B; --text-3:#586A8A; --text-on-accent:#fff;
+    --accent:#0EA5E9; --accent-bright:#38BDF8; --accent-soft:#BAE6FD; --accent-deep:#0284C7; --accent-deeper:#0369A1; --accent-ink:#075985;
+    --bg-base:#EAF0F8; --bg-deep:#D6DFEC; --bg-elevated:#F4F7FC; --bg-mid:#FFFFFF; --bg-high:#FFFFFF; --bg-higher:#E0E8F3;
+    --line-1:rgba(15,23,42,.07); --line-2:rgba(15,23,42,.13); --line-3:rgba(15,23,42,.20); --line-4:rgba(15,23,42,.28); --line-5:rgba(15,23,42,.38);
+    --surface-low:rgba(15,23,42,.035); --surface-mid:rgba(15,23,42,.06); --surface-high:rgba(15,23,42,.09); --surface-strong:rgba(15,23,42,.14);
+    --accent-a-04:rgba(14,165,233,.06); --accent-a-06:rgba(14,165,233,.09); --accent-a-08:rgba(14,165,233,.11);
+    --accent-a-10:rgba(14,165,233,.13); --accent-a-12:rgba(14,165,233,.16); --accent-a-15:rgba(14,165,233,.19);
+    --accent-a-18:rgba(14,165,233,.22); --accent-a-22:rgba(14,165,233,.26); --accent-a-25:rgba(14,165,233,.30);
+    --accent-a-30:rgba(14,165,233,.35); --accent-a-35:rgba(14,165,233,.40); --accent-a-40:rgba(14,165,233,.46);
+    --violet:#532EFB;
+    --card-bg:linear-gradient(160deg,#FFFFFF 0%,#ECF1F9 100%);
+    --font-sans:'Inter', ui-sans-serif, system-ui, sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{ font-family:var(--font-sans); background:var(--bg-base); color:var(--text-1); -webkit-font-smoothing:antialiased; }
+
+  .labo-top{ background:var(--bg-mid); border-bottom:1px solid var(--line-2); padding:2.4rem 1.5rem 1.7rem; }
+  .labo-inner{ max-width:900px; margin:0 auto; }
+  .labo-row{ display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+  .labo-brand{ font-weight:800; font-size:1.05rem; color:var(--text-strong); letter-spacing:-.01em; }
+  .labo-badge{ font-size:.7rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--accent-deeper);
+               background:var(--accent-a-12); border-radius:999px; padding:.35rem .8rem; }
+  .labo-top h1{ font-size:1.7rem; line-height:1.15; color:var(--text-strong); letter-spacing:-.02em; margin:1.3rem 0 .5rem; font-weight:800; }
+  .labo-top p{ margin:0; color:var(--text-2); font-size:.95rem; max-width:70ch; }
+  .labo-note{ margin-top:1rem; font-size:.8rem; color:var(--text-3); border-left:3px solid var(--accent); padding-left:.8rem; }
+
+  .props{ max-width:900px; margin:0 auto; padding:2.4rem 1.5rem 4rem; display:flex; flex-direction:column; gap:2.8rem; }
+  .prop{ }
+  .prop-tag{ display:inline-block; font-size:.68rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+            color:var(--accent-deeper); background:var(--accent-a-12); border-radius:999px; padding:.32rem .75rem; }
+  .prop h2{ font-size:1.18rem; color:var(--text-strong); margin:.7rem 0 .25rem; letter-spacing:-.01em; }
+  .prop-blurb{ margin:0; color:var(--text-2); font-size:.9rem; line-height:1.5; max-width:72ch; }
+  .prop-stage{ margin-top:1.3rem; background:var(--bg-higher); border:1px solid var(--line-1); border-radius:18px;
+              padding:2rem 1.8rem; display:flex; justify-content:center; }
+  .prop-principal .prop-tag{ color:#fff; background:var(--accent-deeper); }
+
+  /* ── Variante 1 — principale (actuelle) ── */
+  .v1{ width:100%; max-width:720px; margin:auto; }
+  .v1-card{ background:linear-gradient(165deg,#FFFFFF 0%,#EEF3FB 100%); border:1px solid var(--line-2);
+            border-radius:20px; box-shadow:0 18px 44px -28px rgba(6,24,56,.3); padding:2.4rem 2.4rem 2.2rem; color:var(--text-1); }
+  .v1-label{ font-size:.72rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-deeper);
+             margin:0 0 1.3rem; display:flex; align-items:center; gap:8px; }
+  .v1-label::before{ content:""; width:20px; height:2px; background:linear-gradient(90deg,var(--accent-deeper),transparent); }
+  .v1-bridge{ border:1px solid var(--line-2); border-radius:14px; background:var(--bg-base); padding:.2rem 1.1rem .5rem; margin-bottom:1.2rem; }
+  .v1-bridge-title{ font-size:.64rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--text-3); padding:.85rem 0 .2rem; }
+  .v1-row{ display:flex; justify-content:space-between; align-items:center; gap:1rem; padding:.62rem 0; border-top:1px solid var(--line-1); }
+  .v1-row:first-of-type{ border-top:none; }
+  .v1-lbl{ display:flex; flex-direction:column; gap:2px; font-size:.9rem; font-weight:600; color:var(--text-1); }
+  .v1-lbl small{ font-size:.7rem; font-weight:400; color:var(--text-3); }
+  .v1-op .v1-lbl{ flex-direction:row; align-items:center; color:var(--text-2); }
+  .v1-amt{ font-size:1rem; font-weight:800; color:var(--text-strong); white-space:nowrap; font-variant-numeric:tabular-nums; }
+  .v1-op .v1-amt{ font-weight:700; color:var(--text-2); }
+  .v1-badge{ display:inline-flex; align-items:center; justify-content:center; width:19px; height:19px; border-radius:6px;
+             margin-right:9px; font-size:.82rem; font-weight:800; line-height:1; }
+  .v1-plus{ background:var(--accent-a-12); color:var(--accent-deeper); }
+  .v1-minus{ background:var(--surface-mid); color:var(--text-2); }
+  .v1-total{ border-top:1px solid var(--line-3); }
+  .v1-total .v1-lbl{ color:var(--text-strong); font-weight:700; }
+  .v1-total .v1-amt{ font-size:1.2rem; color:var(--accent-deeper); }
+  .v1-gauge{ margin:.4rem 0 1.1rem; }
+  .v1-ends{ display:flex; justify-content:space-between; align-items:flex-end; gap:1rem; margin-bottom:1.35rem; }
+  .v1-end{ display:flex; flex-direction:column; gap:3px; }
+  .v1-end-hi{ text-align:right; align-items:flex-end; }
+  .v1-cap{ font-size:.66rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--text-3); }
+  .v1-val{ font-size:1.95rem; font-weight:900; letter-spacing:-.02em; line-height:1.05; color:var(--text-strong); font-variant-numeric:tabular-nums; }
+  .v1-val-hi{ color:var(--accent-deeper); }
+  .v1-track{ position:relative; height:10px; border-radius:999px; background:var(--bg-higher); }
+  .v1-fill{ position:absolute; left:0; top:0; bottom:0; width:100%; border-radius:999px; background:linear-gradient(90deg,var(--accent-deeper),var(--accent)); }
+  .v1-dot{ position:absolute; top:50%; width:13px; height:13px; transform:translate(-50%,-50%); border-radius:50%; background:#fff; box-shadow:0 0 0 2px var(--accent-deep),0 1px 3px rgba(6,24,56,.2); }
+  .v1-unit{ font-size:.86rem; color:var(--text-2); line-height:1.6; margin:0 0 .7rem; }
+  .v1-unit strong{ color:var(--text-strong); }
+  .v1-src{ font-size:.74rem; color:var(--text-3); line-height:1.5; margin:0; }
+  .v1-src strong{ color:var(--text-2); }
+  .v1-cta{ display:flex; align-items:center; justify-content:center; gap:10px; width:100%; margin-top:1.6rem; padding:18px 24px;
+           border-radius:12px; font-size:1rem; font-weight:800; letter-spacing:.02em; text-decoration:none; color:#fff;
+           background:linear-gradient(135deg,var(--accent-deeper),var(--accent-deep)); box-shadow:0 10px 24px -12px rgba(3,105,161,.5); }
+  .v1-cta svg{ width:16px; height:16px; }
+
+  /* ── Variante 2 — Bandeau pleine largeur — 2 colonnes ── */
+.v2 {
+  width: 100%;
+  max-width: 720px;
+  margin: auto;
+  box-sizing: border-box;
+}
+.v2 *, .v2 *::before, .v2 *::after { box-sizing: border-box; }
+
+.v2-panel {
+  background: var(--bg-mid);
+  border: 1px solid var(--line-2);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 18px 44px -28px var(--line-3);
+}
+
+/* ── Bandeau d'en-tête ── */
+.v2-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.4rem 1rem;
+  padding: 1.15rem 1.6rem;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--line-1);
+}
+.v2-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-deeper);
+}
+.v2-context {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--text-3);
+}
+.v2-context strong {
+  color: var(--text-1);
+  font-weight: 700;
+}
+
+/* ── Disposition deux colonnes ── */
+.v2-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.v2-range {
+  padding: 1.7rem 1.6rem 1.8rem;
+  border-right: 1px solid var(--line-1);
+}
+.v2-bridge {
+  padding: 1.7rem 1.6rem 1.8rem;
+}
+
+.v2-label {
+  margin: 0 0 1.1rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+/* ── Colonne gauche : fourchette ── */
+.v2-central {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin-bottom: 1.25rem;
+}
+.v2-central-val {
+  font-size: clamp(1.9rem, 5.5vw, 2.35rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+}
+.v2-central-tag {
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent-deeper);
+}
+
+.v2-gauge {
+  margin: 0 0 0.9rem;
+}
+.v2-gauge-track {
+  position: relative;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--bg-higher);
+}
+.v2-gauge-fill {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-deep));
+}
+.v2-gauge-mark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--bg-mid);
+  border: 3px solid var(--accent-deeper);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 2px 6px -1px var(--line-3);
+}
+
+.v2-bounds {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.v2-bound {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.v2-bound-hi { text-align: right; }
+.v2-bound-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.v2-bound-val {
+  font-size: 1.12rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text-1);
+}
+
+.v2-amp {
+  margin: 0.9rem 0 0;
+  font-size: 0.76rem;
+  color: var(--text-3);
+}
+
+/* ── Colonne droite : pont en tableau ── */
+.v2-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.v2-table th,
+.v2-table td {
+  padding: 0.62rem 0;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--line-1);
+}
+.v2-table th[scope="row"] {
+  font-weight: 500;
+  color: var(--text-2);
+}
+.v2-num {
+  text-align: right;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--text-1);
+}
+
+.v2-sign,
+.v2-eq {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  margin-right: 0.45rem;
+  border-radius: 5px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1;
+  vertical-align: -2px;
+}
+.v2-plus {
+  color: var(--accent-deeper);
+  background: var(--accent-a-12);
+}
+.v2-minus {
+  color: var(--text-2);
+  background: var(--surface-high);
+}
+.v2-eq {
+  color: #fff;
+  background: var(--accent-deeper);
+}
+
+.v2-row-net th[scope="row"] {
+  font-weight: 700;
+  color: var(--text-1);
+}
+.v2-row-net .v2-num { color: var(--accent-deeper); }
+
+.v2-row-total th,
+.v2-row-total td {
+  border-bottom: none;
+  padding-top: 0.78rem;
+}
+.v2-row-total th[scope="row"] {
+  font-weight: 800;
+  color: var(--text-strong);
+}
+.v2-row-total .v2-num {
+  font-size: 1.18rem;
+  font-weight: 900;
+  color: var(--accent-deeper);
+}
+
+/* ── Pied : source + CTA pleine largeur ── */
+.v2-foot {
+  padding: 1.2rem 1.6rem 1.5rem;
+  border-top: 1px solid var(--line-1);
+  background: var(--bg-elevated);
+}
+.v2-source {
+  margin: 0 0 0.95rem;
+  font-size: 0.76rem;
+  color: var(--text-3);
+}
+.v2-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.92rem 1.4rem;
+  border-radius: 12px;
+  background: var(--accent-deeper);
+  color: #fff;
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: 0.005em;
+  text-decoration: none;
+  transition: background-color 0.18s ease, transform 0.18s ease;
+}
+.v2-cta:hover {
+  background: var(--accent-deep);
+  transform: translateY(-1px);
+}
+.v2-arrow {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  transition: transform 0.18s ease;
+}
+.v2-cta:hover .v2-arrow { transform: translateX(3px); }
+
+/* ── Repli mobile ── */
+@media (max-width: 560px) {
+  .v2-cols { grid-template-columns: 1fr; }
+  .v2-range {
+    border-right: none;
+    border-bottom: 1px solid var(--line-1);
+  }
+}
+
+  /* ── Variante 3 — Cascade verticale (timeline) ── */
+.v3 {
+  width: 100%;
+  max-width: 720px;
+  margin: auto;
+  box-sizing: border-box;
+  padding: 2rem 1.6rem 2.2rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--line-2);
+  border-radius: 20px;
+  color: var(--text-1);
+  box-shadow: 0 24px 60px -34px rgba(15, 23, 42, 0.22);
+}
+.v3 *, .v3 *::before, .v3 *::after { box-sizing: border-box; }
+
+/* ── En-tête ── */
+.v3 .v3-head { text-align: center; margin-bottom: 1.9rem; }
+.v3 .v3-eyebrow {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--accent-deeper); margin: 0 0 0.6rem;
+}
+.v3 .v3-title {
+  font-size: clamp(1.5rem, 3vw, 1.9rem); font-weight: 800; line-height: 1.12;
+  letter-spacing: -0.02em; color: var(--text-strong); margin: 0 0 0.85rem;
+}
+.v3 .v3-context {
+  display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.55rem;
+  margin: 0; font-size: 0.82rem; color: var(--text-2);
+}
+.v3 .v3-context strong { color: var(--accent-deeper); font-weight: 700; }
+.v3 .v3-context i { width: 4px; height: 4px; border-radius: 50%; background: var(--line-3); }
+
+/* ── Cascade verticale (timeline) ── */
+.v3 .v3-flow {
+  list-style: none; margin: 0 0 1.5rem; padding: 0;
+  position: relative;
+}
+.v3 .v3-step {
+  position: relative;
+  padding-left: 3.1rem;
+  padding-bottom: 0.85rem;
+}
+.v3 .v3-step:last-child { padding-bottom: 0; }
+/* connecteur vertical */
+.v3 .v3-step::before {
+  content: ''; position: absolute;
+  left: 17px; top: 0; bottom: 0;
+  width: 2px; background: var(--line-2);
+}
+.v3 .v3-step:first-child::before { top: 18px; }
+.v3 .v3-step:last-child::before { bottom: auto; height: 18px; }
+
+/* nœud sur la ligne */
+.v3 .v3-node {
+  position: absolute; left: 6px; top: 12px; z-index: 1;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--bg-mid); border: 2px solid var(--line-3);
+  color: var(--text-2); font-size: 0.82rem; font-weight: 800; line-height: 1;
+}
+.v3 .v3-node--sign { font-size: 0.92rem; }
+.v3 .v3-step--plus .v3-node { border-color: var(--accent-deep); color: var(--accent-deeper); background: var(--accent-a-12); }
+.v3 .v3-step--minus .v3-node { border-color: var(--line-3); color: var(--text-2); background: var(--surface-mid); }
+.v3 .v3-node--total {
+  width: 30px; height: 30px; top: 12px; left: 3px;
+  background: var(--accent-deeper); border-color: var(--accent-deeper);
+  color: #fff; font-size: 1rem;
+}
+
+/* carte de l'étape */
+.v3 .v3-card {
+  background: var(--bg-mid); border: 1px solid var(--line-2);
+  border-radius: 12px; padding: 0.85rem 1.1rem;
+  box-shadow: 0 6px 18px -14px rgba(15, 23, 42, 0.28);
+}
+.v3 .v3-line {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+}
+.v3 .v3-lbl {
+  display: flex; flex-direction: column; gap: 2px;
+  font-size: 0.96rem; font-weight: 700; color: var(--text-1); line-height: 1.2;
+}
+.v3 .v3-lbl small {
+  font-size: 0.72rem; font-weight: 500; color: var(--text-3); letter-spacing: 0.01em;
+}
+.v3 .v3-amt {
+  font-size: 1.04rem; font-weight: 800; color: var(--text-strong); white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.v3 .v3-amt--pos { color: var(--accent-deeper); }
+.v3 .v3-sub {
+  margin: 0.6rem 0 0; padding-top: 0.6rem;
+  border-top: 1px dashed var(--line-2);
+  font-size: 0.8rem; color: var(--text-3);
+}
+.v3 .v3-sub strong { color: var(--text-1); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* étape totale mise en avant */
+.v3 .v3-step--total { padding-bottom: 0; }
+.v3 .v3-card--total {
+  background: var(--bg-mid);
+  border: 1.5px solid var(--accent-deep);
+  box-shadow: 0 14px 34px -20px rgba(15, 23, 42, 0.32);
+}
+.v3 .v3-card--total .v3-lbl { color: var(--text-strong); font-size: 1rem; }
+.v3 .v3-amt--total {
+  font-size: 1.42rem; color: var(--accent-deeper); letter-spacing: -0.01em;
+}
+
+/* ── Fourchette ── */
+.v3 .v3-range {
+  background: var(--bg-higher);
+  border: 1px solid var(--line-2);
+  border-radius: 16px;
+  padding: 1.25rem 1.4rem 1.4rem;
+  margin-bottom: 1.6rem;
+}
+.v3 .v3-range-cap {
+  margin: 0 0 1.1rem;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-2);
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.v3 .v3-range-cap span {
+  font-size: 0.68rem; letter-spacing: 0.04em;
+  color: var(--accent-deeper); background: var(--accent-a-12);
+  padding: 0.18rem 0.5rem; border-radius: 999px; text-transform: none;
+}
+.v3 .v3-range-bounds {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1rem;
+}
+.v3 .v3-bound { display: flex; flex-direction: column; gap: 3px; }
+.v3 .v3-bound--hi { text-align: right; align-items: flex-end; }
+.v3 .v3-bound-tag {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-3);
+}
+.v3 .v3-bound-val {
+  font-size: 1.18rem; font-weight: 800; color: var(--text-strong);
+  font-variant-numeric: tabular-nums;
+}
+.v3 .v3-range-track {
+  position: relative; height: 8px; border-radius: 999px;
+  background: var(--surface-high);
+}
+.v3 .v3-range-fill {
+  position: absolute; inset: 0; border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent-deep), var(--accent));
+}
+.v3 .v3-range-pin {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--bg-mid); border: 3px solid var(--accent-deeper);
+}
+
+/* ── CTA ── */
+.v3 .v3-cta {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; padding: 16px 24px;
+  border-radius: 12px;
+  font-size: 1rem; font-weight: 800; letter-spacing: 0.01em; text-decoration: none;
+  color: #fff; background: var(--accent-deeper);
+  box-shadow: 0 12px 26px -16px rgba(15, 23, 42, 0.34);
+  transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+.v3 .v3-cta:hover { background: var(--accent-deep); transform: translateY(-1px); box-shadow: 0 16px 32px -16px rgba(15, 23, 42, 0.38); }
+.v3 .v3-cta svg { transition: transform 0.2s ease; }
+.v3 .v3-cta:hover svg { transform: translateX(3px); }
+
+/* ── Source ── */
+.v3 .v3-src {
+  margin: 1rem 0 0; text-align: center;
+  font-size: 0.74rem; color: var(--text-3);
+}
+.v3 .v3-src strong { color: var(--text-2); font-weight: 700; }
+
+/* ── Responsive ── */
+@media (max-width: 520px) {
+  .v3 { padding: 1.5rem 1.1rem 1.7rem; }
+  .v3 .v3-step { padding-left: 2.7rem; }
+  .v3 .v3-line { flex-direction: column; align-items: flex-start; gap: 0.35rem; }
+  .v3 .v3-range-bounds { grid-template-columns: 1fr; gap: 0.7rem; }
+  .v3 .v3-bound--hi { text-align: left; align-items: flex-start; }
+  .v3 .v3-range-track { order: 2; }
+}
+
+  /* ── Variante 4 — Minimaliste focal ── */
+.v4 {
+  width: 100%;
+  max-width: 720px;
+  margin: auto;
+  box-sizing: border-box;
+}
+.v4 *,
+.v4 *::before,
+.v4 *::after { box-sizing: border-box; }
+
+.v4 .v4-card {
+  background: #fff;
+  border: 1px solid var(--line-1);
+  border-radius: 22px;
+  padding: clamp(2.75rem, 6vw, 4.5rem) clamp(1.5rem, 5vw, 3.5rem) clamp(2.25rem, 5vw, 3.25rem);
+  text-align: center;
+  box-shadow: 0 18px 44px -30px var(--line-3);
+}
+
+/* Contexte — discret, en haut */
+.v4 .v4-context {
+  margin: 0 0 clamp(2.25rem, 5vw, 3rem);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+/* Le chiffre central */
+.v4 .v4-label {
+  margin: 0 0 0.55rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.v4 .v4-value {
+  margin: 0;
+  font-size: clamp(3.4rem, 11vw, 5.4rem);
+  font-weight: 900;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--text-strong);
+}
+
+/* Fourchette — sous-titre discret */
+.v4 .v4-range {
+  margin: 0.9rem 0 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--accent-deeper);
+}
+.v4 .v4-range-note {
+  font-weight: 400;
+  color: var(--text-3);
+  letter-spacing: 0;
+}
+
+/* Pont — une seule ligne lisible */
+.v4 .v4-bridge {
+  margin: clamp(2.5rem, 6vw, 3.5rem) auto 0;
+  padding-top: clamp(1.6rem, 4vw, 2.1rem);
+  border-top: 1px solid var(--line-1);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.35rem 0.5rem;
+  font-size: clamp(0.95rem, 2.6vw, 1.12rem);
+  font-weight: 700;
+  color: var(--text-1);
+  font-variant-numeric: tabular-nums;
+}
+.v4 .v4-b-op,
+.v4 .v4-b-eq {
+  color: var(--text-3);
+  font-weight: 500;
+}
+.v4 .v4-b-res {
+  color: var(--accent-deeper);
+}
+.v4 .v4-bridge-leg {
+  margin: 0.65rem 0 0;
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--text-3);
+}
+
+/* CTA — sobre, plein bleu */
+.v4 .v4-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: clamp(2.5rem, 6vw, 3.25rem) 0 0;
+  padding: 0.85rem 1.6rem;
+  background: var(--accent-deeper);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  text-decoration: none;
+  border-radius: 11px;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+.v4 .v4-cta:hover {
+  background: var(--text-strong);
+  transform: translateY(-1px);
+}
+.v4 .v4-cta:focus-visible {
+  outline: 2px solid var(--accent-deeper);
+  outline-offset: 3px;
+}
+.v4 .v4-arrow {
+  font-weight: 500;
+  transition: transform 0.18s ease;
+}
+.v4 .v4-cta:hover .v4-arrow { transform: translateX(3px); }
+
+/* Source — tout petit */
+.v4 .v4-source {
+  margin: clamp(1.75rem, 4vw, 2.25rem) 0 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  color: var(--text-3);
+}
+
+@media (max-width: 420px) {
+  .v4 .v4-bridge { font-size: 0.9rem; }
+}
+
+  /* ── Variante 5 — Tableau de bord KPI ── */
+.v5 {
+  width: 100%;
+  max-width: 720px;
+  margin: auto;
+  color: var(--text-1);
+  -webkit-font-smoothing: antialiased;
+}
+.v5 *,
+.v5 *::before,
+.v5 *::after { box-sizing: border-box; }
+
+.v5 .v5-board {
+  background: var(--bg-elevated);
+  border: 1px solid var(--line-2);
+  border-radius: 18px;
+  padding: 26px 26px 22px;
+  box-shadow: 0 22px 50px -34px rgba(15, 23, 42, 0.28);
+}
+
+/* ── Head ── */
+.v5 .v5-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.v5 .v5-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-deeper);
+}
+.v5 .v5-context { display: flex; flex-wrap: wrap; gap: 7px; }
+.v5 .v5-chip {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-2);
+  background: var(--bg-mid);
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  padding: 4px 11px;
+  letter-spacing: 0.01em;
+}
+.v5 .v5-chip-accent {
+  color: var(--accent-deeper);
+  background: var(--accent-a-12);
+  border-color: transparent;
+}
+
+/* ── Tiles ── */
+.v5 .v5-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.v5 .v5-tile {
+  background: var(--bg-mid);
+  border: 1px solid var(--line-2);
+  border-radius: 13px;
+  padding: 16px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.v5 .v5-tile::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--line-3);
+}
+.v5 .v5-tile-accent::before { background: var(--accent); }
+.v5 .v5-tile-strong { background: var(--bg-higher); border-color: var(--line-3); }
+.v5 .v5-tile-strong::before { background: var(--accent-deeper); }
+
+.v5 .v5-tile-label {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--text-3);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.v5 .v5-tile-val {
+  font-size: 1.62rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+  font-variant-numeric: tabular-nums;
+}
+.v5 .v5-tile-accent .v5-tile-val { color: var(--accent-deeper); }
+.v5 .v5-tile-strong .v5-tile-val { color: var(--text-strong); }
+.v5 .v5-unit {
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+.v5 .v5-tile-foot {
+  font-size: 0.72rem;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Bridge ── */
+.v5 .v5-bridge {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 9px;
+  padding: 12px 14px;
+  background: var(--bg-mid);
+  border: 1px solid var(--line-1);
+  border-radius: 11px;
+  margin-bottom: 22px;
+}
+.v5 .v5-bridge-term {
+  font-size: 0.78rem;
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+.v5 .v5-bridge-term strong {
+  color: var(--text-strong);
+  font-weight: 700;
+}
+.v5 .v5-bridge-res strong { color: var(--accent-deeper); }
+.v5 .v5-bridge-op {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 19px; height: 19px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text-3);
+  background: var(--surface-mid);
+}
+.v5 .v5-op-plus { color: var(--accent-deeper); }
+.v5 .v5-op-minus { color: var(--text-2); }
+.v5 .v5-op-eq { color: var(--text-strong); background: var(--surface-high); }
+
+/* ── Range ── */
+.v5 .v5-range { margin-bottom: 22px; }
+.v5 .v5-range-head { margin-bottom: 11px; }
+.v5 .v5-range-title {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+.v5 .v5-range-pm {
+  font-weight: 600;
+  color: var(--accent-deeper);
+  letter-spacing: 0;
+  text-transform: none;
+}
+.v5 .v5-range-bar {
+  position: relative;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--surface-mid);
+  margin-bottom: 11px;
+}
+.v5 .v5-range-fill {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent-a-12), var(--accent));
+}
+.v5 .v5-range-marker {
+  position: absolute;
+  top: 50%;
+  width: 14px; height: 14px;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: var(--bg-mid);
+  border: 3px solid var(--accent-deeper);
+  box-shadow: 0 2px 6px -1px rgba(15, 23, 42, 0.22);
+}
+.v5 .v5-range-scale {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.v5 .v5-range-edge {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+.v5 .v5-range-mid { text-align: center; }
+.v5 .v5-range-end { text-align: right; }
+.v5 .v5-range-cap {
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.v5 .v5-range-num {
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: var(--text-1);
+  font-variant-numeric: tabular-nums;
+}
+.v5 .v5-range-mid .v5-range-num { color: var(--accent-deeper); }
+
+/* ── Foot ── */
+.v5 .v5-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line-2);
+}
+.v5 .v5-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--text-3);
+}
+.v5 .v5-source strong { color: var(--text-2); font-weight: 700; }
+.v5 .v5-ico {
+  width: 16px; height: 16px;
+  flex: none;
+  color: var(--text-3);
+}
+.v5 .v5-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  background: var(--accent-deeper);
+  border-radius: 10px;
+  padding: 11px 18px;
+  letter-spacing: 0.01em;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+.v5 .v5-cta:hover {
+  background: var(--accent-deep);
+  transform: translateY(-1px);
+}
+.v5 .v5-arrow {
+  font-weight: 700;
+  transition: transform 0.18s ease;
+}
+.v5 .v5-cta:hover .v5-arrow { transform: translateX(3px); }
+
+/* ── Responsive ── */
+@media (max-width: 560px) {
+  .v5 .v5-board { padding: 20px 18px 18px; }
+  .v5 .v5-tiles { grid-template-columns: 1fr; }
+  .v5 .v5-tile { flex-direction: row; align-items: baseline; justify-content: space-between; gap: 12px; }
+  .v5 .v5-tile-foot { display: none; }
+  .v5 .v5-foot { flex-direction: column; align-items: stretch; }
+  .v5 .v5-cta { justify-content: center; }
+}
+</style>
+</head>
+<body>
+  <header class="labo-top">
+    <div class="labo-inner">
+      <div class="labo-row">
+        <span class="labo-brand">Novances&nbsp;Évaluation</span>
+        <span class="labo-badge">Page non répertoriée · interne</span>
+      </div>
+      <h1>Choisir la présentation de la valorisation</h1>
+      <p>Cinq propositions pour l'affichage du résultat de l'estimateur, toutes sur le même exemple (PME · Industrie · EBITDA 500&nbsp;k€). La première est celle actuellement en service ; les quatre suivantes en sont des variantes.</p>
+      <p class="labo-note">Lien privé, non répertorié (non indexé, absent de la navigation et du plan du site). À ne pas diffuser au-delà de la direction.</p>
+      <p style="margin-top:1.3rem"><a href="/labo-valorisation-7q2x/essai/" style="display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:.92rem;text-decoration:none;color:#fff;background:linear-gradient(135deg,var(--accent-deeper),var(--accent-deep));padding:.8rem 1.3rem;border-radius:10px;box-shadow:0 10px 24px -12px rgba(3,105,161,.5)">▶ Tester les 5 processus en conditions réelles (formulaire + notification)</a></p>
+      <p style="margin-top:.6rem;font-size:.78rem;color:var(--text-3)">Les vignettes ci-dessous sont des aperçus figés ; la page de test permet de saisir vos chiffres et de basculer entre les 5 styles en direct.</p>
+    </div>
+  </header>
+  <main class="props">
+<section class="prop prop-principal">
+  <span class="prop-tag">Proposition 1&nbsp;· Principale</span>
+  <h2>Présentation actuelle (en service)</h2>
+  <p class="prop-blurb">Le rendu déjà en place : pont « valeur d&#x27;entreprise → valeur des titres », puis fourchette en jauge horizontale et CTA.</p>
+  <div class="prop-stage">
+<section class="v1">
+  <div class="v1-card">
+    <p class="v1-label">Estimation de la valeur de vos titres</p>
+    <div class="v1-bridge">
+      <div class="v1-bridge-title">De la valeur d'entreprise à la valeur de vos titres</div>
+      <div class="v1-row"><span class="v1-lbl">Valeur d'entreprise<small>la valeur de l'activité, hors financement</small></span><span class="v1-amt">2,57 M&#8364;</span></div>
+      <div class="v1-row v1-op"><span class="v1-lbl"><span class="v1-badge v1-plus">+</span>Trésorerie disponible</span><span class="v1-amt">+ 300 k&#8364;</span></div>
+      <div class="v1-row v1-op"><span class="v1-lbl"><span class="v1-badge v1-minus">&#8722;</span>Dette financière</span><span class="v1-amt">&#8722; 150 k&#8364;</span></div>
+      <div class="v1-row v1-total"><span class="v1-lbl">Valeur de vos titres<small>ce qui revient à l'actionnaire</small></span><span class="v1-amt">2,72 M&#8364;</span></div>
+    </div>
+    <div class="v1-gauge">
+      <div class="v1-ends">
+        <div class="v1-end"><span class="v1-cap">Basse</span><span class="v1-val">2,45 M&#8364;</span></div>
+        <div class="v1-end v1-end-hi"><span class="v1-cap">Haute</span><span class="v1-val v1-val-hi">2,99 M&#8364;</span></div>
+      </div>
+      <div class="v1-track"><div class="v1-fill"></div><span class="v1-dot" style="left:0%"></span><span class="v1-dot" style="left:100%"></span></div>
+    </div>
+    <p class="v1-unit">La <strong>valeur d'entreprise</strong> mesure votre activité seule ; la <strong>valeur des titres</strong> (capitaux propres) est ce qui revient à l'actionnaire, une fois la trésorerie ajoutée et la dette retirée.</p>
+    <p class="v1-src">Multiples sectoriels : <strong>Fusacq</strong> (données S2-2025).</p>
+    <a class="v1-cta" href="/#contact">Je veux un rapport d'évaluation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+  </div>
+</section>
+</div>
+</section>
+<section class="prop">
+  <span class="prop-tag">Proposition 2</span>
+  <h2>Bandeau pleine largeur — 2 colonnes</h2>
+  <p class="prop-blurb">Un panneau horizontal large : à gauche la fourchette en jauge, à droite le pont VE→titres en tableau, CTA pleine largeur en pied.</p>
+  <div class="prop-stage"><section class="v2">
+  <div class="v2-panel">
+
+    <header class="v2-head">
+      <span class="v2-eyebrow">Estimation indicative</span>
+      <p class="v2-context">PME · secteur Industrie · multiple effectif <strong>5,1&#215;</strong></p>
+    </header>
+
+    <div class="v2-cols">
+
+      <!-- COLONNE GAUCHE : la fourchette -->
+      <div class="v2-range">
+        <p class="v2-label">Valeur des titres — fourchette estimée</p>
+
+        <div class="v2-central">
+          <span class="v2-central-val">2,72 M&#8364;</span>
+          <span class="v2-central-tag">valeur centrale</span>
+        </div>
+
+        <div class="v2-gauge" aria-hidden="true">
+          <div class="v2-gauge-track">
+            <span class="v2-gauge-fill"></span>
+            <span class="v2-gauge-mark"></span>
+          </div>
+        </div>
+
+        <div class="v2-bounds">
+          <div class="v2-bound">
+            <span class="v2-bound-tag">basse</span>
+            <span class="v2-bound-val">2,45 M&#8364;</span>
+          </div>
+          <div class="v2-bound v2-bound-hi">
+            <span class="v2-bound-tag">haute</span>
+            <span class="v2-bound-val">2,99 M&#8364;</span>
+          </div>
+        </div>
+
+        <p class="v2-amp">Amplitude &#177;&#8201;10&#8201;%</p>
+      </div>
+
+      <!-- COLONNE DROITE : le pont -->
+      <div class="v2-bridge">
+        <p class="v2-label">Du résultat à la valeur des titres</p>
+
+        <table class="v2-table">
+          <tbody>
+            <tr>
+              <th scope="row">Valeur d'entreprise (VE)</th>
+              <td class="v2-num">2,57 M&#8364;</td>
+            </tr>
+            <tr>
+              <th scope="row"><span class="v2-sign v2-plus">+</span> Trésorerie disponible</th>
+              <td class="v2-num">300 k&#8364;</td>
+            </tr>
+            <tr>
+              <th scope="row"><span class="v2-sign v2-minus">&#8722;</span> Dette financière</th>
+              <td class="v2-num">150 k&#8364;</td>
+            </tr>
+            <tr class="v2-row-net">
+              <th scope="row">Trésorerie nette</th>
+              <td class="v2-num">+ 150 k&#8364;</td>
+            </tr>
+            <tr class="v2-row-total">
+              <th scope="row"><span class="v2-eq">=</span> Valeur des titres</th>
+              <td class="v2-num">2,72 M&#8364;</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <footer class="v2-foot">
+      <p class="v2-source">Source : Fusacq — données S2-2025</p>
+      <a class="v2-cta" href="/#contact">
+        Je veux un rapport d'évaluation
+        <svg class="v2-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </footer>
+
+  </div>
+</section></div>
+</section>
+<section class="prop">
+  <span class="prop-tag">Proposition 3</span>
+  <h2>Cascade verticale (timeline)</h2>
+  <p class="prop-blurb">Une cascade verticale en timeline : VE en haut, +trésorerie / −dette en nœuds connectés, valeur des titres en pied, fourchette mise en valeur en encart.</p>
+  <div class="prop-stage"><section class="v3">
+  <header class="v3-head">
+    <p class="v3-eyebrow">De la valeur d'entreprise à la valeur des titres</p>
+    <h2 class="v3-title">La cascade de valorisation</h2>
+    <p class="v3-context">
+      <span>PME</span><i></i><span>Secteur Industrie</span><i></i><span>Multiple effectif <strong>5,1&times;</strong></span>
+    </p>
+  </header>
+
+  <ol class="v3-flow">
+    <li class="v3-step v3-step--base">
+      <span class="v3-node" aria-hidden="true"></span>
+      <div class="v3-card">
+        <div class="v3-line">
+          <span class="v3-lbl">Valeur d'entreprise<small>VE — activité opérationnelle</small></span>
+          <span class="v3-amt">2,57 M&euro;</span>
+        </div>
+      </div>
+    </li>
+
+    <li class="v3-step v3-step--op v3-step--plus">
+      <span class="v3-node v3-node--sign" aria-hidden="true">+</span>
+      <div class="v3-card">
+        <div class="v3-line">
+          <span class="v3-lbl">Trésorerie disponible<small>à additionner</small></span>
+          <span class="v3-amt v3-amt--pos">+ 300 k&euro;</span>
+        </div>
+      </div>
+    </li>
+
+    <li class="v3-step v3-step--op v3-step--minus">
+      <span class="v3-node v3-node--sign" aria-hidden="true">&minus;</span>
+      <div class="v3-card">
+        <div class="v3-line">
+          <span class="v3-lbl">Dette financière<small>à soustraire</small></span>
+          <span class="v3-amt">&minus; 150 k&euro;</span>
+        </div>
+        <p class="v3-sub">Trésorerie nette&nbsp;: <strong>+ 150 k&euro;</strong></p>
+      </div>
+    </li>
+
+    <li class="v3-step v3-step--total">
+      <span class="v3-node v3-node--total" aria-hidden="true">=</span>
+      <div class="v3-card v3-card--total">
+        <div class="v3-line">
+          <span class="v3-lbl">Valeur des titres<small>valeur centrale</small></span>
+          <span class="v3-amt v3-amt--total">2,72 M&euro;</span>
+        </div>
+      </div>
+    </li>
+  </ol>
+
+  <div class="v3-range">
+    <p class="v3-range-cap">Fourchette d'évaluation <span>&plusmn; 10 %</span></p>
+    <div class="v3-range-bounds">
+      <div class="v3-bound">
+        <span class="v3-bound-tag">Basse</span>
+        <span class="v3-bound-val">2,45 M&euro;</span>
+      </div>
+      <div class="v3-range-track" aria-hidden="true">
+        <span class="v3-range-fill"></span>
+        <span class="v3-range-pin"></span>
+      </div>
+      <div class="v3-bound v3-bound--hi">
+        <span class="v3-bound-tag">Haute</span>
+        <span class="v3-bound-val">2,99 M&euro;</span>
+      </div>
+    </div>
+  </div>
+
+  <a class="v3-cta" href="/#contact">
+    Je veux un rapport d'évaluation
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="12" x2="19" y2="12"></line><polyline points="13 6 19 12 13 18"></polyline></svg>
+  </a>
+
+  <p class="v3-src">Source&nbsp;: <strong>Fusacq</strong> — données S2-2025</p>
+</section></div>
+</section>
+<section class="prop">
+  <span class="prop-tag">Proposition 4</span>
+  <h2>Minimaliste focal</h2>
+  <p class="prop-blurb">Tout le poids visuel sur un seul grand chiffre, le reste réduit à l&#x27;essentiel sur fond blanc.</p>
+  <div class="prop-stage"><section class="v4">
+  <div class="v4-card">
+    <p class="v4-context">PME &middot; Industrie &middot; multiple 5,1&times;</p>
+
+    <p class="v4-label">Valeur des titres</p>
+    <p class="v4-value">2,72 M&euro;</p>
+    <p class="v4-range">2,45 &ndash; 2,99 M&euro;<span class="v4-range-note"> &middot; fourchette &plusmn;&nbsp;10&nbsp;%</span></p>
+
+    <p class="v4-bridge">
+      <span class="v4-b-ve">2,57 M&euro;</span>
+      <span class="v4-b-op">+</span><span class="v4-b-cash">300 k&euro;</span>
+      <span class="v4-b-op">&minus;</span><span class="v4-b-debt">150 k&euro;</span>
+      <span class="v4-b-eq">=</span><span class="v4-b-res">2,72 M&euro;</span>
+    </p>
+    <p class="v4-bridge-leg">VE&nbsp;+&nbsp;tr&eacute;sorerie&nbsp;&minus;&nbsp;dette&nbsp;=&nbsp;valeur des titres</p>
+
+    <a class="v4-cta" href="/#contact">Je veux un rapport d'&eacute;valuation <span class="v4-arrow" aria-hidden="true">&rarr;</span></a>
+
+    <p class="v4-source">Source : Fusacq &mdash; donn&eacute;es S2-2025</p>
+  </div>
+</section></div>
+</section>
+<section class="prop">
+  <span class="prop-tag">Proposition 5</span>
+  <h2>Tableau de bord KPI</h2>
+  <p class="prop-blurb">Synthèse façon dashboard : trois tuiles KPI alignées, pont de calcul VE + trésorerie − dette, barre de fourchette sous-jacente et pied source/CTA, dans un cadre clair institutionnel.</p>
+  <div class="prop-stage"><section class="v5">
+  <div class="v5-board">
+
+    <header class="v5-head">
+      <span class="v5-eyebrow">Synthèse d'évaluation</span>
+      <div class="v5-context">
+        <span class="v5-chip">PME</span>
+        <span class="v5-chip">Industrie</span>
+        <span class="v5-chip v5-chip-accent">Multiple effectif 5,1&times;</span>
+      </div>
+    </header>
+
+    <div class="v5-tiles">
+      <div class="v5-tile">
+        <span class="v5-tile-label">Valeur d'entreprise</span>
+        <span class="v5-tile-val">2,57<span class="v5-unit"> M&euro;</span></span>
+        <span class="v5-tile-foot">VE retenue</span>
+      </div>
+      <div class="v5-tile v5-tile-accent">
+        <span class="v5-tile-label">Trésorerie nette</span>
+        <span class="v5-tile-val">+&thinsp;150<span class="v5-unit"> k&euro;</span></span>
+        <span class="v5-tile-foot">300 k&euro; &minus; 150 k&euro;</span>
+      </div>
+      <div class="v5-tile v5-tile-strong">
+        <span class="v5-tile-label">Valeur des titres</span>
+        <span class="v5-tile-val">2,72<span class="v5-unit"> M&euro;</span></span>
+        <span class="v5-tile-foot">Valeur centrale</span>
+      </div>
+    </div>
+
+    <div class="v5-bridge" aria-label="Pont de calcul : valeur d'entreprise plus trésorerie disponible moins dette financière égale valeur des titres">
+      <span class="v5-bridge-term">VE <strong>2,57 M&euro;</strong></span>
+      <span class="v5-bridge-op v5-op-plus">+</span>
+      <span class="v5-bridge-term">Trésorerie <strong>300 k&euro;</strong></span>
+      <span class="v5-bridge-op v5-op-minus">&minus;</span>
+      <span class="v5-bridge-term">Dette <strong>150 k&euro;</strong></span>
+      <span class="v5-bridge-op v5-op-eq">=</span>
+      <span class="v5-bridge-term v5-bridge-res">Titres <strong>2,72 M&euro;</strong></span>
+    </div>
+
+    <div class="v5-range">
+      <div class="v5-range-head">
+        <span class="v5-range-title">Fourchette de valorisation <span class="v5-range-pm">&plusmn;&nbsp;10&nbsp;%</span></span>
+      </div>
+      <div class="v5-range-bar">
+        <span class="v5-range-fill"></span>
+        <span class="v5-range-marker" style="left:50%"></span>
+      </div>
+      <div class="v5-range-scale">
+        <span class="v5-range-edge">
+          <span class="v5-range-cap">Basse</span>
+          <span class="v5-range-num">2,45 M&euro;</span>
+        </span>
+        <span class="v5-range-edge v5-range-mid">
+          <span class="v5-range-cap">Centrale</span>
+          <span class="v5-range-num">2,72 M&euro;</span>
+        </span>
+        <span class="v5-range-edge v5-range-end">
+          <span class="v5-range-cap">Haute</span>
+          <span class="v5-range-num">2,99 M&euro;</span>
+        </span>
+      </div>
+    </div>
+
+    <footer class="v5-foot">
+      <span class="v5-source">
+        <svg class="v5-ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5 1.5 4.3 8 7l6.5-2.7L8 1.5Z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M2 7.2v3.6c0 .5 2.7 2.2 6 2.2s6-1.7 6-2.2V7.2" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+        Source&nbsp;: <strong>Fusacq</strong> &mdash; données S2-2025
+      </span>
+      <a class="v5-cta" href="/#contact">Je veux un rapport d'évaluation <span class="v5-arrow" aria-hidden="true">&rarr;</span></a>
+    </footer>
+
+  </div>
+</section></div>
+</section>
+  </main>
+</body>
+</html>

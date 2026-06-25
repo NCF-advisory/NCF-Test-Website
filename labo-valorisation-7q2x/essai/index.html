@@ -3,53 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Estimer la valeur de votre entreprise · Novances Évaluation</title>
-  <meta name="description" content="Estimez en une minute une première valeur indicative de votre entreprise, par multiple d'EBITDA sectoriel. Outil gratuit pour dirigeants de PME — sans engagement." />
-  <link rel="canonical" href="https://novances-evaluation.fr/estimation/" />
-  <meta property="og:locale" content="fr_FR" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Novances Évaluation" />
-  <meta property="og:title" content="Estimer la valeur de votre entreprise · Novances Évaluation" />
-  <meta property="og:description" content="Une première estimation indicative de la valeur de vos titres, par multiple d'EBITDA sectoriel. Gratuit, sans engagement." />
-  <meta property="og:url" content="https://novances-evaluation.fr/estimation/" />
-  <meta property="og:image" content="https://novances-evaluation.fr/assets/img/brand/logo-novances-evaluation.png" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Estimer la valeur de votre entreprise · Novances Évaluation" />
-  <meta name="twitter:description" content="Estimation indicative par multiple d'EBITDA sectoriel, pour dirigeants de PME." />
-  <meta name="theme-color" content="#1A2E6B" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Test des présentations de valorisation (interne)</title>
   <link rel="icon" href="/favicon.ico" sizes="48x48" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="/assets/img/brand/apple-touch-icon.png" />
-  <link rel="manifest" href="/site.webmanifest" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/css/global.css" />
   <link rel="stylesheet" href="/assets/css/pages/estimation.css" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebApplication",
-        "name": "Estimateur de valeur d'entreprise",
-        "applicationCategory": "BusinessApplication",
-        "operatingSystem": "Web",
-        "url": "https://novances-evaluation.fr/estimation/",
-        "description": "Outil d'estimation indicative de la valeur des titres d'une entreprise, par multiple d'EBITDA sectoriel, selon le secteur et la taille.",
-        "provider": { "@id": "https://novances-evaluation.fr/#organization" },
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://novances-evaluation.fr/" },
-          { "@type": "ListItem", "position": 2, "name": "Estimation", "item": "https://novances-evaluation.fr/estimation/" }
-        ]
-      }
-    ]
-  }
-  </script>
+  <link rel="stylesheet" href="/labo-valorisation-7q2x/essai/variants.css" />
+  <link rel="stylesheet" href="/labo-valorisation-7q2x/essai/layouts.css" />
+  <link rel="stylesheet" href="/labo-valorisation-7q2x/essai/demo.css" />
 </head>
 <body class="estimation-page">
 
@@ -89,6 +54,23 @@
   <a href="/#contact" class="nav-cta">Parler à un expert</a>
 </div>
 
+<!-- ═══════════════════ BANDEAU INTERNE + SÉLECTEUR ═══════════════════ -->
+<div class="demo-bar">
+  <div class="demo-bar-inner">
+    <div class="demo-bar-head">
+      <span class="demo-bar-badge">Démo interne · non répertoriée</span>
+      <p class="demo-bar-txt">Choisissez un <strong>style de notification</strong>, renseignez le formulaire, puis lancez l'estimation : le résultat s'affiche dans le style sélectionné, avec vos chiffres réels.</p>
+    </div>
+    <div class="demo-switch" role="radiogroup" aria-label="Style de notification">
+      <button type="button" class="demo-style is-active" data-style="1">1 · Principale</button>
+      <button type="button" class="demo-style" data-style="2">2 · Bandeau</button>
+      <button type="button" class="demo-style" data-style="3">3 · Cascade</button>
+      <button type="button" class="demo-style" data-style="4">4 · Minimaliste</button>
+      <button type="button" class="demo-style" data-style="5">5 · Dashboard</button>
+    </div>
+  </div>
+</div>
+
 <!-- ═══════════════════ HERO ═══════════════════ -->
 <section id="hero-est">
   <div class="hero-est-inner">
@@ -107,7 +89,6 @@
       <form class="est-form" autocomplete="off" novalidate>
         <p class="est-step-intro">Renseignez les critères ci-dessous, puis lancez l'estimation.</p>
 
-        <!-- 1 · Secteur -->
         <div class="est-field">
           <label class="est-label" for="est-secteur"><span class="est-num">1</span> Secteur d'activité</label>
           <div class="est-select-wrap">
@@ -131,35 +112,24 @@
           </div>
         </div>
 
-        <!-- 2 · Taille -->
         <fieldset class="est-field est-sizes">
           <legend class="est-label"><span class="est-num">2</span> Taille de la société</legend>
           <div class="est-seg" role="radiogroup" aria-label="Taille de la société">
             <label class="est-seg-opt">
               <input type="radio" name="taille" value="tpe" />
-              <span class="est-seg-box">
-                <span class="est-seg-name">TPE</span>
-                <span class="est-seg-crit">1 à 10 salariés</span>
-              </span>
+              <span class="est-seg-box"><span class="est-seg-name">TPE</span><span class="est-seg-crit">1 à 10 salariés</span></span>
             </label>
             <label class="est-seg-opt">
               <input type="radio" name="taille" value="pme" />
-              <span class="est-seg-box">
-                <span class="est-seg-name">PME</span>
-                <span class="est-seg-crit">10 à 100 salariés</span>
-              </span>
+              <span class="est-seg-box"><span class="est-seg-name">PME</span><span class="est-seg-crit">10 à 100 salariés</span></span>
             </label>
             <label class="est-seg-opt">
               <input type="radio" name="taille" value="eti" />
-              <span class="est-seg-box">
-                <span class="est-seg-name">ETI</span>
-                <span class="est-seg-crit">Plus de 100 salariés</span>
-              </span>
+              <span class="est-seg-box"><span class="est-seg-name">ETI</span><span class="est-seg-crit">Plus de 100 salariés</span></span>
             </label>
           </div>
         </fieldset>
 
-        <!-- 3 · EBITDA -->
         <div class="est-field">
           <div class="est-rn-head">
             <label class="est-label" for="est-ebitda-number"><span class="est-num">3</span> EBITDA annuel</label>
@@ -173,7 +143,6 @@
           <p class="est-rn-hint">Excédent brut d'exploitation : votre résultat d'exploitation avant intérêts, impôts, amortissements et provisions. Retenez une année représentative et récurrente.</p>
         </div>
 
-        <!-- 4 · Trésorerie nette -->
         <div class="est-field">
           <label class="est-label"><span class="est-num">4</span> Trésorerie nette</label>
           <p class="est-cash-intro">Saisissez deux montants <strong>positifs</strong> : l'outil calcule lui-même la trésorerie nette (<strong>trésorerie − dette</strong>). Aucun signe à gérer.</p>
@@ -199,9 +168,8 @@
           <div class="est-net" id="est-net" aria-live="polite"></div>
         </div>
 
-        <!-- Déclencheur de l'estimation -->
         <div class="est-go-wrap">
-          <button type="button" class="est-go" id="est-go" disabled aria-describedby="est-go-hint" aria-controls="est-result">
+          <button type="button" class="est-go" id="est-go" disabled aria-describedby="est-go-hint">
             <span class="est-go-content">
               <svg class="est-go-spark" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg>
               <span class="est-go-label">Estimer la valeur</span>
@@ -211,89 +179,47 @@
         </div>
       </form>
 
-      <!-- ── Colonne résultat ── -->
+      <!-- ── Colonne résultat (placeholder) ── -->
       <aside class="est-result" id="est-result" aria-live="polite">
-        <!-- contenu injecté par estimation.js -->
+        <div class="est-result-placeholder">
+          <span class="est-ph-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-6"/></svg>
+          </span>
+          <div>Le résultat s'affichera en <strong>notification</strong>, dans le style sélectionné en haut de page.</div>
+        </div>
       </aside>
 
     </div>
-
-    <!-- ── Note méthodologique ── -->
-    <div class="est-method rv">
-      <div class="est-method-grid">
-        <div class="est-method-col">
-          <h2 class="est-method-h">Comment lire ce chiffre&nbsp;?</h2>
-          <p>L'estimation applique un <strong>multiple d'EBITDA</strong> observé sur les transactions de votre secteur : votre EBITDA est multiplié par ce repère de marché, <strong>ajusté selon la taille</strong> de votre société. On obtient d'abord une <strong>valeur d'entreprise</strong> — ce que vaut l'activité, indépendamment de la façon dont elle est financée.</p>
-          <p>Pour passer à la <strong>valeur de vos titres</strong> (vos capitaux propres), on ajoute votre <strong>trésorerie nette</strong> : on ajoute la trésorerie disponible et on retranche la dette financière. Une société riche en trésorerie et peu endettée vaut donc <strong>plus</strong> que sa seule valeur d'entreprise ; une société endettée, <strong>moins</strong>.</p>
-        </div>
-        <div class="est-method-col">
-          <h2 class="est-method-h">Les limites à garder en tête</h2>
-          <p>Cette estimation est <strong>indicative</strong>. Le multiple sectoriel reflète une moyenne de marché : il ne tient compte ni de votre croissance, ni de la récurrence de vos revenus, ni de la qualité de vos actifs, ni de la dépendance à un dirigeant — autant de facteurs qui déplacent fortement le multiple réel.</p>
-          <p>Une évaluation opposable croise plusieurs méthodes et analyse votre situation réelle. C'est le travail que nous menons sur chaque dossier.</p>
-        </div>
-      </div>
-      <div class="est-method-cta">
-        <div class="est-method-cta-text"><strong>Envie d'une valeur fiable et défendable&nbsp;?</strong><br>Premier échange confidentiel et gratuit pour cadrer votre besoin.</div>
-        <a href="/#contact" class="est-cta-btn">Parler à un expert <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      </div>
-      <p class="est-method-source">Multiples sectoriels : <strong>Fusacq</strong> — multiples VE/EBITDA observés sur le marché français des transactions (données S2-2025).</p>
-    </div>
-
   </div>
 </section>
 
-<!-- ═══════════════════ MODALE RÉSULTAT (notification centrale) ═══════════════════ -->
-<div class="est-modal" id="est-modal" hidden>
+<!-- ═══════════════════ MODALE RÉSULTAT (style sélectionné) ═══════════════════ -->
+<div class="est-modal demo-modal" id="demo-modal" hidden>
   <div class="est-modal-backdrop"></div>
-  <div class="est-modal-card" role="dialog" aria-modal="true" aria-labelledby="est-modal-label">
-    <button type="button" class="est-modal-close" id="est-modal-close" aria-label="Fermer">
-      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
-    </button>
-    <div class="est-modal-body" id="est-modal-body"></div>
+  <div class="demo-modal-switch" role="radiogroup" aria-label="Changer de style en direct">
+    <button type="button" class="demo-style is-active" data-style="1" title="Principale">1</button>
+    <button type="button" class="demo-style" data-style="2" title="Bandeau">2</button>
+    <button type="button" class="demo-style" data-style="3" title="Cascade">3</button>
+    <button type="button" class="demo-style" data-style="4" title="Minimaliste">4</button>
+    <button type="button" class="demo-style" data-style="5" title="Dashboard">5</button>
   </div>
+  <button type="button" class="demo-close" id="demo-close" aria-label="Fermer">
+    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <div class="demo-stage" id="demo-stage" role="dialog" aria-modal="true" aria-label="Résultat de l'estimation"></div>
 </div>
 
 <!-- ═══════════════════ FOOTER ═══════════════════ -->
 <footer class="footer">
   <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <img src="/assets/img/brand/logo-ncf-bl-marine.png" alt="NCF" loading="lazy" />
-        <p class="footer-brand-tag">Cabinet d'évaluation d'entreprise pour les dirigeants de PME.</p>
-        <a class="footer-novances" href="https://novances.fr/" target="_blank" rel="noopener noreferrer" aria-label="Site du Groupe Novances (nouvel onglet)"><img src="/assets/img/brand/logo-novances.avif" alt="Groupe Novances" loading="lazy" /><span>Membre du <strong>Groupe Novances</strong></span></a><div class="footer-novances"><img src="/assets/img/brand/Moore_Global.svg.png" alt="Moore Global" /><span>Réseau international <strong>Moore Global</strong></span></div>
-      </div>
-      <div>
-        <div class="footer-col-title">Pour qui ?</div><div class="footer-links"><a href="/entrepreneurs/" class="footer-link">Entrepreneurs</a><a href="/experts-comptables/" class="footer-link">Experts-comptables</a><a href="/avocats/" class="footer-link">Avocats</a><a href="/notaires/" class="footer-link">Notaires</a></div>
-      </div>
-      <div>
-        <div class="footer-col-title">Cabinet</div>
-        <div class="footer-links">
-          <a href="/equipe/" class="footer-link">L'équipe</a>
-          <a href="/equipe/#novances" class="footer-link">Groupe Novances</a>
-          <a href="/partenaires/" class="footer-link">Partenaires</a>
-          <a href="/tarifs/" class="footer-link">Tarifs</a>
-        </div>
-      </div>
-      <div>
-        <div class="footer-col-title">Publications</div>
-        <div class="footer-links">
-          <a href="/ressources/" class="footer-link">Publications</a>
-          <a href="/#contact" class="footer-link">Contact</a>
-          <a href="/#contact" class="footer-link">Formulaire de contact</a>
-        </div>
-      </div>
-    </div>
     <div class="footer-bottom">
-      <div class="footer-copy">© 2026 Novances Évaluation, Tous droits réservés.</div>
-      <div class="footer-legal">
-        <a href="/mentions-legales/">Mentions légales</a>
-        <a href="/confidentialite/">Confidentialité</a>
-      </div>
+      <div class="footer-copy">© 2026 Novances Évaluation — page de test interne, non répertoriée.</div>
+      <div class="footer-legal"><a href="/labo-valorisation-7q2x/">← Retour au comparateur</a></div>
     </div>
   </div>
 </footer>
 
 <script src="/assets/js/site.js" defer></script>
-<script src="/assets/js/pages/estimation.js" defer></script>
+<script src="/labo-valorisation-7q2x/essai/demo.js" defer></script>
 </body>
 </html>
