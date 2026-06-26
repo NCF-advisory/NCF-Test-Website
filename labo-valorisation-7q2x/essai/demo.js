@@ -3,7 +3,7 @@
 
   const SECTEUR_MULT = {logiciels:7.7,'sante-pharma':7.6,'services-info':7.1,'services-entreprises':5.4,agroalimentaire:5.2,industrie:4.9,ecommerce:4.7,medias:4.7,distribution:4.4,'hotellerie-tourisme':4.3,'transport-logistique':4.2,'commerce-gros':4.0,construction:3.9};
   const TAILLE_MULT = {tpe:4.0,pme:5.5,eti:6.9};
-  const MARKET_AVG = 5.25, SPREAD = 0.20, RANGE_MAX = 2000000, INPUT_MAX = 500000000;
+  const MARKET_AVG = 5.25, SPREAD = 0.10, RANGE_MAX = 2000000, INPUT_MAX = 500000000;
   const SECTEUR_LABELS = {logiciels:'Logiciels','sante-pharma':'Santé & Pharma','services-info':'Services informatiques','services-entreprises':'Services aux entreprises',agroalimentaire:'Agro-alimentaire',industrie:'Industrie',ecommerce:'E-commerce',medias:'Médias & Communication',distribution:'Distribution','hotellerie-tourisme':'Hôtellerie & Tourisme','transport-logistique':'Transport & Logistique','commerce-gros':'Commerce de gros',construction:'Construction'};
   const TAILLE_LABELS = {tpe:'TPE',pme:'PME',eti:'ETI'};
   const ARROW = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
@@ -18,7 +18,7 @@
   const state = { secteur:'', taille:'', ebitda:200000, treso:0, dette:0 };
 
   function effectiveMultiple(){ const s = SECTEUR_MULT[state.secteur], t = TAILLE_MULT[state.taille]; if (s == null || t == null) return null; return s * (t / MARKET_AVG); }
-  function computeValue(){ const m = effectiveMultiple(); if (m == null || state.ebitda <= 0) return null; const ev = state.ebitda * m; const net = state.treso - state.dette; const equity = ev + net; return { multiple:m, ev, net, equity, low: equity*(1-SPREAD/2), high: equity*(1+SPREAD/2) }; }
+  function computeValue(){ const m = effectiveMultiple(); if (m == null || state.ebitda <= 0) return null; const ev = state.ebitda * m; const net = state.treso - state.dette; const equity = ev + net; return { multiple:m, ev, net, equity, low: ev*(1-SPREAD/2) + net, high: ev*(1+SPREAD/2) + net }; }
 
   function buildData(v){ return {
     secteur: SECTEUR_LABELS[state.secteur] || '', taille: TAILLE_LABELS[state.taille] || '',
@@ -32,10 +32,10 @@
     if (!d.hasTreso && !d.hasDette){
       bridge = `<p class="v1-note">Vous n'avez saisi ni trésorerie ni dette : la <strong>valeur de vos titres</strong> est égale à la <strong>valeur d'entreprise</strong>, soit ${d.ev}.</p>`;
     } else {
-      let rows = `<div class="v1-row"><span class="v1-lbl">Valeur d'entreprise<small>la valeur de l'activité, hors financement</small></span><span class="v1-amt">${d.ev}</span></div>`;
+      let rows = `<div class="v1-row"><span class="v1-lbl">Valeur d'entreprise</span><span class="v1-amt">${d.ev}</span></div>`;
       if (d.hasTreso) rows += `<div class="v1-row v1-op"><span class="v1-lbl"><span class="v1-badge v1-plus">+</span>Trésorerie disponible</span><span class="v1-amt">+ ${d.treso}</span></div>`;
       if (d.hasDette) rows += `<div class="v1-row v1-op"><span class="v1-lbl"><span class="v1-badge v1-minus">−</span>Dette financière</span><span class="v1-amt">− ${d.dette}</span></div>`;
-      rows += `<div class="v1-row v1-total"><span class="v1-lbl">Valeur de vos titres<small>ce qui revient à l'actionnaire</small></span><span class="v1-amt">${d.equity}</span></div>`;
+      rows += `<div class="v1-row v1-total"><span class="v1-lbl">Valeur de vos titres</span><span class="v1-amt">${d.equity}</span></div>`;
       bridge = `<div class="v1-bridge"><div class="v1-bridge-title">De la valeur d'entreprise à la valeur de vos titres</div>${rows}</div>`;
     }
     return `<section class="v1"><div class="v1-card">
@@ -189,7 +189,7 @@ function renderV3(d) {
   </ol>
 
   <div class="v3-range">
-    <p class="v3-range-cap">Fourchette d'évaluation <span>&plusmn; 10 %</span></p>
+    <p class="v3-range-cap">Fourchette d'évaluation <span>&plusmn; 5 %</span></p>
     <div class="v3-range-bounds">
       <div class="v3-bound">
         <span class="v3-bound-tag">Basse</span>
@@ -222,7 +222,7 @@ function renderV4(d) {
 
     <p class="v4-label">Valeur des titres</p>
     <p class="v4-value">${d.equity}</p>
-    <p class="v4-range">${d.low} &ndash; ${d.high}<span class="v4-range-note"> &middot; fourchette &plusmn;&nbsp;10&nbsp;%</span></p>
+    <p class="v4-range">${d.low} &ndash; ${d.high}<span class="v4-range-note"> &middot; fourchette &plusmn;&nbsp;5&nbsp;%</span></p>
 
     <p class="v4-bridge">
       <span class="v4-b-ve">${d.ev}</span>
@@ -282,7 +282,7 @@ function renderV5(d) {
 
     <div class="v5-range">
       <div class="v5-range-head">
-        <span class="v5-range-title">Fourchette de valorisation <span class="v5-range-pm">&plusmn;&nbsp;10&nbsp;%</span></span>
+        <span class="v5-range-title">Fourchette de valorisation <span class="v5-range-pm">&plusmn;&nbsp;5&nbsp;%</span></span>
       </div>
       <div class="v5-range-bar">
         <span class="v5-range-fill"></span>

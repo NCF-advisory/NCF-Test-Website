@@ -94,19 +94,19 @@
           <div class="est-select-wrap">
             <select id="est-secteur" class="est-select" required>
               <option value="" disabled selected>Choisir un secteur…</option>
-              <option value="logiciels">Développement de logiciels</option>
-              <option value="sante-pharma">Services de santé &amp; Pharma</option>
-              <option value="services-info">Services informatiques</option>
-              <option value="services-entreprises">Services aux entreprises</option>
               <option value="agroalimentaire">Agro-alimentaire</option>
-              <option value="industrie">Industrie &amp; Production</option>
-              <option value="ecommerce">E-commerce</option>
-              <option value="medias">Médias, Marketing &amp; Communication</option>
-              <option value="distribution">Distribution</option>
-              <option value="hotellerie-tourisme">Hôtellerie &amp; Tourisme</option>
               <option value="transport-logistique">Automobile, Transport &amp; Logistique</option>
               <option value="commerce-gros">Commerce de gros</option>
               <option value="construction">Construction &amp; Technologie d'installation</option>
+              <option value="logiciels">Développement de logiciels</option>
+              <option value="distribution">Distribution</option>
+              <option value="ecommerce">E-commerce</option>
+              <option value="hotellerie-tourisme">Hôtellerie &amp; Tourisme</option>
+              <option value="industrie">Industrie &amp; Production</option>
+              <option value="medias">Médias, Marketing &amp; Communication</option>
+              <option value="services-entreprises">Services aux entreprises</option>
+              <option value="sante-pharma">Services de santé &amp; Pharma</option>
+              <option value="services-info">Services informatiques</option>
             </select>
             <svg class="est-select-chevron" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
           </div>
@@ -121,11 +121,11 @@
             </label>
             <label class="est-seg-opt">
               <input type="radio" name="taille" value="pme" />
-              <span class="est-seg-box"><span class="est-seg-name">PME</span><span class="est-seg-crit">10 à 100 salariés</span></span>
+              <span class="est-seg-box"><span class="est-seg-name">PME</span><span class="est-seg-crit">10 à 250 salariés</span></span>
             </label>
             <label class="est-seg-opt">
               <input type="radio" name="taille" value="eti" />
-              <span class="est-seg-box"><span class="est-seg-name">ETI</span><span class="est-seg-crit">Plus de 100 salariés</span></span>
+              <span class="est-seg-box"><span class="est-seg-name">ETI</span><span class="est-seg-crit">Plus de 250 salariés</span></span>
             </label>
           </div>
         </fieldset>
@@ -140,7 +140,7 @@
           </div>
           <input id="est-ebitda-range" class="est-range" type="range" min="0" max="2000000" step="10000" value="200000" aria-label="Curseur de l'EBITDA annuel" />
           <div class="est-range-scale"><span>0 €</span><span>2 M€ et +</span></div>
-          <p class="est-rn-hint">Excédent brut d'exploitation : votre résultat d'exploitation avant intérêts, impôts, amortissements et provisions. Retenez une année représentative et récurrente.</p>
+          <p class="est-rn-hint">Excédent brut d'exploitation (Résultat d'exploitation + amortissements). Retenez une année représentative et récurrente.</p>
         </div>
 
         <div class="est-field">
