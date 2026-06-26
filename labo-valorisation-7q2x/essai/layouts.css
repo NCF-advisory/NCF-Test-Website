@@ -1,0 +1,514 @@
+/* ═══════════════ Layout variante 2 ═══════════════ */
+/* ═══════════════════════════════════════════════════════════
+   VARIANTE 2 — Mise en page de saisie « Bandeau pleine largeur »
+   Carte élargie pleine largeur, formulaire en 2 colonnes,
+   en-tête horizontal, colonne résultat (placeholder) masquée.
+   Scope strict : body.layout-v2 — aucun sélecteur non préfixé.
+   Tokens uniquement (+ #fff). Esthétique claire, ombres douces.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Élargir la bande : on étend la zone d'inner ── */
+body.layout-v2 .est-inner {
+  max-width: 1240px;
+}
+
+/* ── Carte : une seule colonne large (le formulaire occupe tout) ── */
+body.layout-v2 .est-card {
+  display: block;
+  border-radius: 22px;
+  border-color: var(--line-2);
+  background: var(--bg-elevated);
+  box-shadow: 0 20px 54px -34px rgba(6, 24, 56, 0.28);
+}
+
+/* ── Colonne résultat (placeholder) repliée : le vrai résultat est en modale ── */
+body.layout-v2 .est-result {
+  display: none;
+}
+
+/* ── Formulaire : en-tête horizontal + grille 2 colonnes ──
+   Colonnes auto-remplies dans l'ordre du DOM : pas de placement
+   positionnel fragile (le champ Taille est un <fieldset>, les
+   autres des <div> → nth-of-type mélangerait les types). On laisse
+   la grille répartir les blocs, et on force les éléments pleine
+   largeur (intro + bouton) sur toute la rangée. */
+body.layout-v2 .est-form {
+  padding: 2.6rem 3rem 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 3rem;
+  row-gap: 0;
+  align-content: start;
+}
+
+/* En-tête : bandeau horizontal pleine largeur, accent latéral discret */
+body.layout-v2 .est-step-intro {
+  grid-column: 1 / -1;
+  margin: 0 0 2.1rem;
+  padding: 0.95rem 1.25rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--text-2);
+  background: var(--bg-mid);
+  border: 1px solid var(--line-1);
+  border-left: 3px solid var(--accent-deep);
+  border-radius: 12px;
+}
+
+/* ── Répartition explicite des 4 champs en 2 colonnes ──
+   Ciblage par accroche stable (classe / descendant), indépendant
+   du type de balise, pour éviter toute collision de cellule.
+   Colonne gauche : Secteur (rangée 2) + Taille (rangée 3)
+   Colonne droite : EBITDA (rangée 2) + Trésorerie (rangée 3) */
+body.layout-v2 .est-field:has(#est-secteur) {           /* Secteur */
+  grid-column: 1;
+  grid-row: 2;
+}
+body.layout-v2 .est-field.est-sizes {                   /* Taille (fieldset) */
+  grid-column: 1;
+  grid-row: 3;
+}
+body.layout-v2 .est-field:has(#est-ebitda-range) {      /* EBITDA */
+  grid-column: 2;
+  grid-row: 2;
+}
+body.layout-v2 .est-field:has(#est-treso) {             /* Trésorerie */
+  grid-column: 2;
+  grid-row: 3;
+}
+
+/* Aération régulière entre blocs empilés d'une même colonne */
+body.layout-v2 .est-field {
+  margin-bottom: 1.9rem;
+}
+
+/* ── Bouton : pleine largeur, sous les deux colonnes ── */
+body.layout-v2 .est-go-wrap {
+  grid-column: 1 / -1;
+  grid-row: 4;
+  margin-top: 0.5rem;
+  padding-top: 1.9rem;
+  border-top: 1px solid var(--line-1);
+}
+body.layout-v2 .est-go {
+  max-width: 460px;
+  margin: 0 auto;
+}
+body.layout-v2 .est-go-hint {
+  max-width: 460px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── Repli mobile : une seule colonne lisible ── */
+@media (max-width: 640px) {
+  body.layout-v2 .est-inner { padding: 0 1.1rem; }
+  body.layout-v2 .est-form {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    padding: 1.9rem 1.5rem 2.1rem;
+  }
+  /* On annule le placement en grille : empilement naturel (ordre du DOM) */
+  body.layout-v2 .est-step-intro { grid-column: 1; margin-bottom: 1.6rem; }
+  body.layout-v2 .est-field:has(#est-secteur),
+  body.layout-v2 .est-field.est-sizes,
+  body.layout-v2 .est-field:has(#est-ebitda-range),
+  body.layout-v2 .est-field:has(#est-treso) {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  body.layout-v2 .est-go-wrap { grid-column: 1; grid-row: auto; }
+  body.layout-v2 .est-go,
+  body.layout-v2 .est-go-hint { max-width: none; }
+}
+
+/* ═══════════════ Layout variante 3 ═══════════════ */
+/* ════════════════════════════════════════════════════════════
+   LAYOUT V3 — Saisie « Cascade verticale (étapes / timeline) »
+   Scope : body.layout-v3
+   Override CSS uniquement (aucune modification du balisage).
+   Tokens institutionnels ; aucune couleur ad hoc (sauf #fff).
+   ════════════════════════════════════════════════════════════ */
+
+/* ── Carte : une seule colonne, le résultat placeholder disparaît ── */
+body.layout-v3 .est-card {
+  grid-template-columns: 1fr;
+  background: var(--bg-elevated);
+  box-shadow: 0 24px 60px -34px rgba(15, 23, 42, 0.22);
+}
+body.layout-v3 .est-result { display: none; }
+
+/* ── Formulaire = rail vertical de la timeline ── */
+body.layout-v3 .est-form {
+  position: relative;
+  padding: 2.6rem 2.6rem 2.8rem 2.6rem;
+}
+
+/* Intro recentrée au-dessus du parcours */
+body.layout-v3 .est-step-intro {
+  margin: 0 0 2rem;
+  padding-left: 3.2rem;
+  font-size: 0.92rem;
+  color: var(--text-3);
+}
+
+/* ── Chaque étape : station empilée, nettement séparée ── */
+body.layout-v3 .est-field {
+  position: relative;
+  margin: 0 0 1.5rem 3.2rem;
+  padding: 1.3rem 1.4rem 1.4rem 1.5rem;
+  background: var(--bg-mid);
+  border: 1px solid var(--line-2);
+  border-radius: 14px;
+  box-shadow: 0 8px 22px -18px rgba(15, 23, 42, 0.3);
+}
+body.layout-v3 .est-field:last-of-type { margin-bottom: 1.5rem; }
+
+/* Connecteur vertical : segment reliant chaque station à la suivante.
+   Posé sur la gouttière de 3.2rem à gauche des cartes ; centré sous le nœud
+   (nœud : left -3.2rem, largeur 26px → centre à -3.2rem + 13px ;
+    trait 2px → bord gauche à -3.2rem + 12px). */
+body.layout-v3 .est-field::before {
+  content: '';
+  position: absolute;
+  left: -3.2rem;
+  top: 1.55rem;
+  width: 2px;
+  height: calc(100% + 1.5rem);
+  background: var(--line-2);
+  transform: translateX(12px);
+  z-index: 0;
+}
+/* dernière station de saisie : le trait file jusqu'au nœud final (CTA).
+   gap (1.5rem) + marge haute du go-wrap (1.5rem) + demi-hauteur du bouton. */
+body.layout-v3 .est-field:last-of-type::before {
+  height: calc(100% + 3rem + 28px);
+}
+
+/* ── Nœud sur la ligne : on réutilise le badge .est-num ── */
+body.layout-v3 .est-field .est-num {
+  position: absolute;
+  left: -3.2rem;
+  top: 1.55rem;
+  width: 26px;
+  height: 26px;
+  z-index: 1;
+  font-size: 0.8rem;
+  box-shadow: 0 0 0 4px var(--bg-elevated), 0 2px 6px -1px rgba(15, 23, 42, 0.25);
+}
+
+/* Le label perd le décalage du badge (badge devenu absolu) */
+body.layout-v3 .est-label {
+  margin-bottom: 0.85rem;
+  font-size: 0.96rem;
+}
+
+/* fieldset .est-sizes : la legend porte aussi un .est-num → même traitement */
+body.layout-v3 .est-sizes { padding: 1.3rem 1.4rem 1.4rem 1.5rem; }
+body.layout-v3 .est-sizes .est-label { padding: 0; }
+
+/* EBITDA : le badge est dans .est-rn-head */
+body.layout-v3 .est-rn-head { margin-bottom: 0.85rem; }
+
+/* ── Trésorerie : intro conservée mais compactée ── */
+body.layout-v3 .est-cash-intro { margin: -0.1rem 0 0.9rem; }
+
+/* ── Bouton final : nœud de clôture de la timeline ── */
+body.layout-v3 .est-go-wrap {
+  position: relative;
+  margin: 1.5rem 0 0 3.2rem;
+  padding-left: 0;
+}
+/* nœud final (pastille pleine) sur la ligne, centré sous le trait
+   (trait centre à -3.2rem + 13px ; pastille 14px → bord gauche -3.2rem + 6px). */
+body.layout-v3 .est-go-wrap::before {
+  content: '';
+  position: absolute;
+  left: -3.2rem;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  transform: translate(6px, -50%);
+  border-radius: 50%;
+  background: var(--accent-deeper);
+  box-shadow: 0 0 0 4px var(--bg-elevated);
+  z-index: 1;
+}
+
+/* ── Responsive : ≤ 640px → une seule colonne lisible ── */
+@media (max-width: 640px) {
+  body.layout-v3 .est-form { padding: 1.9rem 1.4rem 2.1rem; }
+  body.layout-v3 .est-step-intro { padding-left: 2.6rem; }
+
+  body.layout-v3 .est-field {
+    margin-left: 2.6rem;
+    padding: 1.1rem 1.1rem 1.2rem;
+  }
+  /* nœud : -2.6rem, 24px → centre -2.6rem + 12px ; trait 2px → bord -2.6rem + 11px */
+  body.layout-v3 .est-field::before { left: -2.6rem; transform: translateX(11px); }
+  body.layout-v3 .est-field .est-num { left: -2.6rem; width: 24px; height: 24px; }
+
+  body.layout-v3 .est-go-wrap { margin-left: 2.6rem; }
+  /* pastille 14px → bord -2.6rem + 12px - 7px = -2.6rem + 5px */
+  body.layout-v3 .est-go-wrap::before { left: -2.6rem; transform: translate(5px, -50%); }
+
+  body.layout-v3 .est-seg { grid-template-columns: 1fr; }
+  body.layout-v3 .est-cash-grid { grid-template-columns: 1fr; gap: 0.9rem; }
+  body.layout-v3 .est-cash-minus { display: none; }
+}
+
+/* ═══════════════ Layout variante 4 ═══════════════ */
+/* ═══════════════════════════════════════════════════════════
+   Variante N=4 — « Minimaliste focal »
+   Une seule colonne étroite centrée (~540px), épure maximale :
+   beaucoup de blanc, bordures discrètes, libellés sobres, aides
+   secondaires masquées, gros bouton Estimer. Calme et minimal.
+   Tout est scopé sous body.layout-v4.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Section : recentrer, plus d'air ── */
+body.layout-v4 .est-section { padding: 1.5rem 0 5.5rem; }
+body.layout-v4 .est-inner { max-width: 620px; padding: 0 1.5rem; }
+
+/* ── Carte : une seule colonne, le panneau résultat disparaît ── */
+body.layout-v4 .est-card {
+  display: block;
+  max-width: 540px;
+  margin: 0 auto;
+  background: var(--bg-mid);
+  border: 1px solid var(--line-2);
+  border-radius: 18px;
+  overflow: visible;
+  box-shadow: 0 18px 48px -34px var(--surface-strong);
+}
+
+/* Placeholder résultat masqué (le résultat s'affiche en modale) */
+body.layout-v4 .est-result { display: none; }
+
+/* ── Formulaire : pile aérée ── */
+body.layout-v4 .est-form { padding: 2.8rem 2.6rem 3rem; }
+body.layout-v4 .est-field { margin-bottom: 2.2rem; }
+body.layout-v4 .est-field:last-child { margin-bottom: 0; }
+
+/* ── Aides secondaires masquées (épure) ── */
+body.layout-v4 .est-step-intro,
+body.layout-v4 .est-rn-hint,
+body.layout-v4 .est-cash-intro,
+body.layout-v4 .est-cash-help { display: none; }
+
+/* ── Libellés sobres : badge numéroté discret monochrome ── */
+body.layout-v4 .est-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-1);
+  letter-spacing: -0.005em;
+  margin-bottom: 0.7rem;
+  gap: 10px;
+}
+body.layout-v4 .est-num {
+  width: 20px; height: 20px;
+  background: transparent;
+  color: var(--text-3);
+  border: 1px solid var(--line-3);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+/* ── Contrôles : bordures discrètes, fond clair ── */
+body.layout-v4 .est-select,
+body.layout-v4 .est-rn-value,
+body.layout-v4 .est-seg-box {
+  background: var(--bg-elevated);
+  border-color: var(--line-2);
+}
+body.layout-v4 .est-select { border-radius: 10px; }
+
+/* Segments taille : sélection sobre, sans inset coloré marqué */
+body.layout-v4 .est-seg-box { border-width: 1px; }
+body.layout-v4 .est-seg-opt input:checked + .est-seg-box {
+  border-color: var(--accent-deep);
+  background: var(--accent-a-06);
+  box-shadow: none;
+}
+
+/* Champ EBITDA : libellé + montant alignés, curseur discret */
+body.layout-v4 .est-rn-value { border-width: 1px; border-radius: 9px; }
+
+/* Trésorerie : grille conservée, plus compacte sans les aides */
+body.layout-v4 .est-cash-grid { gap: 14px; }
+body.layout-v4 .est-cash-cell { gap: 7px; }
+
+/* Net calculé : encadré très discret */
+body.layout-v4 .est-net {
+  background: var(--bg-elevated);
+  border-color: var(--line-1);
+}
+
+/* ── Gros bouton Estimer ── */
+body.layout-v4 .est-go-wrap { margin-top: 2.6rem; }
+body.layout-v4 .est-go {
+  padding: 19px 24px;
+  border-radius: 12px;
+  font-size: 1.02rem;
+  box-shadow: 0 0 0 1px var(--accent-bright), 0 14px 34px -14px var(--accent-a-30);
+}
+body.layout-v4 .est-go:not(:disabled):hover {
+  box-shadow: 0 0 0 1px var(--accent-bright), 0 18px 42px -14px var(--accent-a-35);
+}
+body.layout-v4 .est-go:disabled {
+  background: var(--bg-higher);
+  color: var(--text-3);
+  box-shadow: 0 0 0 1px var(--line-2);
+}
+body.layout-v4 .est-go-hint {
+  color: var(--text-3);
+  margin-top: 0.85rem;
+}
+
+/* ── Responsive : déjà une colonne, on resserre l'air ── */
+@media (max-width: 640px) {
+  body.layout-v4 .est-inner { padding: 0 1.1rem; }
+  body.layout-v4 .est-card { max-width: 100%; }
+  body.layout-v4 .est-form { padding: 2rem 1.5rem 2.2rem; }
+  body.layout-v4 .est-field { margin-bottom: 1.8rem; }
+  body.layout-v4 .est-seg { grid-template-columns: 1fr; }
+  body.layout-v4 .est-seg-box {
+    flex-direction: row; align-items: baseline;
+    justify-content: space-between; gap: 10px; text-align: left;
+  }
+  body.layout-v4 .est-cash-grid { grid-template-columns: 1fr; gap: 1rem; }
+  body.layout-v4 .est-cash-minus { display: none; }
+}
+
+/* ═══════════════ Layout variante 5 ═══════════════ */
+/* ═══════════════════════════════════════════════════════════
+   VARIANTE 5 — Saisie « Tableau de bord (tuiles) »
+   Style PANNEAU DE CONTRÔLE : .est-field compactés en tuiles
+   bordées, grille 2 colonnes, densité dashboard.
+   Tout est scopé sous body.layout-v5. Override CSS uniquement.
+   Accordé à la notification 5 (Dashboard).
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Carte : on supprime la grille 2 colonnes, le formulaire
+      occupe toute la largeur en panneau dense ── */
+body.layout-v5 .est-card {
+  grid-template-columns: 1fr;
+  border-color: var(--line-2);
+  border-radius: 16px;
+  box-shadow: 0 18px 44px -28px var(--surface-strong);
+}
+
+/* On masque la colonne résultat (placeholder) : la notif est en modale */
+body.layout-v5 .est-result { display: none; }
+
+/* On masque l'intro d'étape : look dashboard direct */
+body.layout-v5 .est-step-intro { display: none; }
+
+/* ── Form = grille tableau de bord, 2 colonnes, espacement resserré ── */
+body.layout-v5 .est-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 1.5rem;
+}
+
+/* ── Tuile : chaque champ devient une cellule bordée du dashboard ── */
+body.layout-v5 .est-field {
+  margin: 0;
+  padding: 14px 15px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--line-1);
+  border-radius: 12px;
+}
+
+/* Champs « larges » : EBITDA (curseur, 4e enfant) + Trésorerie (2 colonnes,
+   5e enfant) prennent toute la largeur de la grille pour rester lisibles.
+   On cible la position réelle dans le DOM (est-step-intro = 1er enfant),
+   car .est-field mélange <div> et <fieldset> : nth-child est robuste,
+   nth-of-type ne le serait pas. */
+body.layout-v5 .est-form > .est-field:nth-child(4),
+body.layout-v5 .est-form > .est-field:nth-child(5) {
+  grid-column: 1 / -1;
+}
+
+/* ── Libellés tuiles : compacts, alignés panneau ── */
+body.layout-v5 .est-label {
+  font-size: 0.82rem;
+  margin-bottom: 0.6rem;
+}
+body.layout-v5 .est-num {
+  width: 19px; height: 19px;
+  font-size: 0.68rem;
+}
+
+/* Select secteur : fond clair tuile, padding resserré */
+body.layout-v5 .est-select {
+  padding: 10px 40px 10px 13px;
+  font-size: 0.9rem;
+  border-radius: 9px;
+}
+
+/* Segments taille : gap resserré, boxes plus compactes */
+body.layout-v5 .est-seg { gap: 8px; }
+body.layout-v5 .est-seg-box {
+  padding: 10px 8px;
+  border-radius: 9px;
+}
+body.layout-v5 .est-seg-name { font-size: 0.88rem; }
+body.layout-v5 .est-seg-crit { font-size: 0.68rem; }
+
+/* ── Tuile EBITDA : en-tête compact, curseur conservé ── */
+body.layout-v5 .est-rn-head { margin-bottom: 0.6rem; }
+body.layout-v5 .est-rn-value {
+  padding: 5px 11px;
+  border-radius: 9px;
+}
+body.layout-v5 .est-rn-input { font-size: 0.98rem; }
+body.layout-v5 .est-rn-cur { font-size: 0.98rem; }
+body.layout-v5 .est-range { margin-top: 0.25rem; }
+body.layout-v5 .est-range-scale {
+  font-size: 0.68rem;
+  margin-top: 0.4rem;
+}
+/* Aide EBITDA masquée : densité dashboard */
+body.layout-v5 .est-rn-hint { display: none; }
+
+/* ── Tuile Trésorerie : intro/aides masquées, calcul net conservé ── */
+body.layout-v5 .est-cash-intro { display: none; }
+body.layout-v5 .est-cash-help { display: none; }
+body.layout-v5 .est-cash-grid { gap: 10px; }
+body.layout-v5 .est-cash-cell { gap: 5px; }
+body.layout-v5 .est-cash-cap { font-size: 0.72rem; }
+body.layout-v5 .est-cash-minus {
+  padding-top: 1rem;
+  font-size: 1.15rem;
+}
+body.layout-v5 .est-net {
+  margin-top: 0.75rem;
+  padding: 9px 12px;
+  border-radius: 9px;
+}
+
+/* ── Barre d'action : pied du tableau de bord, pleine largeur ── */
+body.layout-v5 .est-go-wrap {
+  grid-column: 1 / -1;
+  margin-top: 0.4rem;
+}
+body.layout-v5 .est-go {
+  padding: 14px 24px;
+  border-radius: 11px;
+}
+body.layout-v5 .est-go-hint { margin-top: 0.6rem; }
+
+/* ── Responsive : ≤ 640px, une seule colonne lisible ── */
+@media (max-width: 640px) {
+  body.layout-v5 .est-form {
+    grid-template-columns: 1fr;
+    padding: 1.2rem;
+  }
+  body.layout-v5 .est-cash-grid {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+  body.layout-v5 .est-cash-minus { display: none; }
+}

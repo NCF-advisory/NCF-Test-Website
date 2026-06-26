@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Test des présentations de valorisation (interne)</title>
+  <link rel="icon" href="/favicon.ico" sizes="48x48" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/global.css" />
+  <link rel="stylesheet" href="/assets/css/pages/estimation.css" />
+  <link rel="stylesheet" href="/labo-valorisation-7q2x/essai/variants.css" />
+  <link rel="stylesheet" href="/labo-valorisation-7q2x/essai/layouts.css" />
+  <link rel="stylesheet" href="/labo-valorisation-7q2x/essai/demo.css" />
+</head>
+<body class="estimation-page">
+
+<!-- ═══════════════════ NAVBAR ═══════════════════ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="NCF, accueil">
+      <img class="nav-logo-mark" src="/assets/img/brand/logo-ncf-bl-marine.png" alt="NCF" /><span class="nav-logo-affil">Membre du Groupe Novances</span>
+    </a>
+    <div class="nav-links">
+      <a href="/entrepreneurs/" class="nav-link">Entrepreneurs</a>
+      <a href="/experts-comptables/" class="nav-link">Experts-comptables</a>
+      <a href="/avocats/" class="nav-link">Avocats</a>
+      <a href="/notaires/" class="nav-link">Notaires</a>
+      <a href="/ressources/" class="nav-link">Publications</a>
+      <a href="/tarifs/" class="nav-link">Tarifs</a>
+    </div>
+    <div class="nav-cta-wrap">
+      <a href="/#contact" class="nav-cta">
+        Parler à un expert
+        <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <button id="hbg" aria-label="Menu" aria-expanded="false">
+      <span id="b1"></span><span id="b2"></span><span id="b3"></span>
+    </button>
+  </div>
+</nav>
+<div id="mob-menu">
+  <div class="mob-affil">Membre du Groupe Novances</div>
+  <a href="/entrepreneurs/">Entrepreneurs</a>
+  <a href="/experts-comptables/">Experts-comptables</a>
+  <a href="/avocats/">Avocats</a>
+  <a href="/notaires/">Notaires</a>
+  <a href="/ressources/">Publications</a>
+  <a href="/tarifs/">Tarifs</a>
+  <a href="/#contact" class="nav-cta">Parler à un expert</a>
+</div>
+
+<!-- ═══════════════════ BANDEAU INTERNE + SÉLECTEUR ═══════════════════ -->
+<div class="demo-bar">
+  <div class="demo-bar-inner">
+    <div class="demo-bar-head">
+      <span class="demo-bar-badge">Démo interne · non répertoriée</span>
+      <p class="demo-bar-txt">Choisissez un <strong>style de notification</strong>, renseignez le formulaire, puis lancez l'estimation : le résultat s'affiche dans le style sélectionné, avec vos chiffres réels.</p>
+    </div>
+    <div class="demo-switch" role="radiogroup" aria-label="Style de notification">
+      <button type="button" class="demo-style is-active" data-style="1">1 · Principale</button>
+      <button type="button" class="demo-style" data-style="2">2 · Bandeau</button>
+      <button type="button" class="demo-style" data-style="3">3 · Cascade</button>
+      <button type="button" class="demo-style" data-style="4">4 · Minimaliste</button>
+      <button type="button" class="demo-style" data-style="5">5 · Dashboard</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section id="hero-est">
+  <div class="hero-est-inner">
+    <div class="hero-est-eyebrow">Estimation gratuite</div>
+    <h1 class="hero-est-h1">Quelle est la valeur de <span class="accent">votre entreprise&nbsp;?</span></h1>
+    <p class="hero-est-sub">En une minute, obtenez une première estimation indicative de la valeur de vos titres, à partir d'un multiple d'EBITDA propre à votre secteur. Quelques chiffres suffisent — sans engagement, sans création de compte.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ ESTIMATEUR ═══════════════════ -->
+<section class="est-section">
+  <div class="est-inner">
+    <div class="est-card rv">
+
+      <!-- ── Colonne saisie ── -->
+      <form class="est-form" autocomplete="off" novalidate>
+        <p class="est-step-intro">Renseignez les critères ci-dessous, puis lancez l'estimation.</p>
+
+        <div class="est-field">
+          <label class="est-label" for="est-secteur"><span class="est-num">1</span> Secteur d'activité</label>
+          <div class="est-select-wrap">
+            <select id="est-secteur" class="est-select" required>
+              <option value="" disabled selected>Choisir un secteur…</option>
+              <option value="logiciels">Développement de logiciels</option>
+              <option value="sante-pharma">Services de santé &amp; Pharma</option>
+              <option value="services-info">Services informatiques</option>
+              <option value="services-entreprises">Services aux entreprises</option>
+              <option value="agroalimentaire">Agro-alimentaire</option>
+              <option value="industrie">Industrie &amp; Production</option>
+              <option value="ecommerce">E-commerce</option>
+              <option value="medias">Médias, Marketing &amp; Communication</option>
+              <option value="distribution">Distribution</option>
+              <option value="hotellerie-tourisme">Hôtellerie &amp; Tourisme</option>
+              <option value="transport-logistique">Automobile, Transport &amp; Logistique</option>
+              <option value="commerce-gros">Commerce de gros</option>
+              <option value="construction">Construction &amp; Technologie d'installation</option>
+            </select>
+            <svg class="est-select-chevron" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+        </div>
+
+        <fieldset class="est-field est-sizes">
+          <legend class="est-label"><span class="est-num">2</span> Taille de la société</legend>
+          <div class="est-seg" role="radiogroup" aria-label="Taille de la société">
+            <label class="est-seg-opt">
+              <input type="radio" name="taille" value="tpe" />
+              <span class="est-seg-box"><span class="est-seg-name">TPE</span><span class="est-seg-crit">1 à 10 salariés</span></span>
+            </label>
+            <label class="est-seg-opt">
+              <input type="radio" name="taille" value="pme" />
+              <span class="est-seg-box"><span class="est-seg-name">PME</span><span class="est-seg-crit">10 à 100 salariés</span></span>
+            </label>
+            <label class="est-seg-opt">
+              <input type="radio" name="taille" value="eti" />
+              <span class="est-seg-box"><span class="est-seg-name">ETI</span><span class="est-seg-crit">Plus de 100 salariés</span></span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="est-field">
+          <div class="est-rn-head">
+            <label class="est-label" for="est-ebitda-number"><span class="est-num">3</span> EBITDA annuel</label>
+            <div class="est-rn-value">
+              <input id="est-ebitda-number" class="est-rn-input" type="text" inputmode="numeric" autocomplete="off" aria-label="EBITDA annuel en euros" value="200 000" />
+              <span class="est-rn-cur">€</span>
+            </div>
+          </div>
+          <input id="est-ebitda-range" class="est-range" type="range" min="0" max="2000000" step="10000" value="200000" aria-label="Curseur de l'EBITDA annuel" />
+          <div class="est-range-scale"><span>0 €</span><span>2 M€ et +</span></div>
+          <p class="est-rn-hint">Excédent brut d'exploitation : votre résultat d'exploitation avant intérêts, impôts, amortissements et provisions. Retenez une année représentative et récurrente.</p>
+        </div>
+
+        <div class="est-field">
+          <label class="est-label"><span class="est-num">4</span> Trésorerie nette</label>
+          <p class="est-cash-intro">Saisissez deux montants <strong>positifs</strong> : l'outil calcule lui-même la trésorerie nette (<strong>trésorerie − dette</strong>). Aucun signe à gérer.</p>
+          <div class="est-cash-grid">
+            <div class="est-cash-cell">
+              <span class="est-cash-cap">Trésorerie disponible</span>
+              <div class="est-rn-value est-cash-value">
+                <input id="est-treso" class="est-rn-input" type="text" inputmode="numeric" autocomplete="off" aria-label="Trésorerie disponible en euros" value="0" />
+                <span class="est-rn-cur">€</span>
+              </div>
+              <span class="est-cash-help">Disponibilités, placements liquides</span>
+            </div>
+            <div class="est-cash-minus" aria-hidden="true">−</div>
+            <div class="est-cash-cell">
+              <span class="est-cash-cap">Dette financière</span>
+              <div class="est-rn-value est-cash-value">
+                <input id="est-dette" class="est-rn-input" type="text" inputmode="numeric" autocomplete="off" aria-label="Dette financière en euros" value="0" />
+                <span class="est-rn-cur">€</span>
+              </div>
+              <span class="est-cash-help">Emprunts et dettes financières</span>
+            </div>
+          </div>
+          <div class="est-net" id="est-net" aria-live="polite"></div>
+        </div>
+
+        <div class="est-go-wrap">
+          <button type="button" class="est-go" id="est-go" disabled aria-describedby="est-go-hint">
+            <span class="est-go-content">
+              <svg class="est-go-spark" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg>
+              <span class="est-go-label">Estimer la valeur</span>
+            </span>
+          </button>
+          <p class="est-go-hint" id="est-go-hint">Renseignez le secteur et la taille pour lancer l'estimation.</p>
+        </div>
+      </form>
+
+      <!-- ── Colonne résultat (placeholder) ── -->
+      <aside class="est-result" id="est-result" aria-live="polite">
+        <div class="est-result-placeholder">
+          <span class="est-ph-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-6"/></svg>
+          </span>
+          <div>Le résultat s'affichera en <strong>notification</strong>, dans le style sélectionné en haut de page.</div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ MODALE RÉSULTAT (style sélectionné) ═══════════════════ -->
+<div class="est-modal demo-modal" id="demo-modal" hidden>
+  <div class="est-modal-backdrop"></div>
+  <div class="demo-modal-switch" role="radiogroup" aria-label="Changer de style en direct">
+    <button type="button" class="demo-style is-active" data-style="1" title="Principale">1</button>
+    <button type="button" class="demo-style" data-style="2" title="Bandeau">2</button>
+    <button type="button" class="demo-style" data-style="3" title="Cascade">3</button>
+    <button type="button" class="demo-style" data-style="4" title="Minimaliste">4</button>
+    <button type="button" class="demo-style" data-style="5" title="Dashboard">5</button>
+  </div>
+  <button type="button" class="demo-close" id="demo-close" aria-label="Fermer">
+    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <div class="demo-stage" id="demo-stage" role="dialog" aria-modal="true" aria-label="Résultat de l'estimation"></div>
+</div>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Novances Évaluation — page de test interne, non répertoriée.</div>
+      <div class="footer-legal"><a href="/labo-valorisation-7q2x/">← Retour au comparateur</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/site.js" defer></script>
+<script src="/labo-valorisation-7q2x/essai/demo.js" defer></script>
+</body>
+</html>
