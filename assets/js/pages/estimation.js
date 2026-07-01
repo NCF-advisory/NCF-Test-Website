@@ -138,6 +138,7 @@
   }
 
   const ARROW = '<svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+  const CHECK = '<svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
 
   // ── Trésorerie nette : lecture en clair sous les deux saisies ──
   function updateNet() {
@@ -154,20 +155,37 @@
       <span class="est-net-tag">${tag}</span>`;
   }
 
-  // ── Panneau (placeholder / suspense uniquement) ──────────────
+  // ── Panneau (invitation « sans engagement » / suspense) ──────
   function showPlaceholder() {
     const ready = state.secteur && state.taille;
-    const msg = ready
-      ? 'Tout est prêt. Lancez l’estimation pour révéler votre fourchette de valeur.'
-      : 'Renseignez vos critères, puis lancez l’estimation : votre fourchette de valeur apparaîtra ici.';
-    result.className = 'est-result';
+    const cta = ready
+      ? 'Tout est prêt — lancez l’estimation.'
+      : 'Renseignez le secteur et la taille pour lancer l’estimation.';
     result.removeAttribute('aria-busy');
+    // Bloc déjà rendu : on ne touche qu'à la ligne dynamique (évite de tout re-rendre à chaque saisie).
+    const ctaSpan = result.querySelector('.est-ph-cta span');
+    if (ctaSpan) {
+      result.className = 'est-result';
+      ctaSpan.textContent = cta;
+      return;
+    }
+    result.className = 'est-result';
     result.innerHTML = `
       <div class="est-result-placeholder">
         <span class="est-ph-icon" aria-hidden="true">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-6"/></svg>
         </span>
-        <div>${msg}</div>
+        <p class="est-ph-eyebrow">Explorez librement</p>
+        <p class="est-ph-title">Testez sans engagement</p>
+        <ul class="est-ph-list">
+          <li>${CHECK}<span><strong>Gratuit</strong>, sans création de compte</span></li>
+          <li>${CHECK}<span><strong>Sans engagement</strong> de votre part</span></li>
+          <li>${CHECK}<span>Calcul <strong>dans votre navigateur</strong></span></li>
+          <li>${CHECK}<span>Résultat <strong>immédiat</strong>, à l’écran</span></li>
+        </ul>
+        <p class="est-ph-body">Vos chiffres ne sont ni transmis ni enregistrés.</p>
+        <p class="est-ph-note">Estimation indicative, à titre de repère.</p>
+        <p class="est-ph-cta">${ARROW}<span>${cta}</span></p>
       </div>`;
   }
 
@@ -297,7 +315,7 @@
         </div>
       </div>
       <p class="est-modal-unit">La <strong>valeur d'entreprise</strong> mesure votre activité seule ; la <strong>valeur des titres</strong> (capitaux propres) est ce qui revient à l'actionnaire, une fois la trésorerie ajoutée et la dette retirée.</p>
-      <p class="est-modal-src">Multiples sectoriels : <strong>Fusacq</strong> (données S2-2025).</p>
+      <p class="est-modal-src">Multiples sectoriels observés sur le marché français des transactions.</p>
       <a class="est-modal-cta" href="/#contact">Je veux un rapport d'évaluation ${ARROW}</a>
       <p class="est-modal-fine">Une estimation n'est pas une évaluation : un échange permet d'obtenir une valeur fiable et défendable.</p>`);
 
