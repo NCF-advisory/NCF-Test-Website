@@ -94,9 +94,8 @@
 <!-- ═══════════════════ HERO ═══════════════════ -->
 <section id="hero-est">
   <div class="hero-est-inner">
-    <div class="hero-est-eyebrow">Estimation gratuite</div>
     <h1 class="hero-est-h1">Quelle est la valeur de <span class="accent">votre entreprise&nbsp;?</span></h1>
-    <p class="hero-est-sub">En une minute, obtenez une première estimation indicative de la valeur de vos titres, à partir d'un multiple d'EBITDA propre à votre secteur. Quelques chiffres suffisent — sans engagement, sans création de compte.</p>
+    <p class="hero-est-sub">En une minute, obtenez une première estimation indicative de la valeur de vos titres, à partir d'un multiple d'EBITDA propre à votre secteur.</p>
   </div>
 </section>
 
@@ -170,8 +169,6 @@
               <span class="est-rn-cur">€</span>
             </div>
           </div>
-          <input id="est-ebitda-range" class="est-range" type="range" min="0" max="2000000" step="10000" value="200000" aria-label="Curseur de l'EBITDA annuel" />
-          <div class="est-range-scale"><span>0 €</span><span>2 M€ et +</span></div>
           <p class="est-rn-hint">Excédent brut d'exploitation (Résultat d'exploitation + amortissements). Retenez une année représentative et récurrente.</p>
         </div>
 
@@ -203,13 +200,12 @@
 
         <!-- Déclencheur de l'estimation -->
         <div class="est-go-wrap">
-          <button type="button" class="est-go" id="est-go" disabled aria-describedby="est-go-hint" aria-controls="est-result">
+          <button type="button" class="est-go" id="est-go" disabled aria-controls="est-result">
             <span class="est-go-content">
-              <svg class="est-go-spark" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg>
               <span class="est-go-label">Estimer la valeur</span>
+              <svg class="est-go-arrow" aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </span>
           </button>
-          <p class="est-go-hint" id="est-go-hint">Renseignez le secteur et la taille pour lancer l'estimation.</p>
         </div>
       </form>
 
@@ -225,12 +221,12 @@
       <div class="est-method-grid">
         <div class="est-method-col">
           <h2 class="est-method-h">Comment lire ce chiffre&nbsp;?</h2>
-          <p>L'estimation applique un <strong>multiple d'EBITDA</strong> observé sur les transactions de votre secteur : votre EBITDA est multiplié par ce repère de marché, <strong>ajusté selon la taille</strong> de votre société. On obtient d'abord une <strong>valeur d'entreprise</strong> — ce que vaut l'activité, indépendamment de la façon dont elle est financée.</p>
+          <p>L'estimation applique un <strong>multiple d'EBITDA</strong> observé sur les transactions de votre secteur : votre EBITDA est multiplié par ce repère de marché, <strong>ajusté selon la taille</strong> de votre société. On obtient d'abord une <strong>valeur d'entreprise</strong>, ce que vaut l'activité, indépendamment de la façon dont elle est financée.</p>
           <p>Pour passer à la <strong>valeur de vos titres</strong> (vos capitaux propres), on ajoute votre <strong>trésorerie nette</strong> : on ajoute la trésorerie disponible et on retranche la dette financière. Une société riche en trésorerie et peu endettée vaut donc <strong>plus</strong> que sa seule valeur d'entreprise ; une société endettée, <strong>moins</strong>.</p>
         </div>
         <div class="est-method-col">
           <h2 class="est-method-h">Les limites à garder en tête</h2>
-          <p>Cette estimation est <strong>indicative</strong>. Le multiple sectoriel reflète une moyenne de marché : il ne tient compte ni de votre croissance, ni de la récurrence de vos revenus, ni de la qualité de vos actifs, ni de la dépendance à un dirigeant — autant de facteurs qui déplacent fortement le multiple réel.</p>
+          <p>Cette estimation est <strong>indicative</strong>. Le multiple sectoriel reflète une moyenne de marché : il ne tient compte ni de votre croissance, ni de la récurrence de vos revenus, ni de la qualité de vos actifs, ni de la dépendance à un dirigeant, autant de facteurs qui déplacent fortement le multiple réel.</p>
           <p>Une évaluation opposable croise plusieurs méthodes et analyse votre situation réelle. C'est le travail que nous menons sur chaque dossier.</p>
         </div>
       </div>

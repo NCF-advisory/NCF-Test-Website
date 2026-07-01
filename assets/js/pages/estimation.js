@@ -50,8 +50,7 @@
 
   const SPREAD = 0.10;           // amplitude de la fourchette : ± SPREAD/2 appliquée à la valeur d'entreprise (puis + trésorerie nette)
 
-  const RANGE_MAX = 2_000_000;   // borne haute du curseur EBITDA (échelle resserrée pour les PME)
-  const INPUT_MAX = 500_000_000; // saisie libre tolérée au-delà du curseur (EBITDA / trésorerie / dette)
+  const INPUT_MAX = 500_000_000; // saisie libre tolérée (EBITDA / trésorerie / dette)
   const STEP_MS = 550;           // durée d'affichage d'un message de suspense
   const COUNT_MS = 1000;         // durée du comptage final
   const MODAL_OUT_MS = 300;      // doit couvrir la transition de sortie CSS de la modale
@@ -65,14 +64,12 @@
   if (!form || !result || !modal) return;
 
   const secteurEl = document.getElementById('est-secteur');
-  const ebitdaRangeEl = document.getElementById('est-ebitda-range');
   const ebitdaNumberEl = document.getElementById('est-ebitda-number');
   const tresoEl = document.getElementById('est-treso');
   const detteEl = document.getElementById('est-dette');
   const netEl = document.getElementById('est-net');
   const tailleEls = form.querySelectorAll('input[name="taille"]');
   const goEl = document.getElementById('est-go');
-  const hintEl = document.getElementById('est-go-hint');
   const modalBody = document.getElementById('est-modal-body');
   const modalCard = modal.querySelector('.est-modal-card');
   const closeBtn = document.getElementById('est-modal-close');
@@ -175,7 +172,6 @@
         <span class="est-ph-icon" aria-hidden="true">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-6"/></svg>
         </span>
-        <p class="est-ph-eyebrow">Explorez librement</p>
         <p class="est-ph-title">Testez sans engagement</p>
         <ul class="est-ph-list">
           <li>${CHECK}<span><strong>Gratuit</strong>, sans création de compte</span></li>
@@ -410,9 +406,6 @@
     const ok = !!(state.secteur && state.taille);
     goEl.disabled = !ok;
     goEl.classList.toggle('is-ready', ok);
-    hintEl.textContent = ok
-      ? 'Prêt — lancez l’estimation.'
-      : 'Renseignez le secteur et la taille pour lancer l’estimation.';
   }
 
   // ── Écouteurs ────────────────────────────────────────────────
@@ -428,16 +421,9 @@
     });
   });
 
-  ebitdaRangeEl.addEventListener('input', () => {
-    state.ebitda = parseInt(ebitdaRangeEl.value, 10);
-    ebitdaNumberEl.value = groupFr.format(state.ebitda);
-    resetPanel();
-  });
-
   // Pendant la frappe : maj sans reformater (évite le saut de curseur).
   ebitdaNumberEl.addEventListener('input', () => {
     state.ebitda = clamp(parseDigits(ebitdaNumberEl.value), 0, INPUT_MAX);
-    ebitdaRangeEl.value = String(Math.min(state.ebitda, RANGE_MAX));
     resetPanel();
   });
   ebitdaNumberEl.addEventListener('blur', () => { ebitdaNumberEl.value = groupFr.format(state.ebitda); });
@@ -465,7 +451,6 @@
 
   // ── Init ─────────────────────────────────────────────────────
   ebitdaNumberEl.value = groupFr.format(state.ebitda);
-  ebitdaRangeEl.value = String(Math.min(state.ebitda, RANGE_MAX));
   tresoEl.value = groupFr.format(state.treso);
   detteEl.value = groupFr.format(state.dette);
   updateNet();
