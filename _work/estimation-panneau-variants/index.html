@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Panneau navy — variantes réassurance (interne)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  /* Tokens repris de global.css (self-contained pour ouverture directe) */
+  :root{
+    --accent:#0EA5E9; --accent-bright:#38BDF8; --accent-deep:#0284C7; --accent-deeper:#0369A1;
+    --bg:#EEF2F9; --text-1:#0B1E40;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:'Inter',system-ui,sans-serif; margin:0; padding:2.5rem 1.5rem 4rem;
+    background:var(--bg); color:var(--text-1);
+  }
+  .page-head{max-width:1240px; margin:0 auto 2rem;}
+  .page-head h1{font-size:1.5rem; font-weight:900; letter-spacing:-.02em; margin:0 0 .5rem;}
+  .page-head p{font-size:.95rem; color:#42506b; line-height:1.6; margin:.3rem 0; max-width:880px;}
+  .page-head code{background:#dde5f2; padding:1px 6px; border-radius:5px; font-size:.85em;}
+  .grid{
+    max-width:1240px; margin:0 auto; display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:1.5rem; align-items:stretch;
+  }
+  .variant{display:flex; flex-direction:column;}
+  .variant-tag{
+    font-size:.72rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--accent-deeper); margin-bottom:.6rem;
+  }
+  .variant-tag span{color:#7a879e; font-weight:600; letter-spacing:0;}
+
+  /* ── Réplique fidèle de .est-result (estimation.css) ── */
+  .est-result{
+    flex:1; display:flex; flex-direction:column; justify-content:center;
+    padding:2.4rem 2.2rem; min-height:440px; border-radius:16px; overflow:hidden;
+    background:
+      radial-gradient(600px 400px at 80% 0%, rgba(56,189,248,.18), transparent 60%),
+      linear-gradient(160deg,#0B1E40 0%,#061838 100%);
+    color:#fff; position:relative;
+  }
+  .est-ph-icon{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:42px; height:42px; border-radius:12px;
+    background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14);
+    color:var(--accent-bright); margin-bottom:1.3rem;
+  }
+  .ph-eyebrow{
+    font-size:.72rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent-bright); margin:0 0 .9rem;
+  }
+  .ph-title{
+    font-size:1.15rem; font-weight:800; line-height:1.25; letter-spacing:-.01em;
+    color:#fff; margin:0 0 1rem;
+  }
+  .ph-body{font-size:.93rem; color:rgba(255,255,255,.80); line-height:1.6; margin:.2rem 0 0;}
+  .ph-body strong{color:#fff; font-weight:700;}
+
+  .ph-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.7rem;}
+  .ph-list li{
+    display:flex; gap:.6rem; align-items:flex-start;
+    font-size:.92rem; color:rgba(255,255,255,.85); line-height:1.5;
+  }
+  .ph-list li strong{color:#fff; font-weight:700;}
+  .ph-list svg{flex:none; margin-top:2px; color:var(--accent-bright);}
+
+  .ph-note{font-size:.8rem; color:rgba(255,255,255,.55); line-height:1.55; margin:1rem 0 0;}
+
+  .ph-cta{
+    margin-top:1.3rem; padding-top:1.1rem; border-top:1px solid rgba(255,255,255,.1);
+    font-size:.86rem; color:rgba(255,255,255,.72); line-height:1.5;
+    display:flex; gap:.5rem; align-items:flex-start;
+  }
+  .ph-cta svg{flex:none; margin-top:2px; color:var(--accent-bright);}
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <h1>Panneau navy du simulateur — 6 variantes « réassurance »</h1>
+  <p>État <strong>vide</strong> de la colonne résultat de <code>/estimation/</code> (avant lancement). Objectif : <strong>mettre le client en confiance</strong> avant qu'il saisisse EBITDA / trésorerie / dette. Rendu fidèle à la prod (<code>.est-result</code>).</p>
+  <p>Argument de confiance central et <strong>vérifié</strong> : le calcul est fait à 100 % dans le navigateur — les chiffres saisis ne sont ni transmis ni enregistrés. Les sur-promesses invérifiables (« aucun appel commercial », etc.) ont été retirées par la relecture.</p>
+  <p>La ligne du bas (sous le trait) est <strong>dynamique</strong> : « Renseignez le secteur et la taille… » tant que c'est incomplet, puis « Tout est prêt — lancez l'estimation. » une fois rempli. Dis-moi le numéro retenu, je l'intègre dans <code>estimation.js</code>.</p>
+</div>
+
+<div class="grid">
+
+  <!-- ══ 1 — Confidentialité ══ -->
+  <div class="variant">
+    <div class="variant-tag">1 · Confidentialité <span>— vos chiffres restent chez vous</span></div>
+    <div class="est-result">
+      <span class="est-ph-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-6"/></svg></span>
+      <p class="ph-eyebrow">Calcul 100&nbsp;% dans votre navigateur</p>
+      <p class="ph-title">Vos chiffres restent chez vous</p>
+      <ul class="ph-list">
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Tout est calculé sur <strong>votre appareil</strong>.</span></li>
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>EBITDA, trésorerie, dette&nbsp;: <strong>rien n'est transmis</strong>.</span></li>
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Aucun de vos montants n'est <strong>enregistré</strong>.</span></li>
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Résultat affiché <strong>aussitôt</strong>, à l'écran.</span></li>
+      </ul>
+      <p class="ph-note">Gratuit, sans compte, sans engagement.</p>
+      <p class="ph-cta"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg><span>Renseignez le secteur et la taille pour lancer l'estimation.</span></p>
+    </div>
+  </div>
+
+  <!-- ══ 2 — Sans engagement ══ -->
+  <div class="variant">
+    <div class="variant-tag">2 · Sans engagement <span>— explorez librement</span></div>
+    <div class="est-result">
+      <span class="est-ph-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-6"/></svg></span>
+      <p class="ph-eyebrow">Explorez librement</p>
+      <p class="ph-title">Testez sans engagement</p>
+      <ul class="ph-list">
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span><strong>Gratuit</strong>, sans création de compte</span></li>
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span><strong>Sans engagement</strong> de votre part</span></li>
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Calcul <strong>dans votre navigateur</strong></span></li>
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Résultat <strong>immédiat</strong>, à l'écran</span></li>
+      </ul>
+      <p class="ph-body">Vos chiffres ne sont ni transmis ni enregistrés.</p>
+      <p class="ph-note">Estimation indicative, à titre de repère.</p>
+      <p class="ph-cta"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg><span>Renseignez le secteur et la taille pour lancer l'estimation.</span></p>
+    </div>
+  </div>
+
+  <!-- ══ 3 — Un repère, pas un verdict ══ -->
+  <div class="variant">
+    <div class="variant-tag">3 · Dédramatise <span>— un repère, pas un verdict</span></div>
+    <div class="est-result">
+      <span class="est-ph-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-6"/></svg></span>
+      <p class="ph-eyebrow">Juste un repère</p>
+      <p class="ph-title">Pour vous situer, sans pression</p>
+      <ul class="ph-list">
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Une <strong>première estimation</strong>, un ordre de grandeur</span></li>
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span><strong>Indicatif</strong>&nbsp;: ni verdict, ni évaluation définitive</span></li>
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Cela <strong>n'engage à rien</strong>&nbsp;: vous gardez la main</span></li>
+      </ul>
+      <p class="ph-body">L'idée n'est pas de juger votre entreprise, mais de vous donner un premier repère de valeur.</p>
+      <p class="ph-note">Gratuit, sans compte. Vos chiffres ne sont ni transmis ni enregistrés&nbsp;: le calcul se fait dans votre navigateur.</p>
+      <p class="ph-cta"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg><span>Renseignez le secteur et la taille pour lancer l'estimation.</span></p>
+    </div>
+  </div>
+
+  <!-- ══ 4 — Rapide et simple ══ -->
+  <div class="variant">
+    <div class="variant-tag">4 · Rapidité <span>— une minute suffit</span></div>
+    <div class="est-result">
+      <span class="est-ph-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-6"/></svg></span>
+      <p class="ph-eyebrow">Une minute suffit</p>
+      <p class="ph-title">Quelques chiffres, un résultat immédiat</p>
+      <ul class="ph-list">
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Résultat <strong>à l'écran</strong>, tout de suite</span></li>
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Quelques champs suffisent</span></li>
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Gratuit, <strong>sans compte</strong></span></li>
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Calcul dans <strong>votre navigateur</strong>&nbsp;: vos chiffres ne sont ni transmis ni enregistrés</span></li>
+      </ul>
+      <p class="ph-note">Estimation indicative, par multiple d'EBITDA sectoriel.</p>
+      <p class="ph-cta"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg><span>Renseignez le secteur et la taille pour lancer l'estimation.</span></p>
+    </div>
+  </div>
+
+  <!-- ══ 5 — Réassurance par la rigueur ══ -->
+  <div class="variant">
+    <div class="variant-tag">5 · Rigueur <span>— une méthode, pas un hasard</span></div>
+    <div class="est-result">
+      <span class="est-ph-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-6"/></svg></span>
+      <p class="ph-eyebrow">Une méthode, pas un hasard</p>
+      <p class="ph-title">Un chiffre qui s'appuie sur le marché</p>
+      <ul class="ph-list">
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Votre estimation repose sur des <strong>multiples réels</strong>, pas une formule maison.</span></li>
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Ils viennent de <strong>vraies transactions</strong> du marché français.</span></li>
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Le repère est <strong>propre à votre secteur</strong>.</span></li>
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Source&nbsp;: <strong>Fusacq</strong>, données de cessions récentes.</span></li>
+      </ul>
+      <p class="ph-note">Estimation indicative&nbsp;: un premier repère, pas une évaluation complète.</p>
+      <p class="ph-cta"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg><span>Renseignez le secteur et la taille pour lancer l'estimation.</span></p>
+    </div>
+  </div>
+
+  <!-- ══ 6 — Vous gardez la main ══ -->
+  <div class="variant">
+    <div class="variant-tag">6 · Contrôle <span>— vous gardez la main</span></div>
+    <div class="est-result">
+      <span class="est-ph-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-6"/></svg></span>
+      <p class="ph-eyebrow">Vous restez maître</p>
+      <p class="ph-title">Testez autant de fois que vous voulez</p>
+      <ul class="ph-list">
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Le calcul se fait <strong>dans votre navigateur</strong>&nbsp;: vos chiffres ne sont ni transmis ni enregistrés.</span></li>
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Ajustez vos hypothèses <strong>à volonté</strong>, sans limite.</span></li>
+        <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Sans compte, <strong>sans engagement</strong>.</span></li>
+      </ul>
+      <p class="ph-body">Vous saisissez, vous relancez, vous comparez&nbsp;: c'est vous qui décidez.</p>
+      <p class="ph-note">Outil gratuit.</p>
+      <p class="ph-cta"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg><span>Renseignez le secteur et la taille pour lancer l'estimation.</span></p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
