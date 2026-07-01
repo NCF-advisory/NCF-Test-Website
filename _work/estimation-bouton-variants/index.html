@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Bouton « Estimer la valeur » — 5 variantes (interne)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<!-- Vrais styles de prod : le bouton est stylé par .est-go (estimation.css) -->
+<link rel="stylesheet" href="/assets/css/global.css" />
+<link rel="stylesheet" href="/assets/css/pages/estimation.css" />
+<style>
+  body { background: var(--bg-base, #EEF2F9); padding: 2.5rem 1.5rem 4rem; }
+  .wrap { max-width: 620px; margin: 0 auto; }
+  .wrap > h1 { font-size: 1.4rem; font-weight: 900; letter-spacing: -.02em; color: var(--text-1); margin: 0 0 .4rem; }
+  .wrap > p.intro { font-size: .95rem; color: var(--text-3); line-height: 1.6; margin: 0 0 2rem; }
+  .btn-block {
+    background: var(--card-bg, #fff); border: 1px solid var(--line-2);
+    border-radius: 16px; padding: 1.6rem 1.8rem; margin-bottom: 1.3rem;
+  }
+  .btn-tag {
+    font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--accent-deeper); margin: 0 0 .3rem;
+  }
+  .btn-desc { font-size: .84rem; color: var(--text-3); line-height: 1.5; margin: 0 0 1.1rem; }
+
+  /* ── Tweaks par variante (le reste vient de .est-go dans estimation.css) ── */
+  /* flèche qui glisse au survol */
+  .v-arrow .est-go-content svg,
+  .v-grad  .est-go-content svg { transition: transform .2s; }
+  .v-arrow:hover .est-go-content svg,
+  .v-grad:hover  .est-go-content svg { transform: translateX(3px); }
+
+  /* glyphe € */
+  .v-euro .euro { font-size: 1.05rem; font-weight: 900; line-height: 1; }
+
+  /* variante dégradé (fond plus riche, on garde la flèche) */
+  .v-grad.est-go { background: linear-gradient(135deg, var(--accent-deep), var(--accent-deeper)); }
+  .v-grad.est-go:hover { background: linear-gradient(135deg, var(--accent-deeper), var(--accent-ink)); }
+</style>
+</head>
+<body class="estimation-page">
+<div class="wrap">
+  <h1>Bouton « Estimer la valeur » — 5 variantes</h1>
+  <p class="intro">Rendu avec le style de prod (<code>.est-go</code>), à l'état <strong>activé</strong> (comme après avoir choisi secteur + taille). Plus d'icône « spark » qui évoque un chargement. Survole pour voir l'animation. Dis-moi le numéro retenu.</p>
+
+  <!-- 1 — Texte seul -->
+  <div class="btn-block">
+    <p class="btn-tag">1 · Texte seul</p>
+    <p class="btn-desc">Épuré et confiant. Aucune icône, la parole au libellé.</p>
+    <button type="button" class="est-go">
+      <span class="est-go-content">
+        <span class="est-go-label">Estimer la valeur</span>
+      </span>
+    </button>
+  </div>
+
+  <!-- 2 — Flèche → -->
+  <div class="btn-block">
+    <p class="btn-tag">2 · Flèche (cohérent avec le site)</p>
+    <p class="btn-desc">Reprend la flèche des CTA du site (navbar, « Parler à un expert »). Glisse à droite au survol.</p>
+    <button type="button" class="est-go v-arrow">
+      <span class="est-go-content">
+        <span class="est-go-label">Estimer la valeur</span>
+        <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </span>
+    </button>
+  </div>
+
+  <!-- 3 — Icône graphique -->
+  <div class="btn-block">
+    <p class="btn-tag">3 · Icône graphique</p>
+    <p class="btn-desc">Rappelle le résultat chiffré (même famille que l'icône du panneau navy).</p>
+    <button type="button" class="est-go">
+      <span class="est-go-content">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-6"/></svg>
+        <span class="est-go-label">Estimer la valeur</span>
+      </span>
+    </button>
+  </div>
+
+  <!-- 4 — Glyphe € -->
+  <div class="btn-block">
+    <p class="btn-tag">4 · Valeur (€)</p>
+    <p class="btn-desc">Va droit au but : on parle d'une valeur en euros. Glyphe sobre, pas d'icône.</p>
+    <button type="button" class="est-go v-euro">
+      <span class="est-go-content">
+        <span class="euro" aria-hidden="true">€</span>
+        <span class="est-go-label">Estimer la valeur</span>
+      </span>
+    </button>
+  </div>
+
+  <!-- 5 — Dégradé + flèche -->
+  <div class="btn-block">
+    <p class="btn-tag">5 · Dégradé + flèche (plus premium)</p>
+    <p class="btn-desc">Même flèche, mais fond en dégradé accent pour un rendu plus riche et plus « produit ».</p>
+    <button type="button" class="est-go v-grad">
+      <span class="est-go-content">
+        <span class="est-go-label">Estimer la valeur</span>
+        <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </span>
+    </button>
+  </div>
+
+</div>
+</body>
+</html>
