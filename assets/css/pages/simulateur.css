@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   Page /estimation/ — estimateur de valeur d'entreprise.
+   Page /simulateur/ — estimateur de valeur d'entreprise.
    Multiple d'EBITDA sectoriel : saisie (secteur, taille, EBITDA,
    trésorerie nette) → valeur indicative des titres.
    Hérite des tokens + du chrome de global.css.
@@ -341,7 +341,7 @@
 .est-compute-bar > span {
   display: block; height: 100%; width: 0; border-radius: 999px;
   background: linear-gradient(90deg, var(--accent), var(--accent-bright));
-  /* doit rester synchronisé avec STEPS.length × STEP_MS dans estimation.js */
+  /* doit rester synchronisé avec STEPS.length × STEP_MS dans simulateur.js */
   animation: est-fill 2200ms ease-out forwards;
 }
 @keyframes est-spin { to { transform: rotate(360deg); } }

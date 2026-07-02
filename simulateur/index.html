@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Estimer la valeur de votre entreprise · Novances Évaluation</title>
   <meta name="description" content="Estimez en une minute une première valeur indicative de votre entreprise, par multiple d'EBITDA sectoriel. Outil gratuit pour dirigeants de PME — sans engagement." />
-  <link rel="canonical" href="https://novances-evaluation.fr/estimation/" />
+  <link rel="canonical" href="https://novances-evaluation.fr/simulateur/" />
   <meta property="og:locale" content="fr_FR" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Novances Évaluation" />
   <meta property="og:title" content="Estimer la valeur de votre entreprise · Novances Évaluation" />
   <meta property="og:description" content="Une première estimation indicative de la valeur de vos titres, par multiple d'EBITDA sectoriel. Gratuit, sans engagement." />
-  <meta property="og:url" content="https://novances-evaluation.fr/estimation/" />
+  <meta property="og:url" content="https://novances-evaluation.fr/simulateur/" />
   <meta property="og:image" content="https://novances-evaluation.fr/assets/img/brand/logo-novances-evaluation.png" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Estimer la valeur de votre entreprise · Novances Évaluation" />
@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/css/global.css" />
-  <link rel="stylesheet" href="/assets/css/pages/estimation.css" />
+  <link rel="stylesheet" href="/assets/css/pages/simulateur.css" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -35,7 +35,7 @@
         "name": "Estimateur de valeur d'entreprise",
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "Web",
-        "url": "https://novances-evaluation.fr/estimation/",
+        "url": "https://novances-evaluation.fr/simulateur/",
         "description": "Outil d'estimation indicative de la valeur des titres d'une entreprise, par multiple d'EBITDA sectoriel, selon le secteur et la taille.",
         "provider": { "@id": "https://novances-evaluation.fr/#organization" },
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
@@ -44,14 +44,14 @@
         "@type": "BreadcrumbList",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://novances-evaluation.fr/" },
-          { "@type": "ListItem", "position": 2, "name": "Estimation", "item": "https://novances-evaluation.fr/estimation/" }
+          { "@type": "ListItem", "position": 2, "name": "Simulateur", "item": "https://novances-evaluation.fr/simulateur/" }
         ]
       }
     ]
   }
   </script>
 </head>
-<body class="estimation-page">
+<body class="simulateur-page">
 
 <!-- ═══════════════════ NAVBAR ═══════════════════ -->
 <nav id="navbar">
@@ -66,7 +66,7 @@
       <a href="/notaires/" class="nav-link">Notaires</a>
       <a href="/ressources/" class="nav-link">Publications</a>
       <a href="/tarifs/" class="nav-link">Tarifs</a>
-      <a href="/estimation/" class="nav-link active" aria-current="page">Simulateur</a>
+      <a href="/simulateur/" class="nav-link active" aria-current="page">Simulateur</a>
     </div>
     <div class="nav-cta-wrap">
       <a href="/#contact" class="nav-cta">
@@ -87,7 +87,7 @@
   <a href="/notaires/">Notaires</a>
   <a href="/ressources/">Publications</a>
   <a href="/tarifs/">Tarifs</a>
-  <a href="/estimation/" aria-current="page">Simulateur</a>
+  <a href="/simulateur/" aria-current="page">Simulateur</a>
   <a href="/#contact" class="nav-cta">Parler à un expert</a>
 </div>
 
@@ -211,7 +211,7 @@
 
       <!-- ── Colonne résultat ── -->
       <aside class="est-result" id="est-result" aria-live="polite">
-        <!-- contenu injecté par estimation.js -->
+        <!-- contenu injecté par simulateur.js -->
       </aside>
 
     </div>
@@ -292,6 +292,6 @@
 </footer>
 
 <script src="/assets/js/site.js" defer></script>
-<script src="/assets/js/pages/estimation.js" defer></script>
+<script src="/assets/js/pages/simulateur.js" defer></script>
 </body>
 </html>

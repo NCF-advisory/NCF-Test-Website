@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   Page /estimation/ — estimateur de valeur d'entreprise.
+   Page /simulateur/ — estimateur de valeur d'entreprise.
 
    Méthode : multiple d'EBITDA sectoriel (source : Fusacq).
      1. Valeur d'entreprise (VE) = EBITDA × multiple
