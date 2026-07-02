@@ -156,7 +156,7 @@
   function showPlaceholder() {
     const ready = state.secteur && state.taille;
     const cta = ready
-      ? 'Tout est prêt — lancez l’estimation.'
+      ? 'Tout est prêt, lancez l’estimation.'
       : 'Renseignez le secteur et la taille pour lancer l’estimation.';
     result.removeAttribute('aria-busy');
     // Bloc déjà rendu : on ne touche qu'à la ligne dynamique (évite de tout re-rendre à chaque saisie).
