@@ -2,10 +2,10 @@
   "cleanUrls": true,
   "trailingSlash": true,
   "redirects": [
-    { "source": "/estimation", "destination": "/simulateur/", "permanent": true },
-    { "source": "/transmission", "destination": "/entrepreneurs/", "permanent": true },
-    { "source": "/croissance-externe", "destination": "/entrepreneurs/", "permanent": true },
-    { "source": "/litiges-entre-associes", "destination": "/entrepreneurs/", "permanent": true }
+    { "source": "/estimation/", "destination": "/simulateur/", "permanent": true },
+    { "source": "/transmission/", "destination": "/entrepreneurs/", "permanent": true },
+    { "source": "/croissance-externe/", "destination": "/entrepreneurs/", "permanent": true },
+    { "source": "/litiges-entre-associes/", "destination": "/entrepreneurs/", "permanent": true }
   ],
   "headers": [
     {
