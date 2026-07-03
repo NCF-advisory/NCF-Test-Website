@@ -40,13 +40,9 @@
     'construction': 3.9,
   };
 
-  const MARKET_AVG = 5.25;   // multiple moyen tous secteurs (Fusacq) — pivot de l'effet taille.
-
-  // Effet de la taille sur le multiple — multiple moyen représentatif du segment,
-  // dérivé de la courbe Fusacq (figure 8 : 3,9x à 200 k€ d'EBITDA → 6,9x à 10 M€).
-  // Appliqué en proportion de la moyenne marché : un segment > 5,25 majore le
-  // multiple sectoriel, un segment < 5,25 le minore.
-  const TAILLE_MULT = { tpe: 4.0, pme: 5.5, eti: 6.9 };
+  // Ajustement de taille appliqué directement au multiple sectoriel :
+  // décote de 20 % pour une TPE, aucun ajustement pour une PME, cote de 20 % pour une ETI.
+  const TAILLE_FACTOR = { tpe: 0.80, pme: 1.00, eti: 1.20 };
 
   const SPREAD = 0.10;           // amplitude de la fourchette : ± SPREAD/2 appliquée à la valeur d'entreprise (puis + trésorerie nette)
 
@@ -109,12 +105,12 @@
     if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
   }
 
-  // Multiple effectif = multiple sectoriel × (multiple de taille / moyenne marché).
+  // Multiple effectif = multiple sectoriel × facteur de taille (décote TPE / cote ETI).
   function effectiveMultiple() {
     const sector = SECTEUR_MULT[state.secteur];
-    const size = TAILLE_MULT[state.taille];
-    if (sector == null || size == null) return null;
-    return sector * (size / MARKET_AVG);
+    const factor = TAILLE_FACTOR[state.taille];
+    if (sector == null || factor == null) return null;
+    return sector * factor;
   }
 
   // Renvoie { ev, net, equity, low, high, multiple } ou null si données incomplètes.
