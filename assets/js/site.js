@@ -86,7 +86,7 @@
         event.preventDefault();
         window.scrollTo({
           top: target.getBoundingClientRect().top + window.pageYOffset - 118,
-          behavior: 'smooth',
+          behavior: reducedMotion ? 'auto' : 'smooth',
         });
       });
     });

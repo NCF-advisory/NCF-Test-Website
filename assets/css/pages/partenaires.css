@@ -26,8 +26,15 @@
     @media (max-width: 920px) {
       .partners-hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
     }
+
+    /* Sections alternées — mêmes fonds que les pages parcours (parcours.css),
+       avec l'accent cyan du site à la place du persona (absent sur cette page). */
+    .sec-dark   { background: var(--navy-deep); }
+    .sec-soft   { background: linear-gradient(180deg, var(--navy-deep), var(--bg-deep) 50%, var(--navy-deep)); }
+    .sec-raised { background: radial-gradient(800px 500px at 50% 0%, rgba(14 165 233 / 0.04), transparent 65%), var(--navy-deep); }
+
     .partners-kicker {
-      color: var(--cyan-bright);
+      color: var(--accent-deeper);
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.18em;
@@ -41,7 +48,7 @@
       letter-spacing: -0.035em;
       max-width: 760px;
     }
-    .partners-hero h1 span { color: var(--cyan-bright); }
+    .partners-hero h1 span { color: var(--accent-deeper); }
     .partners-lead {
       color: var(--ink-dim);
       font-size: 1.04rem;
@@ -73,10 +80,10 @@
     .partner-panel-logo {
       height: 34px;
       width: auto;
-      filter: brightness(0) invert(1);
+      filter: var(--logo-filter, none);
     }
     .partner-panel-badge {
-      color: var(--cyan-bright);
+      color: var(--accent-deeper);
       font-size: 0.68rem;
       font-weight: 800;
       letter-spacing: 0.12em;
@@ -98,7 +105,7 @@
       line-height: 1.55;
     }
     .partner-panel-list svg {
-      color: var(--cyan-bright);
+      color: var(--accent-deeper);
       margin-top: 2px;
     }
     .partner-types {
@@ -123,7 +130,7 @@
       border-radius: 8px;
       background: rgba(0, 184, 255, 0.1);
       border: 1px solid rgba(0, 184, 255, 0.22);
-      color: var(--cyan-bright);
+      color: var(--accent-deeper);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -152,7 +159,7 @@
     }
     @media (max-width: 860px) { .workflow { grid-template-columns: 1fr; } }
     .workflow-num {
-      color: var(--cyan-bright);
+      color: var(--accent-deeper);
       font-size: 0.76rem;
       font-weight: 800;
       letter-spacing: 0.14em;

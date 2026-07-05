@@ -256,6 +256,9 @@ body > * { position: relative; z-index: 1; }
   .nav-links, .nav-cta-wrap { display: none !important; }
   .nav-logo-affil { display: none; }
 }
+@media (min-width: 981px) {
+  #mob-menu { display: none !important; }
+}
 
 /* Compense la hauteur navbar pour les ancres */
 :target { scroll-margin-top: 80px; }
@@ -345,6 +348,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-v
 .rv.d3 { transition-delay: 0.24s; }
 .rv.d4 { transition-delay: 0.32s; }
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
   .rv { opacity: 1; transform: none; transition: none; }
 }
 

@@ -149,7 +149,8 @@
   box-shadow: 0 0 0 3px var(--accent-a-15);
 }
 .est-rn-input {
-  width: 8ch; border: none; background: transparent;
+  /* 11ch : couvre INPUT_MAX formaté fr-FR (« 500 000 000 »), sinon les gros montants débordent. */
+  width: 11ch; border: none; background: transparent;
   font-family: inherit; font-size: 1.05rem; font-weight: 800;
   color: var(--text-strong); text-align: right;
   padding: 0;

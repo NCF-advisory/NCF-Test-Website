@@ -94,7 +94,9 @@
 
   const clamp = (n, min, max) => Math.min(Math.max(n, min), max);
   const parseDigits = (str) => {
-    const digits = String(str).replace(/[^\d]/g, '');
+    // Tronque une éventuelle partie décimale (« 1 234 567,89 » collé depuis un
+    // tableur ne doit pas devenir 123 456 789 : on ignore les centimes).
+    const digits = String(str).replace(/[.,]\d{1,2}\s*€?\s*$/, '').replace(/[^\d]/g, '');
     return digits ? parseInt(digits, 10) : 0;
   };
 
