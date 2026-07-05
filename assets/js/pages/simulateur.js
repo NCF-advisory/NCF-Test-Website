@@ -386,6 +386,12 @@
       </div>`;
     const msgEl = result.querySelector('.est-compute-msg');
 
+    // Sur mobile (une colonne), le panneau d'attente est sous le pli :
+    // on l'amène à l'écran pour que le clic ait un retour visible.
+    if (window.matchMedia('(max-width: 860px)').matches) {
+      result.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
     let i = 1;
     const tick = () => {
       if (myRun !== runId) return;
@@ -446,6 +452,8 @@
 
   goEl.addEventListener('click', runEstimation);
   closeBtn.addEventListener('click', closeModal);
+  // Mobile : tap sur le fond assombri = fermeture (comme une notification)
+  modal.querySelector('.est-modal-backdrop')?.addEventListener('click', closeModal);
 
   // ── Init ─────────────────────────────────────────────────────
   ebitdaNumberEl.value = groupFr.format(state.ebitda);

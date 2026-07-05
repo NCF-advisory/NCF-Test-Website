@@ -513,9 +513,38 @@
   .est-result { padding: 1.9rem 1.6rem; }
   .est-method { padding: 1.8rem 1.5rem; }
   .est-seg { grid-template-columns: 1fr; }
-  .est-seg-box { flex-direction: row; align-items: baseline; justify-content: space-between; gap: 10px; text-align: left; }
+  .est-seg-box { flex-direction: row; align-items: baseline; justify-content: space-between; gap: 10px; text-align: left; padding: 15px 14px; }
   .est-cash-grid { grid-template-columns: 1fr; gap: 1rem; }
   .est-cash-minus { display: none; }
   .est-method-cta { flex-direction: column; align-items: flex-start; }
   .hero-est-inner { padding: 1.5rem 1rem 0.5rem; }
+
+  /* iOS zoome sur les champs < 16px : on force 1rem sur mobile */
+  .est-select { font-size: 1rem; }
+
+  /* Saisie EBITDA : label au-dessus, champ pleine largeur (cible tactile large) */
+  .est-rn-head { flex-direction: column; align-items: stretch; gap: 0.6rem; }
+  .est-rn-value { display: flex; width: 100%; }
+  .est-rn-value .est-rn-input { flex: 1 1 auto; width: auto; min-width: 0; }
+
+  /* ── Modale → bottom sheet mobile : le CTA reste atteignable sans scroll ── */
+  .est-modal { padding: 0; align-items: flex-end; }
+  .est-modal-card {
+    max-width: none;
+    padding: 1.7rem 1.3rem calc(1.3rem + env(safe-area-inset-bottom));
+    max-height: calc(100dvh - 3.5rem);
+    border-radius: 22px 22px 0 0;
+    border-left: none; border-right: none; border-bottom: none;
+    transform: translateY(100%);
+    transition: opacity 0.22s ease, transform 0.32s cubic-bezier(.2,.9,.25,1);
+  }
+  .est-modal-close { top: 10px; right: 10px; width: 40px; height: 40px; }
+  .est-modal-label { margin-bottom: 1.1rem; padding-right: 3rem; }
+  .est-bridge { padding: 0.1rem 0.9rem 0.35rem; margin-bottom: 0.9rem; }
+  .est-bridge-row { padding: 0.5rem 0; }
+  .est-gauge { margin: 0.5rem 0 0.9rem; }
+  .est-gauge-ends { margin-bottom: 1rem; }
+  .est-modal-unit { font-size: 0.8rem; line-height: 1.55; }
+  .est-modal-cta { margin-top: 1.2rem; padding: 16px 20px; }
+  .est-modal-fine { margin-top: 0.9rem; }
 }

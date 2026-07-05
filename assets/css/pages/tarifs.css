@@ -639,4 +639,25 @@
 @media (max-width: 620px) {
   #hero-tarifs { padding-top: 100px; }
   .hero-tarifs-inner { padding: 1.5rem 1rem; }
+
+  /* Matrice : plus de scroll horizontal caché — grille 3 colonnes,
+     libellé de prestation en pleine largeur, prix alignés sous les
+     en-têtes TPE / PME / PME+. */
+  .tarif-matrix { grid-template-columns: repeat(3, 1fr); overflow-x: visible; }
+  .tm-head .tm-cell:first-child { display: none; }          /* cellule « Segments » inutile */
+  .tm-cell { text-align: center; padding: 0.75rem 0.5rem; border-right: none !important; }
+  .tm-cell:first-child {
+    grid-column: 1 / -1;
+    position: static;
+    text-align: left;
+    padding: 0.9rem 0.9rem 0.2rem;
+    border-bottom: none;
+  }
+  .tm-head .tm-cell { padding: 0.9rem 0.4rem; }
+  .tm-seg-crit { font-size: 0.64rem; }
+  .tm-row-base .tm-cell { padding-top: 0.6rem; padding-bottom: 1rem; }
+  .tm-row-base .tm-cell:first-child { padding: 1rem 0.9rem 0.1rem; }
+  .tm-row-base .tm-price { font-size: 1.3rem; }
+  .tm-row-addon .tm-cell { padding-bottom: 0.9rem; }
+  .tm-row-addon .tm-cell:first-child { padding: 0.9rem 0.9rem 0.15rem; }
 }

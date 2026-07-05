@@ -449,10 +449,14 @@ a.footer-novances:hover img { opacity: 1; }
     max-width: 100%;
     text-align: center;
     font-size: 1rem;
+    padding: 8px 0;
   }
 
   #mob-menu .nav-cta {
     justify-content: center;
+    color: var(--text-on-accent);
+    padding: 14px 22px;
+    margin-top: 0.4rem;
   }
 
   :target {

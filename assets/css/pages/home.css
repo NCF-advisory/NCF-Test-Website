@@ -76,6 +76,8 @@
     }
     @media (prefers-reduced-motion: reduce) {
       .hero-h1 .accent::after { animation: none; transform: scaleX(1); }
+      .trust-track { animation: none; }
+      .trust-track-wrap { overflow-x: auto; }
     }
     .hero-sub {
       font-size: 1.08rem; font-weight: 400; color: var(--gd); line-height: 1.6;
@@ -984,6 +986,11 @@
         margin-top: 1.75rem;
         -webkit-mask-image: none;
                 mask-image: none;
+      }
+
+      /* iOS zoome sur les champs < 16px : on force 1rem sur mobile */
+      .form-input, .form-select, .form-textarea {
+        font-size: 1rem;
       }
 
       .trust-track {
