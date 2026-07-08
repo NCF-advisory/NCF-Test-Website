@@ -2,6 +2,8 @@
   "cleanUrls": true,
   "trailingSlash": true,
   "redirects": [
+    { "source": "/(.*)", "has": [{ "type": "host", "value": "www.ncf-advisory.fr" }], "destination": "https://novances-evaluation.fr/", "statusCode": 301 },
+    { "source": "/(.*)", "has": [{ "type": "host", "value": "ncf-advisory.fr" }], "destination": "https://novances-evaluation.fr/", "statusCode": 301 },
     { "source": "/estimation/", "destination": "/simulateur/", "permanent": true },
     { "source": "/transmission/", "destination": "/entrepreneurs/", "permanent": true },
     { "source": "/croissance-externe/", "destination": "/entrepreneurs/", "permanent": true },
