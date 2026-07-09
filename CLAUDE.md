@@ -124,18 +124,19 @@ Le skill `frontend-design` (plugin officiel Anthropic) se déclenche automatique
 
 ### Icônes
 
-**Toujours** utiliser la librairie maison `assets/ncf-icons/` (sprite SVG + classes utilitaires). Voir `assets/ncf-icons/README.md` et `ICON_GUIDELINES.md`. Jamais d'icônes externes (Heroicons, Lucide, FontAwesome, emojis dans l'UI, etc.).
+**Toujours** utiliser la librairie maison `assets/ncf-icons/`. Voir `assets/ncf-icons/README.md` et `ICON_GUIDELINES.md`. Jamais d'icônes externes (Heroicons, Lucide, FontAwesome, emojis dans l'UI, etc.).
 
-Les variables `--ncf-*` définies dans `icons.css` ne sont qu'un fallback : les `.ncf-icon` héritent de `currentColor`, donc dans la pratique elles prennent la couleur du texte parent — bien aligné avec la palette institutionnelle.
+En production, les pages consomment **uniquement le sprite** : `<svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#nom"/></svg>`, stylé par le CSS de la page (couleur via `currentColor`). Le reste du dossier (`icons.css`, `preview.html`, `svg/` — les SVG unitaires sources du sprite —, README, guidelines) est du matériel de dev : versionné dans git mais exclu du déploiement via `.vercelignore`.
 
 ## Contenu — articles Ressources
 
 Workflow d'import d'un article LinkedIn dans `ressources/` :
 
-1. HTML brut LinkedIn déposé dans `ressources/Linkedin/<Titre LinkedIn>.html` (non indexé via `robots.txt`).
+1. HTML brut LinkedIn déposé dans `ressources/Linkedin/<Titre LinkedIn>.html` (dossier exclu du déploiement via `.vercelignore` et non indexé via `robots.txt`).
 2. Script `_work/import-linkedin-articles.mjs` pour extraire/normaliser.
 3. Page finale : `ressources/<slug>/index.html` avec visuels dans `assets/img/articles/<slug>.jpg` (+ `<slug>-body{n}.jpg` pour le corps).
 4. Ajouter la card dans `ressources/index.html` et l'URL dans `sitemap.xml`.
+5. **Supprimer le HTML brut** une fois l'article publié — on ne garde pas ces sources dans le repo (nettoyage de juillet 2026 : ~14,5 Mo de fichiers bruts retirés).
 
 Le slug doit être **stable** une fois publié (URL = SEO).
 
@@ -148,12 +149,17 @@ Le slug doit être **stable** une fois publié (URL = SEO).
 
 ## API contact
 
-`api/contact.js` (route Vercel serverless, format CommonJS) : POST → crée une Person + Lead + Note dans Pipedrive.
+`api/contact.js` (route Vercel serverless, format CommonJS) : POST → crée une Person + Lead + Note dans Pipedrive, puis envoie un email de notification via Resend.
 
 Variables d'environnement requises côté Vercel :
 - `PIPEDRIVE_API_TOKEN`
 - `PIPEDRIVE_COMPANY_DOMAIN` (avec ou sans `https://`, avec ou sans `.pipedrive.com`)
 - `PIPEDRIVE_OWNER_ID` (optionnel)
+
+Notification email via Resend (optionnel — si l'une des trois manque, l'envoi est sauté silencieusement ; un échec Resend ne fait pas échouer la création du lead) :
+- `RESEND_API_KEY`
+- `CONTACT_EMAIL_FROM` (adresse sur un domaine vérifié dans Resend)
+- `CONTACT_EMAIL_TO` (boîte qui reçoit les notifications)
 
 Le formulaire de contact ne demande plus de cas d'usage : seuls prénom, nom et email sont obligatoires côté API.
 

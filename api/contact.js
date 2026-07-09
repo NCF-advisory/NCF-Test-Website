@@ -68,6 +68,42 @@ async function pipedriveRequest(path, body) {
   return payload.data;
 }
 
+async function sendNotificationEmail({ prenom, nom, email, telephone, message, pageUrl, referrer }) {
+  const apiKey = process.env.RESEND_API_KEY;
+  const from = process.env.CONTACT_EMAIL_FROM;
+  const to = process.env.CONTACT_EMAIL_TO;
+  if (!apiKey || !from || !to) return;
+
+  const lines = [
+    `<strong>Nom :</strong> ${escapeHtml(`${prenom} ${nom}`)}`,
+    `<strong>Email :</strong> ${escapeHtml(email)}`,
+    telephone ? `<strong>Téléphone :</strong> ${escapeHtml(telephone)}` : '',
+    message ? `<strong>Message :</strong><br>${escapeHtml(message)}` : '<strong>Message :</strong> Non renseigné',
+    pageUrl ? `<strong>Page :</strong> ${escapeHtml(pageUrl)}` : '',
+    referrer ? `<strong>Référent :</strong> ${escapeHtml(referrer)}` : '',
+  ].filter(Boolean);
+
+  const response = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      from,
+      to,
+      reply_to: email,
+      subject: `Nouvelle demande site web - ${prenom} ${nom}`,
+      html: lines.join('<br><br>'),
+    }),
+  });
+
+  if (!response.ok) {
+    const payload = await response.json().catch(() => ({}));
+    throw new Error(payload.message || `Resend HTTP ${response.status}`);
+  }
+}
+
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
@@ -132,6 +168,12 @@ module.exports = async function handler(req, res) {
       content: noteLines.join('<br><br>'),
       pinned_to_lead_flag: 1,
     });
+
+    try {
+      await sendNotificationEmail({ prenom, nom, email, telephone, message, pageUrl, referrer });
+    } catch (emailError) {
+      console.error('Contact email notification failed:', emailError);
+    }
 
     return json(res, 200, { ok: true });
   } catch (error) {
