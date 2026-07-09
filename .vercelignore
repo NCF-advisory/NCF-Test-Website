@@ -10,3 +10,10 @@ ressources/Linkedin/
 NOTES.md
 ARCHITECTURE.md
 CHARTE-GRAPHIQUE.md
+
+# ncf-icons : seul icons-sprite.svg est utilisé par le site
+assets/ncf-icons/README.md
+assets/ncf-icons/ICON_GUIDELINES.md
+assets/ncf-icons/preview.html
+assets/ncf-icons/icons.css
+assets/ncf-icons/svg/
