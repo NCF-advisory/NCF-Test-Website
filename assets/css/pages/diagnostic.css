@@ -88,15 +88,6 @@
   font-size: 0.78rem; font-weight: 600; color: var(--text-2);
 }
 .diag-chips svg { width: 15px; height: 15px; color: var(--accent-deeper); }
-.diag-intro-title {
-  font-size: clamp(1.35rem, 2.4vw, 1.7rem);
-  font-weight: 800; letter-spacing: -0.02em; color: var(--text-strong);
-  margin: 0 0 0.7rem;
-}
-.diag-intro-body {
-  font-size: 0.95rem; color: var(--text-2); line-height: 1.7;
-  max-width: 480px; margin: 0 auto 1.8rem;
-}
 .diag-go {
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
   padding: 16px 34px; border: none; border-radius: 12px;

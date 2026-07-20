@@ -186,8 +186,6 @@
           <li><svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#clock"/></svg>2 minutes</li>
           <li><svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#lock"/></svg>Confidentiel</li>
         </ul>
-        <h2 class="diag-intro-title">Où en êtes-vous&nbsp;?</h2>
-        <p class="diag-intro-body">Dépendance au dirigeant, processus, diversification, pilotage financier… Répondez à 10 questions et obtenez immédiatement votre score de création de valeur, avec les leviers à activer.</p>
         <button type="button" class="diag-go" id="diag-go">
           Je fais le diagnostic
           ${ARROW}
