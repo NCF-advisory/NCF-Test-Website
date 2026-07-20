@@ -181,9 +181,6 @@
   function renderIntro() {
     setContent(`
       <div class="diag-intro">
-        <span class="diag-intro-icon" aria-hidden="true">
-          <svg><use href="/assets/ncf-icons/icons-sprite.svg#chart"/></svg>
-        </span>
         <ul class="diag-chips" aria-label="Ce qu'il faut savoir">
           <li><svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#steps"/></svg>10 questions</li>
           <li><svg aria-hidden="true"><use href="/assets/ncf-icons/icons-sprite.svg#clock"/></svg>2 minutes</li>
@@ -202,7 +199,8 @@
   function renderQuestion(i) {
     const item = QUESTIONS[i];
     const opts = item.opts || DEFAULT_OPTS;
-    const pct = Math.round((i / QUESTIONS.length) * 100);
+    // Barre pleine sur la dernière question (10/10 = 100 %).
+    const pct = Math.round(((i + 1) / QUESTIONS.length) * 100);
 
     setContent(`
       <div class="diag-head">
