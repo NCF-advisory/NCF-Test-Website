@@ -11,16 +11,8 @@
 /* ────── HERO ────── */
 #hero-diag {
   padding-top: 92px;
-  padding-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
   background: #fff;
-  position: relative;
-  overflow: hidden;
-}
-#hero-diag::before {
-  content: ''; position: absolute; inset: 0; z-index: -1;
-  background:
-    radial-gradient(900px 600px at 80% 20%, var(--accent-a-10), transparent 60%),
-    #fff;
 }
 .hero-diag-inner {
   max-width: 820px;
@@ -45,15 +37,11 @@
 }
 
 /* ────── SECTION / CARTE ────── */
-.diag-section { padding: 1.5rem 0 4rem; }
+.diag-section { padding: 1rem 0 4rem; background: #fff; }
 .diag-inner { max-width: 720px; margin: 0 auto; padding: 0 2rem; }
 
 .diag-card {
-  background: var(--card-bg);
-  border: 1px solid var(--line-2);
-  border-radius: 20px;
-  padding: 2.4rem 2.6rem 2.5rem;
-  box-shadow: 0 24px 60px -32px rgba(6, 24, 56, 0.35);
+  padding: 1.6rem 0 0;
   min-height: 380px;
   display: flex; flex-direction: column; justify-content: center;
 }
@@ -470,7 +458,7 @@
 }
 @media (max-width: 560px) {
   .diag-inner { padding: 0 1.1rem; }
-  .diag-card { padding: 1.7rem 1.3rem 1.9rem; min-height: 420px; }
+  .diag-card { padding: 1rem 0 0; min-height: 420px; }
   /* Modale → bottom sheet mobile */
   .diag-modal { padding: 0; align-items: flex-end; }
   .diag-modal-card {
