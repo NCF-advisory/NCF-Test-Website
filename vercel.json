@@ -11,7 +11,7 @@
   ],
   "headers": [
     {
-      "source": "/diagnostic-valeur/:path*",
+      "source": "/diagnostic-valeur(/.*)?",
       "headers": [
         { "key": "X-Robots-Tag", "value": "noindex" }
       ]
