@@ -190,7 +190,6 @@
           Je fais le diagnostic
           ${ARROW}
         </button>
-        <p class="diag-go-note">Confidentiel – Sans engagement</p>
       </div>`);
     card.querySelector('#diag-go').addEventListener('click', () => renderQuestion(0));
   }

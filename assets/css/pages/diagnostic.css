@@ -112,11 +112,6 @@
   0%, 100% { box-shadow: 0 0 0 1px var(--accent-bright), 0 12px 30px -10px var(--accent-a-35), 0 0 0 0 var(--accent-a-15); }
   50%      { box-shadow: 0 0 0 1px var(--accent-bright), 0 12px 30px -10px var(--accent-a-35), 0 0 0 8px var(--accent-a-04); }
 }
-.diag-go-note {
-  margin: 1.05rem 0 0;
-  font-size: 0.76rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
-  color: var(--text-3);
-}
 
 /* ────── QUESTIONS ────── */
 .diag-head {
