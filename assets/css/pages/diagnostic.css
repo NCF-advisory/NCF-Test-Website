@@ -296,8 +296,8 @@
 .diag-r-grid .diag-r-block { margin-bottom: 0; }
 .diag-r-block-h {
   display: flex; align-items: center; gap: 8px;
-  font-size: 0.68rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--text-2);
+  font-size: 0.95rem; font-weight: 750;
+  color: var(--text-strong);
   margin: 0 0 0.75rem;
 }
 .diag-r-block-h::before {

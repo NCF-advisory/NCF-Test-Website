@@ -63,7 +63,7 @@
       html: `
         <p class="diag-r-lead">Votre entreprise dispose déjà de solides fondamentaux de création de valeur.</p>
         <div class="diag-r-block">
-          <h3 class="diag-r-block-h">Le constat</h3>
+          <h3 class="diag-r-block-h">Le constat&nbsp;:</h3>
           <ul class="diag-r-list is-check">
             <li>${CHECK}<span>organisation structurée, moins dépendante du dirigeant</span></li>
             <li>${CHECK}<span>processus clés relativement formalisés</span></li>
@@ -73,7 +73,7 @@
         </div>
         <div class="diag-r-grid">
           <div class="diag-r-block">
-            <h3 class="diag-r-block-h">Une base favorable pour</h3>
+            <h3 class="diag-r-block-h">Une base favorable pour&nbsp;:</h3>
             <ul class="diag-r-list">
               <li>${DOT}<span>améliorer votre valorisation future</span></li>
               <li>${DOT}<span>renforcer l'attractivité de votre société</span></li>
@@ -82,7 +82,7 @@
             </ul>
           </div>
           <div class="diag-r-block">
-            <h3 class="diag-r-block-h">Un regard extérieur peut encore identifier</h3>
+            <h3 class="diag-r-block-h">Un regard extérieur peut encore identifier&nbsp;:</h3>
             <ul class="diag-r-list">
               <li>${DOT}<span>des leviers de valorisation complémentaires</span></li>
               <li>${DOT}<span>des axes d'amélioration du cash-flow</span></li>
@@ -102,7 +102,7 @@
         <p>Certaines bonnes pratiques sont déjà en place.</p>
         <div class="diag-r-grid">
           <div class="diag-r-block">
-            <h3 class="diag-r-block-h">Ce qui peut limiter votre valorisation</h3>
+            <h3 class="diag-r-block-h">Ce qui peut limiter votre valorisation&nbsp;:</h3>
             <ul class="diag-r-list">
               <li>${DOT}<span>dépendance encore forte au dirigeant</span></li>
               <li>${DOT}<span>organisation insuffisamment formalisée</span></li>
@@ -112,7 +112,7 @@
             </ul>
           </div>
           <div class="diag-r-block">
-            <h3 class="diag-r-block-h">Sans empêcher la croissance, cela peut</h3>
+            <h3 class="diag-r-block-h">Sans empêcher la croissance, cela peut&nbsp;:</h3>
             <ul class="diag-r-list">
               <li>${DOT}<span>réduire la résilience de l'entreprise</span></li>
               <li>${DOT}<span>limiter son attractivité auprès d'un investisseur ou repreneur</span></li>
@@ -132,7 +132,7 @@
         <p>Votre entreprise paraît encore fortement dépendante du dirigeant.</p>
         <div class="diag-r-grid">
           <div class="diag-r-block">
-            <h3 class="diag-r-block-h">En l'état</h3>
+            <h3 class="diag-r-block-h">En l'état&nbsp;:</h3>
             <ul class="diag-r-list">
               <li>${DOT}<span>les processus sont peu formalisés</span></li>
               <li>${DOT}<span>le savoir-faire reste concentré</span></li>
@@ -141,7 +141,7 @@
             </ul>
           </div>
           <div class="diag-r-block">
-            <h3 class="diag-r-block-h">Cette situation peut impacter</h3>
+            <h3 class="diag-r-block-h">Cette situation peut impacter&nbsp;:</h3>
             <ul class="diag-r-list">
               <li>${DOT}<span>la capacité de développement de l'entreprise</span></li>
               <li>${DOT}<span>sa rentabilité à long terme</span></li>
