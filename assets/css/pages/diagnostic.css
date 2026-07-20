@@ -49,10 +49,15 @@
 .diag-noscript a { color: var(--accent-deeper); font-weight: 700; }
 
 .diag-step { width: 100%; }
-.diag-anim { animation: diag-in 0.32s ease both; }
+.diag-anim { animation: diag-in 0.38s cubic-bezier(0.22, 0.9, 0.3, 1) both; }
 @keyframes diag-in {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: none; }
+}
+/* Sortie d'écran : durée synchronisée avec OUT_MS dans diagnostic.js */
+.diag-step.diag-out { animation: diag-out 0.18s ease-in both; }
+@keyframes diag-out {
+  to { opacity: 0; transform: translateY(-10px); }
 }
 
 .diag-privacy {
@@ -446,6 +451,7 @@
 /* ────── REDUCED MOTION ────── */
 @media (prefers-reduced-motion: reduce) {
   .diag-anim { animation: none; }
+  .diag-step.diag-out { animation: none; }
   .diag-go { animation: none; }
   .diag-spinner { animation: none; }
   .diag-bar > span { transition: none; }

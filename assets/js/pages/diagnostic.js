@@ -163,8 +163,20 @@
 
   const answers = new Array(QUESTIONS.length).fill(null);
   let timers = [];
+  let lastPct = 0; // position courante de la barre de progression
 
   const clearTimers = () => { timers.forEach(clearTimeout); timers = []; };
+
+  // Durée de l'animation de sortie d'un écran (doit couvrir diag-out en CSS).
+  const OUT_MS = 180;
+
+  // Fait sortir l'écran courant en douceur avant de rendre le suivant.
+  function transitionTo(render) {
+    const cur = card.querySelector('.diag-step');
+    if (reducedMotion || !cur) { render(); return; }
+    cur.classList.add('diag-out');
+    timers.push(setTimeout(render, OUT_MS));
+  }
 
   function setContent(html) {
     clearTimers();
@@ -191,7 +203,7 @@
           ${ARROW}
         </button>
       </div>`);
-    card.querySelector('#diag-go').addEventListener('click', () => renderQuestion(0));
+    card.querySelector('#diag-go').addEventListener('click', () => transitionTo(() => renderQuestion(0)));
   }
 
   // ── Questions ────────────────────────────────────────────────
@@ -206,7 +218,7 @@
         <span class="diag-theme">${item.theme}</span>
         <span class="diag-count">Question ${i + 1}<span class="diag-count-total"> / ${QUESTIONS.length}</span></span>
       </div>
-      <div class="diag-bar" aria-hidden="true"><span style="width:${pct}%"></span></div>
+      <div class="diag-bar" aria-hidden="true"><span style="width:${reducedMotion ? pct : lastPct}%"></span></div>
       <h2 class="diag-q">${item.q}</h2>
       <div class="diag-opts" role="group" aria-label="Votre réponse">
         ${opts.map((label, v) => `
@@ -219,18 +231,27 @@
         ${i > 0 ? `<button type="button" class="diag-back" id="diag-back">${BACK} Question précédente</button>` : ''}
       </div>`);
 
+    // La barre glisse de sa position précédente vers la nouvelle (transition CSS).
+    if (!reducedMotion) {
+      const barEl = card.querySelector('.diag-bar > span');
+      requestAnimationFrame(() => requestAnimationFrame(() => { barEl.style.width = pct + '%'; }));
+    }
+    lastPct = pct;
+
     card.querySelectorAll('.diag-opt').forEach((btn) => {
       btn.addEventListener('click', () => {
         answers[i] = Number(btn.dataset.points);
         card.querySelectorAll('.diag-opt').forEach((b) => b.classList.toggle('is-selected', b === btn));
         clearTimers();
         timers.push(setTimeout(() => {
-          if (i + 1 < QUESTIONS.length) renderQuestion(i + 1);
-          else renderComputing();
-        }, reducedMotion ? 0 : AUTO_ADVANCE_MS));
+          transitionTo(() => {
+            if (i + 1 < QUESTIONS.length) renderQuestion(i + 1);
+            else renderComputing();
+          });
+        }, reducedMotion ? 0 : AUTO_ADVANCE_MS - OUT_MS));
       });
     });
-    card.querySelector('#diag-back')?.addEventListener('click', () => renderQuestion(i - 1));
+    card.querySelector('#diag-back')?.addEventListener('click', () => transitionTo(() => renderQuestion(i - 1)));
     keepInView();
   }
 
@@ -252,7 +273,7 @@
     STEPS.slice(1).forEach((s, idx) => {
       timers.push(setTimeout(() => { msg.textContent = s; }, STEP_MS * (idx + 1)));
     });
-    timers.push(setTimeout(renderResult, STEP_MS * STEPS.length));
+    timers.push(setTimeout(() => transitionTo(renderResult), STEP_MS * STEPS.length));
     keepInView();
   }
 
@@ -310,7 +331,8 @@
     card.querySelector('#diag-cta').addEventListener('click', openModal);
     card.querySelector('#diag-restart').addEventListener('click', () => {
       answers.fill(null);
-      renderQuestion(0);
+      lastPct = 0;
+      transitionTo(() => renderQuestion(0));
     });
     keepInView();
   }
