@@ -211,24 +211,7 @@
   text-transform: uppercase;
   margin-top: 2px;
 }
-.tm-row-addon .tm-label {
-  font-weight: 600;
-  color: var(--text-1);
-  font-size: 0.85rem;
-}
-.tm-row-addon .tm-label-desc {
-  font-size: 0.72rem;
-  color: var(--text-3);
-  font-weight: 400;
-  margin-top: 2px;
-}
-.tm-row-addon .tm-price {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text-strong);
-  letter-spacing: -0.01em;
-}
-.tm-row-addon:last-of-type .tm-cell { border-bottom: 0; }
+.tm-row-base .tm-cell { border-bottom: 0; }
 
 
 /* ════════════════════════════════════════════════════════════
@@ -626,7 +609,6 @@
      colonnes de prix qui défilent dessous. */
   .tm-cell:nth-child(4n+1) { position: sticky; left: 0; z-index: 2; }
   .tm-head .tm-cell:nth-child(4n+1) { z-index: 3; }
-  .tm-row-addon .tm-cell:nth-child(4n+1) { background: var(--card-bg); }
   .tm-row-base .tm-cell:nth-child(4n+1) {
     background: linear-gradient(var(--accent-a-04), var(--accent-a-04)), var(--card-bg);
   }
@@ -658,6 +640,4 @@
   .tm-row-base .tm-cell { padding-top: 0.6rem; padding-bottom: 1rem; }
   .tm-row-base .tm-cell:first-child { padding: 1rem 0.9rem 0.1rem; }
   .tm-row-base .tm-price { font-size: 1.3rem; }
-  .tm-row-addon .tm-cell { padding-bottom: 0.9rem; }
-  .tm-row-addon .tm-cell:first-child { padding: 0.9rem 0.9rem 0.15rem; }
 }
